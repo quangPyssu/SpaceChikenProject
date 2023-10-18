@@ -1,10 +1,5 @@
 #include "SceneNode.h"
 
-SceneNode::SceneNode()
-{
-    this->Parent = nullptr;
-}
-
 void SceneNode::attachChild(Ptr child)
 {
     child->Parent = this;

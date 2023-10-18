@@ -143,15 +143,23 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\Button.cpp" />
     <ClCompile Include="source\Core\Global.cpp" />
+    <ClCompile Include="source\Entiy\Entity.cpp" />
     <ClCompile Include="source\SceneNode.cpp" />
     <ClCompile Include="source\StateSteak.cpp" />
+    <ClCompile Include="source\States\GameState.cpp" />
+    <ClCompile Include="source\States\MainMenu.cpp" />
+    <ClCompile Include="source\States\State.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="source\Button.h" />
     <ClInclude Include="source\Core\Global.h" />
+    <ClInclude Include="source\Entiy\Entity.h" />
     <ClInclude Include="source\SceneNode.h" />
     <ClInclude Include="source\StateSteak.h" />
+    <ClInclude Include="source\States\GameState.h" />
+    <ClInclude Include="source\States\MainMenu.h" />
+    <ClInclude Include="source\States\State.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

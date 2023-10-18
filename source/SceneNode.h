@@ -14,8 +14,6 @@ using namespace Constants;
 class SceneNode : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {
 public:
-    SceneNode();
-
     typedef std::shared_ptr<SceneNode> Ptr;
 public:
 
@@ -39,7 +37,7 @@ public:
 
 public:
     vector<Ptr> Children;
-    SceneNode* Parent;
+    SceneNode* Parent=nullptr;
 
     bool isDisable = false;
     bool isInteractable = false;

@@ -2,27 +2,27 @@
 
 #include "SceneNode.h"
 
-namespace States {
-    enum ID {
-    };
-};
+#include "States/State.h"
+#include "States/MainMenu.h"
+#include "States/GameState.h"
 
-class StateSteak;
-
-class State : public SceneNode { 
-public:
-    typedef std::unique_ptr<State> Ptr;
-
-	State(StateSteak& stateSteak, sf::RenderWindow& window);
-	virtual ~State();
-
-	virtual void handleEvent(sf::Event& event) = 0;
-	virtual void update() = 0;
-	virtual void draw() = 0;
-};
-
-class StateSteak : private sf::NonCopyable {
+class StateSteak : private sf::NonCopyable { // StateSteak to Store all states of the screen
 public: 
+	StateSteak();
 
+	void pushState(States::ID stateID);
+	void popState();
+	void clearStates();
 
+	bool isEmpty() const;
+
+	void update(Event& event, Vector2f& MousePos);
+	void draw(RenderTarget& target, RenderStates states) const;
+	void takeTime(Time& dt);
+
+private:
+	std::vector<State::Ptr> Stack;
+	State Dummy;
+
+	void CreateState(States::ID &stateID);
 };

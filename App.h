@@ -1,5 +1,6 @@
 #include "source/Core/Global.h"
-#include "source/Button.h"
+#include "source/StateSteak.h"
+
 
 #pragma once
 class App
@@ -9,25 +10,29 @@ class App
 	~App();
 
 	sf::RenderWindow* window;
-	sf::Event event;
-	sf::View view;
+
+	
 
 	void Run();
 
 private:
 	void ProcessInput();
-	void update();
+	void update(Event& event, Vector2f& MousePos);
 	void render();
 	void TakeTime(sf::Time dt);
+
+	sf::Event event;
+	sf::View view;
 
 	sf::Vector2f MousePos;
 	sf::Time dt;
 
+	bool isDead = false;
 	Clock clock;
 
+	StateSteak* state_stk;
 
-	sf::RectangleShape shape;
-	sf::Texture texture;
-	Button* button;
+
+	// subject for delete later	
 };
 

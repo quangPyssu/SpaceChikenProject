@@ -1,34 +1,41 @@
 #include "Button.h"
 
-Button::Button(const sf::Vector2f& position, const sf::Vector2f& size, const std::string& text, string texture)
+Button::Button(const sf::Vector2f& position, const sf::Vector2f& size, const std::string& text) // defualt constructor
 {
-	shape.setPosition(position);
-	shape.setSize(size);
-	shape.setTexture(&ResourceManager::getTexture(texture));
-
-	label.setFont(ResourceManager::getFont("Arial"));
-	label.setString(text);
-	label.setCharacterSize(size.y/2);
-	label.setFillColor(Colors::black);
-	label.setPosition(position.x + size.x / 2 - label.getGlobalBounds().width / 2, position.y + size.y / 2 - label.getGlobalBounds().height / 2);
-}	
-
-Button::Button(const sf::Vector2f& position, const sf::Vector2f& size, const std::string& text)
-{
-	std::cout << "1asdasd" << std::endl;
 	shape.setPosition(position);
 	shape.setSize(size);
 	shape.setFillColor(Colors::grey);
 
-	label.setFont(ResourceManager::getFont("ArialTh"));
+	//label.setFont(ResourceManager::getFont("ArialTh"));
+	label.setFont(ResourceManager::getFont("neuro"));
+	label.setString(text);
+	label.setCharacterSize(size.y / 2);
+	label.setFillColor(Colors::black);
+	label.setPosition(position.x + size.x / 2 - label.getGlobalBounds().width / 2, position.y + size.y / 2 - label.getGlobalBounds().height / 2);
+	
+}
+
+Button::Button(const sf::Vector2f& position, int ButtonType, const std::string& text)
+{
+	/*int x = (ButtonType-1) % 3;
+	int y = (ButtonType-1) / 3;
+
+	shape.setPosition(position);
+	shape.setSize(Constants::ButtonTypeTail[x]-);
+	shape.setSize(size);
+	shape.setFillColor(Colors::grey);
+
+	label.setFont(ResourceManager::getFont("neuro"));
 	label.setString(text);
 	label.setCharacterSize(size.y / 2);
 	label.setFillColor(Colors::black);
 	label.setPosition(position.x + size.x / 2 - label.getGlobalBounds().width / 2, position.y + size.y / 2 - label.getGlobalBounds().height / 2);
 
-	texture = ResourceManager::getTexture("Metal_Buttons.png");
-	shape.setTexture(&texture);
-	
+	texture = ResourceManager::getTexture("Metal-Buttons.png");
+
+	shape.setTextureRect(sf::IntRect(Constants::ButtonTypeHead[2].x, Constants::ButtonTypeHead[2].y,
+		Constants::ButtonTypeTail[2].x, Constants::ButtonTypeTail[2].y));
+	shape.setTexture(&texture);*/
 }
 
 void Button::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const

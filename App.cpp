@@ -2,7 +2,10 @@
 
 App::App()
 {
-	window = new sf::RenderWindow(sf::VideoMode(800 * Constants::SCALE, 600 * Constants::SCALE), "Chieken", sf::Style::Fullscreen);
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 5.0;
+
+	window = new sf::RenderWindow(sf::VideoMode(800 * Constants::SCALE, 600 * Constants::SCALE), "Chieken", sf::Style::Fullscreen,settings);
 
 	window->setFramerateLimit(60);
 
@@ -17,29 +20,28 @@ App::App()
 
 	view.setViewport(sf::FloatRect(barWidth / window->getSize().x, barHeight / window->getSize().y,
 		800 * Constants::SCALE / window->getSize().x, 600 * Constants::SCALE / window->getSize().y));
-
-	window->setView(view);
-	window->setMouseCursorVisible(false);
-
-
-	shape.setSize(sf::Vector2f(20, 20));
-	shape.setFillColor(Colors::grey);
-	texture = ResourceManager::getTexture("Cursors.png");
-
-	shape.setTexture(&texture);
-	button = new Button(sf::Vector2f(200, 100), sf::Vector2f(200, 100), "Button"); std::cout << "1asdasd" << std::endl;
-
 	
+	window->setFramerateLimit(60);
+	window->setView(view);
+
+	//window->setMouseCursorVisible(false);
+
+	Constants::WINDOW_SIZE = sf::Vector2f(window->getSize().x,window->getSize().y);
+
+	state_stk = new StateSteak();
+
+
+	//delete later	
 }
 
 App::~App()
 {
+	delete state_stk;
 	delete window;
 }
 
 void App::Run()
 {
-	std::cout << "1asdasd" << std::endl;
 	while (window->isOpen()) {
 		ProcessInput(); 
 
@@ -63,29 +65,30 @@ void App::ProcessInput()
 	MousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 
 	while (window->pollEvent(event)) {
-		if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) window->close();
+		if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Delete) || isDead) window->close();
 
-		update();		
+		update(event,MousePos);		
+		//std::cout << MousePos.x << " " << MousePos.y << std::endl;
+		//std::cout << window->getSize().x << " " << window->getSize().y << std::endl;
 	}
 }
 
-void App::update()
+void App::update(Event& event, Vector2f& MousePos)
 {
-	button->update(event, MousePos);
-	shape.setPosition(MousePos);
-
+	state_stk->update(event,MousePos);
+	if (state_stk->isEmpty()) isDead=true;
 }
 
 void App::TakeTime(sf::Time dt)
 {
-	button->takeTime(dt);
 }
 
 void App::render()
 {
 	window->clear(Colors::white);
-	button->draw(*window, sf::RenderStates::Default);
-	window->draw(shape);
+
+	state_stk->draw(*window, sf::RenderStates::Default);
+
 	window->display();
 }
 

@@ -19,6 +19,12 @@
     <Filter Include="Tools">
       <UniqueIdentifier>{257b7d9f-bcff-4c3d-9347-f3252afb1b34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{551d91b2-4244-49a2-b150-cf2449fc4504}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{a83ddad7-d516-49f2-9cf2-c5c1c8c4df72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,6 +45,18 @@
     <ClCompile Include="source\StateSteak.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\States\State.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\States\MainMenu.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="source\States\GameState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Entity.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SceneNode.h">
@@ -55,6 +73,18 @@
     </ClInclude>
     <ClInclude Include="source\StateSteak.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\States\State.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\States\MainMenu.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="source\States\GameState.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Entiy\Entity.h">
+      <Filter>Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

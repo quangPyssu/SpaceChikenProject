@@ -6,24 +6,26 @@ namespace Constants {
     const int T = 3;
 
     const double pi = 3.14159265;
-    const double SCALE_X = (double)(sf::VideoMode::getDesktopMode().width)/(800) ;
-    const double SCALE_Y = (double)(sf::VideoMode::getDesktopMode().height)/(600) ;
+    const double SCALE_X = (double)(sf::VideoMode::getDesktopMode().width) / (800);
+    const double SCALE_Y = (double)(sf::VideoMode::getDesktopMode().height) / (600);
     const double SCALE = std::min(SCALE_X, SCALE_Y);
     const sf::Time TIME_PER_FRAME = sf::seconds(1.f / 60.f);
 
-    const int WINDOW_WIDTH = sf::VideoMode::getDesktopMode().width/3*2;
-    const int WINDOW_HEIGHT = sf::VideoMode::getDesktopMode().height/3*2;
-
     const float targetAspectRatio = 1920.0f / 1080.0f;
+
+    sf::Vector2f Constants::WINDOW_SIZE = sf::Vector2f(800.0f, 600.0f);
 
     const int font_size_small = 20;
     const int font_size_medium = 30;
-    const int font_size_large = 40; 
+    const int font_size_large = 40;
 
-    const int nothing=-999999999;
+    const int nothing = -999999999;
 
     const sf::Time TIME_PER_ANIME_FRAME = sf::seconds(0.6f);
-    const float FRAME_PER_FRAME=10;
+    const float FRAME_PER_FRAME = 10;
+
+    const sf::Vector2f ButtonTypeHead[3] = { sf::Vector2f(5,5), sf::Vector2f(125,112), sf::Vector2f(302,212) };
+    const sf::Vector2f ButtonTypeTail[3] = { sf::Vector2f(95,95), sf::Vector2f(263,190), sf::Vector2f(287,298) };
 };
 
 namespace Colors {
@@ -49,6 +51,29 @@ namespace Colors {
     sf::Color Default_Color = black;
 };
 
+namespace getScale
+{
+    sf::Vector2f getScaleMax(sf::Vector2f Oject, sf::Vector2f Target)
+    {
+        double res = std::max(Target.x / Oject.x, Target.y / Oject.y);
+        sf::Vector2f res2 = sf::Vector2f(res, res);
+        return res2;
+    }
+
+    sf::Vector2f getScaleMin(sf::Vector2f Oject, sf::Vector2f Target)
+    {
+        double res = std::min(Target.x / Oject.x, Target.y / Oject.y);
+        sf::Vector2f res2 = sf::Vector2f(res, res);
+        return res2;
+    }
+
+sf::Vector2f getScale(sf::Vector2f Oject, sf::Vector2f Target)
+	{
+        sf::Vector2f res = sf::Vector2f(Target.x / Oject.x, Target.y / Oject.y);
+		return res;
+	}
+}
+
 namespace ResourceManager
 {
     sf::Font& getFont(const std::string& ID)
@@ -62,7 +87,7 @@ namespace ResourceManager
             {
                 fonts.emplace(ID, font);
                 return fonts[ID];
-            }
+            } else throw std::runtime_error("Failed to load font: " + ID);
         }
     }
 
@@ -88,11 +113,18 @@ namespace ResourceManager
             {
                 textures.emplace(ID, texture);
                 return textures[ID];
-            }
+            } else throw std::runtime_error("Failed to load texture: " + ID);
+        }
+    }    
+
+    void unloadTexture(const std::string& ID)
+    {
+		auto it = textures.find(ID);
+
+        if (it != textures.end())
+        {
+            std::cout << " Unloading texture: " << ID << "\n";
+            textures.erase(it);
         }
     }
-
-
-
-    
 }

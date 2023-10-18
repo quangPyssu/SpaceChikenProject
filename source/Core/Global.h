@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include <unordered_map>
 
 #define ff first
 #define ss second
@@ -19,8 +20,7 @@ namespace Constants
     extern const double SCALE_Y;
     extern const double SCALE;
     extern const sf::Time TIME_PER_FRAME;
-    extern const int WINDOW_WIDTH;
-    extern const int WINDOW_HEIGHT;
+    extern sf::Vector2f WINDOW_SIZE;
 
     extern const float targetAspectRatio;
 
@@ -33,7 +33,8 @@ namespace Constants
     extern const sf::Time TIME_PER_ANIME_FRAME;
     extern const float FRAME_PER_FRAME;
 
-    enum states {IDLE, HOVER , PRESSED , ACTIVE};
+    extern const sf::Vector2f ButtonTypeHead[3];
+    extern const sf::Vector2f ButtonTypeTail[3];
 
     enum TextAlign {Left,Middle,Right};
 };
@@ -65,12 +66,20 @@ namespace Colors
     extern sf::Color Search_Color;
 };
 
+namespace getScale
+{
+    sf::Vector2f getScaleMax(sf::Vector2f Object, sf::Vector2f Target); //fill
+    sf::Vector2f getScaleMin(sf::Vector2f Object, sf::Vector2f Target); //fit
+    sf::Vector2f getScaleStretch(sf::Vector2f Object, sf::Vector2f Target); //Stretch
+}
+
 namespace ResourceManager
 {
-
-    static std::map<std::string, sf::Font> fonts;
-    static std::map<std::string, sf::Texture> textures;
+    static std::unordered_map<std::string, sf::Font> fonts;
+    static std::unordered_map<std::string, sf::Texture> textures;
 
     sf::Font& getFont(const std::string& ID);
     sf::Texture& getTexture(const std::string& ID);
+
+    void unloadTexture(const std::string& ID);
 }
