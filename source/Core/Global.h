@@ -23,6 +23,7 @@ namespace Constants
     extern sf::Vector2f WINDOW_SIZE;
 
     extern const float targetAspectRatio;
+    extern bool IsPaused;
 
     extern const float EDGE_THICKNESS;
     extern const sf::Vector2f BUTTON_SIZE;

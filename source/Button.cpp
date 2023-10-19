@@ -60,7 +60,7 @@ void Button::updateCurrent(Event& event, Vector2f& MousePos)
 	}
 }
 
-void Button::takeTimeCurrent(Time& dt)
+void Button::takeTimeCurrent()
 {
 }
 

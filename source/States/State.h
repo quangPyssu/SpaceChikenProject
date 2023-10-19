@@ -2,6 +2,7 @@
 
 #include "../SceneNode.h"
 #include "../Button.h"
+#include "../Animation/Animation.h"
 
 namespace States {
     enum ID {

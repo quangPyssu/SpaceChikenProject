@@ -18,7 +18,7 @@ public:
 
 	void update(Event& event, Vector2f& MousePos);
 	void draw(RenderTarget& target, RenderStates states) const;
-	void takeTime(Time& dt);
+	void takeTime();
 
 private:
 	std::vector<State::Ptr> Stack;

@@ -1,5 +1,6 @@
 #pragma once
 #include "../SceneNode.h"
+#include "../Animation/Animation.h"
 
 class Entity : public SceneNode
 {
@@ -11,8 +12,17 @@ public:
 
     void updateCurrent(sf::Event& event, sf::Vector2f& MousePos) override;
 
- 
-    void takeTimeCurrent(sf::Time& dt) override;
+    void takeTimeCurrent() override;
 
+    void setVelocity(sf::Vector2f velocity);
+
+    void setAcceleration(sf::Vector2f acceleration);
+
+protected:
+    Vector2f Velocity;
+    Vector2f Acceleration;
+
+    vector<Animation*> animations;
+    vector<Sprite*> sprites;
 };
 

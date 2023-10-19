@@ -30,7 +30,6 @@ App::App()
 
 	state_stk = new StateSteak();
 
-
 	//delete later	
 }
 
@@ -42,18 +41,19 @@ App::~App()
 
 void App::Run()
 {
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+
 	while (window->isOpen()) {
 		ProcessInput(); 
 
-		dt += clock.restart();
-
-		while (dt > TIME_PER_FRAME)
+		sf::Time elapsedTime = clock.restart();
+		timeSinceLastUpdate += elapsedTime;
+		while (timeSinceLastUpdate > TIME_PER_FRAME) 
 		{
-			dt -= TIME_PER_FRAME;
-			//update with frame
-
+			timeSinceLastUpdate -= TIME_PER_FRAME;
 			TakeTime(TIME_PER_FRAME);
 		}
+		TakeTime(TIME_PER_FRAME);
 
 		render();
 	}
@@ -65,6 +65,11 @@ void App::ProcessInput()
 	MousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 
 	while (window->pollEvent(event)) {
+		if (event.type == sf::Event::GainedFocus)
+			IsPaused = false;
+		else if (event.type == sf::Event::LostFocus)
+			IsPaused = true;
+
 		if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Delete) || isDead) window->close();
 
 		update(event,MousePos);		
@@ -81,6 +86,7 @@ void App::update(Event& event, Vector2f& MousePos)
 
 void App::TakeTime(sf::Time dt)
 {
+	state_stk->takeTime();
 }
 
 void App::render()

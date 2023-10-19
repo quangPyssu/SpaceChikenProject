@@ -57,6 +57,15 @@
     <ClCompile Include="source\Entiy\Entity.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="source\Animation\Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Player.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Animation\SpriteOnly.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SceneNode.h">
@@ -85,6 +94,15 @@
     </ClInclude>
     <ClInclude Include="source\Entiy\Entity.h">
       <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Animation\Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Entiy\Player.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Animation\SpriteOnly.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

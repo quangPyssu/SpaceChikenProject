@@ -10,7 +10,7 @@ public:
 
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
     void updateCurrent(Event& event, Vector2f& MousePos) override;
-    void takeTimeCurrent(Time& dt) override;
+    void takeTimeCurrent() override;
 
     bool isLeftClicked(Event& event, Vector2f& MousePos);
     bool isRightClicked(Event& event, Vector2f& MousePos);

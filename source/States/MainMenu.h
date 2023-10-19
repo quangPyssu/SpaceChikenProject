@@ -10,13 +10,19 @@ public:
 
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
     void updateCurrent(Event& event, Vector2f& MousePos) override;
-    void takeTimeCurrent(Time& dt) override;
+    void takeTimeCurrent() override;
 
 private:
-    sf::Texture texture;
+
     sf::Texture textureBack;
 
     sf::Sprite backgroundSprite;
+
+    Animation* animePlanetTop;
+    Animation* animeNeutronStar;
+
+
+
     Button* btn_Quit;
     Button* btn_NewGame;
     Button* btn_Load;

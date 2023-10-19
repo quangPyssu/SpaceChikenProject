@@ -1,6 +1,6 @@
 #include "StateSteak.h"
 
-StateSteak::StateSteak()
+StateSteak::StateSteak() 
 {
 	Stack.clear();
 	Dummy.CurrentState = States::Main;
@@ -69,7 +69,7 @@ void StateSteak::update(Event& event, Vector2f& MousePos)
 {
 	if (!Stack.empty() && (Stack.back()->isDead)) Stack.pop_back();
 
-	if (!Stack.empty()) CreateState(Stack.back()->CurrentState);
+	if (!Stack.empty())	CreateState(Stack.back()->CurrentState);
 
 	if (!Stack.empty())	Stack.back()->update(event, MousePos);
 }
@@ -80,9 +80,9 @@ void StateSteak::draw(RenderTarget& target, RenderStates states) const
 	Stack.back()->draw(target, states);
 }
 
-void StateSteak::takeTime(Time& dt)
+void StateSteak::takeTime()
 {
 	if (!Stack.empty())
-	Stack.back()->takeTime(dt);
+	Stack.back()->takeTime();
 }
 

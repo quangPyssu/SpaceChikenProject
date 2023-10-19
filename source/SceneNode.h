@@ -29,9 +29,9 @@ public:
 
     virtual void updateCurrent(Event& event, Vector2f& MousePos) {};
 
-    void takeTime(Time& dt);
+    void takeTime();
 
-    virtual void takeTimeCurrent(Time& dt) {};
+    virtual void takeTimeCurrent() {};
 
     void PushToObject(SceneNode* tmp, SceneNode* Father);
 
@@ -45,6 +45,5 @@ public:
     virtual void Disable();
     virtual void Able();
 
-    virtual void setPosition(SceneNode* other);
 };
 

@@ -41,11 +41,11 @@ void SceneNode::update(Event& event, Vector2f& MousePos)
     for (const auto& child : Children) child->update(event, MousePos);
 }
 
-void SceneNode::takeTime(Time& dt)
+void SceneNode::takeTime()
 {
     if (isDisable) return;
-    takeTimeCurrent(dt);
-    for (const auto& child : Children) child->takeTime(dt);
+    takeTimeCurrent();
+    for (const auto& child : Children) child->takeTime();
 }
 
 void SceneNode::Disable()
@@ -56,9 +56,4 @@ void SceneNode::Disable()
 void SceneNode::Able()
 {
     isDisable = false;
-}
-
-void SceneNode::setPosition(SceneNode* other)
-{
-	Transformable::setPosition(other->getPosition());
 }
