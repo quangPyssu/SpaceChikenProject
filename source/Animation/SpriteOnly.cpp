@@ -1,14 +1,30 @@
 #include "SpriteOnly.h"
 
-SpriteOnly::SpriteOnly(const std::string& i_texture_location)
+SpriteOnly::SpriteOnly(const std::string& i_texture_location) 
 {
 	texture = ResourceManager::getTexture(i_texture_location);
 	sprite.setTexture(texture);
+	isRootSet = true;
+}
+
+SpriteOnly::SpriteOnly(const std::string& i_texture_location, sf::Vector2f divation) : divation(divation)
+{
+	texture = ResourceManager::getTexture(i_texture_location);
+	sprite.setTexture(texture);
+	isRootSet = false;
 }
 
 void SpriteOnly::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(sprite);
+}
+
+void SpriteOnly::takeTimeCurrent()
+{
+	if (!isRootSet)
+	{
+		setPosition(this->Parent->getPosition()+divation);
+	}
 }
 
 void SpriteOnly::setRotation(float angle)

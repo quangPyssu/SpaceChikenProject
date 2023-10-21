@@ -48,9 +48,6 @@
     <ClCompile Include="source\States\State.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\States\MainMenu.cpp">
-      <Filter>States</Filter>
-    </ClCompile>
     <ClCompile Include="source\States\GameState.cpp">
       <Filter>States</Filter>
     </ClCompile>
@@ -65,6 +62,18 @@
     </ClCompile>
     <ClCompile Include="source\Animation\SpriteOnly.cpp">
       <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Bullet.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tools\BulletManager.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="source\States\MainMenu.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Enemy.cpp">
+      <Filter>Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +112,15 @@
     </ClInclude>
     <ClInclude Include="source\Animation\SpriteOnly.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Entiy\Bullet.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tools\BulletManager.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Entiy\Enemy.h">
+      <Filter>Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

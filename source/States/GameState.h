@@ -2,6 +2,7 @@
 
 #include "State.h"
 #include "../Entiy/Player.h"
+#include "../Tools/BulletManager.h"
 
 class GameState: public State
 {
@@ -23,5 +24,9 @@ private:
     // Player, Enimes, 
 
     Player* player;
+
+    BulletManager* PlayerBullets_Standard;
+    BulletManager* PlayerBullets_Detroyer;
+    BulletManager* EnimesBullets;    
 };
 

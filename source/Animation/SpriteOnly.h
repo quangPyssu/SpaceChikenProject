@@ -5,8 +5,10 @@ class SpriteOnly :  public SceneNode
 {
 	public:
 	SpriteOnly(const std::string& i_texture_location);
+	SpriteOnly(const std::string& i_texture_location,sf::Vector2f divation);
 
 	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
+	void takeTimeCurrent() override;
 
 	void setRotation(float angle);
 	void setScale(float x);
@@ -16,5 +18,8 @@ class SpriteOnly :  public SceneNode
 	private:
 		sf::Texture texture;
 		sf::Sprite sprite;
+		sf::Vector2f divation;
+
+		bool isRootSet = true;
 };
 

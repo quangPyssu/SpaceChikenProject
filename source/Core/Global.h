@@ -29,6 +29,9 @@ namespace Constants
     extern const sf::Vector2f BUTTON_SIZE;
     extern const sf::Vector2f TEXTBOX_SIZE;
 
+    extern sf::Vector2f dtMousePos;
+    extern sf::Vector2f lastMousePos;
+
     extern const int nothing;
 
     extern const sf::Time TIME_PER_ANIME_FRAME;
@@ -38,10 +41,12 @@ namespace Constants
     extern const sf::Vector2f ButtonTypeTail[3];
 
     enum TextAlign {Left,Middle,Right};
+
+    enum BulletType { Normal };
+    enum EnemyType { Enemy_Chicken_1, Fast, Tank, Boss };
 };
 
 namespace Var {
-    
 }
 
 namespace Colors

@@ -80,8 +80,16 @@ void App::ProcessInput()
 
 void App::update(Event& event, Vector2f& MousePos)
 {
+	updateMousePos();
 	state_stk->update(event,MousePos);
 	if (state_stk->isEmpty()) isDead=true;
+}
+
+void App::updateMousePos()
+{
+	Vector2f dtMP = MousePos - lastMousePos;
+	dtMousePos = dtMP;
+	lastMousePos = MousePos;
 }
 
 void App::TakeTime(sf::Time dt)

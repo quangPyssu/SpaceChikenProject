@@ -28,6 +28,9 @@ namespace Constants {
 
     const sf::Vector2f ButtonTypeHead[3] = { sf::Vector2f(5,5), sf::Vector2f(125,112), sf::Vector2f(302,212) };
     const sf::Vector2f ButtonTypeTail[3] = { sf::Vector2f(95,95), sf::Vector2f(263,190), sf::Vector2f(287,298) };
+
+    sf::Vector2f lastMousePos = sf::Vector2f(0, 0);
+    sf::Vector2f dtMousePos = sf::Vector2f(0, 0);
 };
 
 namespace Colors {

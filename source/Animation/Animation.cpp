@@ -1,25 +1,55 @@
 #include "Animation.h"
 
-Animation::Animation(unsigned short animationSpeed, unsigned short frameWidth, unsigned short floorCnt, double Scale, Vector2f Position, Vector2f Origin, const std::string& i_texture_location)
+Animation::Animation(unsigned short animationSpeed, unsigned short widthCnt, unsigned short floorCnt, double Scale, Vector2f Position, Vector2f Origin, const std::string& i_texture_location)
 {
+	texture = ResourceManager::getTexture(i_texture_location);
+
 	this->animationSpeed = animationSpeed;
-	this->frameWidth = frameWidth;
 	this->floorCnt = floorCnt;
-	if (!floorCnt) this->floorCnt = 1;
 
-	texture = ResourceManager::getTexture(i_texture_location);	
+	Width = texture.getSize().x/widthCnt;
+	Height = texture.getSize().y / floorCnt;
+	
+	if (!floorCnt) this->floorCnt = 1;	
 
-	totalFrames = (texture.getSize().x / frameWidth)*floorCnt;
+	totalFrames = widthCnt*floorCnt;
 	FramePerFloor = totalFrames / floorCnt;
-
-	floorHeight = texture.getSize().y / floorCnt;
 	
 	sprite.setTexture(texture);
 
 	sprite.setScale(Scale*SCALE, Scale*SCALE);
 	sprite.setPosition(Position);
 
-	sprite.setOrigin(Vector2f(Origin.x*frameWidth,Origin.y*floorHeight));
+	sprite.setOrigin(Vector2f(Origin.x*Width,Origin.y*Height));
+
+	isRootSet = true;
+}
+
+Animation::Animation(unsigned short animationSpeed, unsigned short widthCnt, unsigned short floorCnt, double Scale, Vector2f Position, Vector2f Origin, Vector2f divation, const std::string& i_texture_location)
+{
+	texture = ResourceManager::getTexture(i_texture_location);
+
+	this->animationSpeed = animationSpeed;
+	this->floorCnt = floorCnt;
+	Width = texture.getSize().x / widthCnt;
+	Height = texture.getSize().y / floorCnt;
+	
+	if (!floorCnt) this->floorCnt = 1;
+	
+
+	totalFrames = widthCnt*floorCnt;
+	FramePerFloor = totalFrames / floorCnt;
+	
+
+	sprite.setTexture(texture);
+
+	sprite.setScale(Scale*SCALE, Scale*SCALE);
+	sprite.setPosition(Position);
+
+	sprite.setOrigin(Vector2f(Origin.x*Width, Origin.y*Height));
+
+	this->divation = divation;
+	isRootSet = false;
 }
 
 void Animation::takeTimeCurrent() 
@@ -30,17 +60,25 @@ void Animation::takeTimeCurrent()
 	while (animationFrameID >= animationSpeed)
 	{
 		animationFrameID -= animationSpeed;
-		currentFrame++;
+		currentFrame+=pingPongDirection;
 
-		if (currentFrame == totalFrames)
+		if (isPingPong)
 		{
-			currentFrame = 0;
+			if (currentFrame == totalFrames) currentFrame--,pingPongDirection = -1;
+			else if (currentFrame == 0) pingPongDirection = 1;
 		}
+		else
+		if (currentFrame == totalFrames) currentFrame = 0;
 	}
 
 	currentFloor = currentFrame / FramePerFloor;
 
-	sprite.setTextureRect(sf::IntRect(currentFrame% FramePerFloor * frameWidth, floorHeight*currentFloor, frameWidth, floorHeight));
+	sprite.setTextureRect(sf::IntRect(currentFrame%FramePerFloor * Width, Height*currentFloor, Width, Height));
+
+	if (!isRootSet)
+	{
+		setPosition(this->Parent->getPosition() + divation);
+	}
 }
 
 void Animation::updateCurrent(Event& event, Vector2f& MousePos)
@@ -77,4 +115,14 @@ void Animation::reset()
 {
 	animationFrameID = 0;
 	currentFrame = 0;
+}
+
+void Animation::makePingPong()
+{
+	isPingPong = true;
+}
+
+void Animation::setDivation(Vector2f divation)
+{
+	this->divation = divation;
 }

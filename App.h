@@ -20,6 +20,7 @@ private:
 	void update(Event& event, Vector2f& MousePos);
 	void render();
 	void TakeTime(sf::Time dt);
+	void updateMousePos();
 
 	sf::Event event;
 	sf::View view;

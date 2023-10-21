@@ -2,9 +2,11 @@
 #include "../Animation/Animation.h"
 #include "../Animation/SpriteOnly.h"
 
+#include "Entity.h"
+
 #pragma once
 
-class Player : public SceneNode
+class Player : public Entity
 {
 	public:
 	Player();
@@ -14,15 +16,16 @@ class Player : public SceneNode
 	void updateCurrent(Event& event, Vector2f& MousePos) override;
 	void takeTimeCurrent() override;
 
-	private:
-		vector <Animation*> animations;
-		vector <Vector2f> animationPos;
+	void resetGun();
 
-		vector <SpriteOnly*> sprites;
-		vector <Vector2f> spritePos;
+	bool isFiring=false;
+
+	private:
 
 		Texture texturePlayer;
+		short unsigned int reloadSpeed = 1;
+		short unsigned int reloadFrameID = 0;
+		short unsigned int reloadFrameIDMax = 50;
 
-		RectangleShape hitbox;
 };
 
