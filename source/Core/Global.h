@@ -42,7 +42,7 @@ namespace Constants
 
     enum TextAlign {Left,Middle,Right};
 
-    enum BulletType { Normal };
+    enum BulletType { Player_Bullet_Normal,Enemy_Bullet_Normal };
     enum EnemyType { Enemy_Chicken_1, Fast, Tank, Boss };
 };
 

@@ -12,9 +12,15 @@ BulletManager::~BulletManager()
 
 void BulletManager::addBullet(BulletType type, sf::Vector2f position)
 {
-	unique_ptr <Bullet> tmp2 = std::make_unique<Bullet>(type,position);
+	Bullet* tmp = new Bullet(type,position);
 
-	BulletList.push_back(std::move(tmp2));
+	BulletList.push_back(tmp);
+	BulletList.back()->PushToObject(BulletList.back(),this);
+}
+
+void BulletManager::addTarget(Entity& target)
+{
+	TargetList.push_back(&target);
 }
 
 void BulletManager::updateCurrent(sf::Event& event, sf::Vector2f& MousePos)
@@ -24,14 +30,15 @@ void BulletManager::updateCurrent(sf::Event& event, sf::Vector2f& MousePos)
 
 void BulletManager::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	for (int i = 0; i < BulletList.size(); i++)
+	/*for (int i = 0; i < BulletList.size(); i++)
 	{
-		target.draw(*BulletList[i], states);
-	}
+		BulletList[i]->draw(target, states);
+	}*/
 }
 
 void BulletManager::deleteBullet(int& index)
 {
+	detachChild(*BulletList[index]);
 	BulletList.erase(BulletList.begin() + index);
 	index--;
 }
@@ -40,18 +47,25 @@ void BulletManager::takeTimeCurrent()
 {
 	for (int i = 0; i < BulletList.size(); i++)
 	{
-		BulletList[i]->takeTimeCurrent();
 		if (BulletList[i]->isDead)
 		{
 			deleteBullet(i);
 			continue;
 		}
 
+		//BulletList[i]->takeTimeCurrent();
+
 		for (int j=0;j < TargetList.size();j++)
 		{
 			if (BulletList[i]->CollitionDetection(*TargetList[j]))
 			{
-				TargetList[j]->takeDamage(BulletList[i]->Damage);
+				TargetList[j]->takeDamage(BulletList[i]->Damage);				
+
+				if (TargetList[j]->isDead)
+				{
+					TargetList.erase(TargetList.begin() + j);
+					j--;
+				}
 
 				if (BulletList[i]->Destructible)
 				{

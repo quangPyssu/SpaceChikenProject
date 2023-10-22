@@ -23,7 +23,6 @@ class Player : public Entity
 	private:
 
 		Texture texturePlayer;
-		short unsigned int reloadSpeed = 1;
 		short unsigned int reloadFrameID = 0;
 		short unsigned int reloadFrameIDMax = 50;
 

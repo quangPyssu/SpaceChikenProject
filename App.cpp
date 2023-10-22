@@ -4,6 +4,7 @@ App::App()
 {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 5.0;
+	srand(time(NULL));
 
 	window = new sf::RenderWindow(sf::VideoMode(800 * Constants::SCALE, 600 * Constants::SCALE), "Chieken", sf::Style::Fullscreen,settings);
 

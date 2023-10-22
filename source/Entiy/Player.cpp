@@ -17,10 +17,6 @@ Player::Player()
 		animations.push_back(new Animation(10, 10, 6, 1, { 0,0 }, { 0,0.5 }, Vector2f( 0, texturePlayer.getSize().y / 4 ), "FireJet.png"));
 		animations.back()->setRotation(90);
 		animations.back()->PushToObject(animations.back(), this);
-
-		animations.push_back(new Animation(2, 50, 1, 0.7, { 0,0 }, { 0.5,0.5 }, Vector2f(0, texturePlayer.getSize().y / 2), "ThanGa.png"));
-		animations.back()->makePingPong();
-		animations.back()->PushToObject(animations.back(), this); // than ga
 	}
 
 	{
@@ -28,6 +24,8 @@ Player::Player()
 		sprites.back()->PushToObject(sprites.back(), this);
 		sprites.back()->setOrigin({ 0.5, 0.5 });
 	}
+
+	HitPoints = 10;
 }
 
 Player::~Player()

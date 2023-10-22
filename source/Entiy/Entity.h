@@ -17,18 +17,21 @@ public:
 
     void ApplyPhysics();
 
+    bool isDead = false;
+
 protected:
     Vector2f Velocity = { 0,0 };
     Vector2f Acceleration = { 0,0 };
+    Vector2f D_Acceleration = { 0,0 };
+
 
     vector <Animation*> animations;
     vector <SpriteOnly*> sprites;
 
 protected:
 
-    int HitPoints = -1;
-    int Damage = -1;
-    bool isDead = false;
+    int HitPoints = 1;
+    int Damage = 0;    
 
     bool hasPhysics = false;
 
@@ -36,8 +39,9 @@ protected:
 
 protected:
    
+    void outScope(); //check if the entity is out of the screen 
+
     bool CollitionDetection(const Entity& other);
-    bool Destructible = false;    
 
     RectangleShape hitbox;
 

@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Core/Global.h"
+#include <cassert>
 
 
 using namespace sf;

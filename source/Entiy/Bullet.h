@@ -9,4 +9,5 @@ class Bullet : public Entity
 	void takeTimeCurrent() override;
 
 	BulletType type;
+	bool Destructible = false;
 };

@@ -7,13 +7,41 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 
 	switch (type)
 	{
-	case Constants::Normal:
-			hitbox.setFillColor(Color::Red);
+	case Constants::Player_Bullet_Normal:
+			hitbox.setFillColor(Colors::trans);
+			hitbox.setOutlineColor(Colors::red);
+			hitbox.setOutlineThickness(1);
 			hitbox.setSize({ 5,20 });
 			hitbox.setOrigin(hitbox.getSize().x / 2, hitbox.getSize().y / 2);
+
+			animations.push_back(new Animation(10, 11, 1, 0.5, { 0,0 }, { 0.5,0.5 }, Vector2f(0,0), "Bullet.png"));
+			animations.back()->setRotation(-90);
+			animations.back()->PushToObject(animations.back(), this);
+
+			Destructible = true;
+			Damage = 1;
+
 			Velocity = { 0, -100 };
-			Acceleration = {0,-30};
+			Acceleration = {0,-25};
 		break;
+
+	case Constants::Enemy_Bullet_Normal:
+		hitbox.setFillColor(Colors::purple);
+		hitbox.setSize({ 5,20 });
+		hitbox.setOrigin(hitbox.getSize().x / 2, hitbox.getSize().y / 2);
+
+		sprites.push_back(new SpriteOnly("egg.png", Vector2f(0, 0)));
+		sprites.back()->PushToObject(sprites.back(), this);
+		sprites.back()->setOrigin({ 0.5, 0.5 });
+		sprites.back()->setScale( 0.5);
+
+		Destructible = true;
+		Damage = 1;
+
+		Velocity = { 0, 100 };
+		Acceleration = { 0,0 };
+		break;
+
 	default:
 		break;
 	}
@@ -23,11 +51,6 @@ void Bullet::takeTimeCurrent()
 {
 	Entity::takeTimeCurrent();
 
-	//outscope
-	if (getPosition().x < 0 || getPosition().x > WINDOW_SIZE.x || getPosition().y < 0 || getPosition().y > WINDOW_SIZE.y)
-	{
-		isDead = true;
-	}
 }
 
 
