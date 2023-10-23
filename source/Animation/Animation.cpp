@@ -26,34 +26,27 @@ Animation::Animation(unsigned short animationSpeed, unsigned short widthCnt, uns
 }
 
 Animation::Animation(unsigned short animationSpeed, unsigned short widthCnt, unsigned short floorCnt, double Scale, Vector2f Position, Vector2f Origin, Vector2f divation, const std::string& i_texture_location)
+	: Animation(animationSpeed, widthCnt, floorCnt, Scale, Position, Origin, i_texture_location)
 {
-	texture = ResourceManager::getTexture(i_texture_location);
-
-	this->animationSpeed = animationSpeed;
-	this->floorCnt = floorCnt;
-	Width = texture.getSize().x / widthCnt;
-	Height = texture.getSize().y / floorCnt;
-	
-	if (!floorCnt) this->floorCnt = 1;
-	
-
-	totalFrames = widthCnt*floorCnt;
-	FramePerFloor = totalFrames / floorCnt;
-	
-
-	sprite.setTexture(texture);
-
-	sprite.setScale(Scale*SCALE, Scale*SCALE);
-	sprite.setPosition(Position);
-
-	sprite.setOrigin(Vector2f(Origin.x*Width, Origin.y*Height));
-
 	this->divation = divation;
 	isRootSet = false;
 }
 
+Animation::Animation(unsigned short animationSpeed, unsigned short widthCnt, unsigned short floorCnt, double Scale, Vector2f Position, Vector2f Origin, Vector2f divation, const std::string& i_texture_location, int TotalTime)
+	: Animation(animationSpeed, widthCnt, floorCnt, Scale, Position, Origin, divation, i_texture_location)
+{
+	this->totalTime = TotalTime;
+	hasLimitedTime = true;
+}
+
 void Animation::takeTimeCurrent() 
 {
+	if (hasLimitedTime)
+	{
+		totalTime = max(totalTime - 1, 0);
+		if (totalTime == 0) return;
+	}
+
 	animationFrameID++;
 	//cout << "Animation::updateCurrent " << animationFrameID << endl << " " << currentFrame << endl;
 
@@ -68,7 +61,7 @@ void Animation::takeTimeCurrent()
 			else if (currentFrame == 0) pingPongDirection = 1;
 		}
 		else
-		if (currentFrame == totalFrames) currentFrame = 0;
+		if (currentFrame == totalFrames) currentFrame = resetFrame;
 	}
 
 	currentFloor = currentFrame / FramePerFloor;
@@ -81,8 +74,9 @@ void Animation::takeTimeCurrent()
 	}
 }
 
-void Animation::updateCurrent(Event& event, Vector2f& MousePos)
+bool Animation::isAnimationFinished()
 {
+	return hasLimitedTime && totalTime<=0;
 }
 
 void Animation::setPosition(Vector2f pos)
@@ -125,4 +119,9 @@ void Animation::makePingPong()
 void Animation::setDivation(Vector2f divation)
 {
 	this->divation = divation;
+}
+
+void Animation::setResetFrame(int resetFrame)
+{
+	this->resetFrame = resetFrame;
 }

@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <unordered_map>
 
@@ -9,6 +10,7 @@
 #define ss second
 
 #define null NULL
+
 
 namespace Constants
 {
@@ -42,8 +44,8 @@ namespace Constants
 
     enum TextAlign {Left,Middle,Right};
 
-    enum BulletType { Player_Bullet_Normal,Enemy_Bullet_Normal };
-    enum EnemyType { Enemy_Chicken_1, Fast, Tank, Boss };
+    enum BulletType { Player_Bullet_Normal,Enemy_Bullet_Normal,Player_Bullet_Destroyer };
+    
 };
 
 namespace Var {
@@ -83,9 +85,12 @@ namespace ResourceManager
 {
     static std::unordered_map<std::string, sf::Font> fonts;
     static std::unordered_map<std::string, sf::Texture> textures;
+    static std::unordered_map<std::string, sf::SoundBuffer> soundBuffers;
 
     sf::Font& getFont(const std::string& ID);
     sf::Texture& getTexture(const std::string& ID);
+
+    void MakeSound(const std::string& ID, bool loop = false, float volume = 100);
 
     void unloadTexture(const std::string& ID);
 }

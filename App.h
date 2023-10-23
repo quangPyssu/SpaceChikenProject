@@ -1,5 +1,6 @@
 #include "source/Core/Global.h"
 #include "source/StateSteak.h"
+#include "thread"
 
 
 #pragma once
@@ -9,9 +10,7 @@ class App
 	App();
 	~App();
 
-	sf::RenderWindow* window;
-
-	
+	sf::RenderWindow* window;	
 
 	void Run();
 
@@ -21,6 +20,8 @@ private:
 	void render();
 	void TakeTime(sf::Time dt);
 	void updateMousePos();
+
+	void GameLogicThread();
 
 	sf::Event event;
 	sf::View view;

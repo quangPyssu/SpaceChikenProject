@@ -1,6 +1,8 @@
 #pragma once
 #include "Entity.h"
 
+enum EnemyType { Enemy_Chicken_1, Fast, Tank, Boss };
+
 class Enemy : public Entity
 {
 	public:

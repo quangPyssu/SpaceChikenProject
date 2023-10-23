@@ -17,6 +17,7 @@ private:
     sf::Texture textureBack;
 
     sf::Sprite backgroundSprite;
+    sf::Sprite CursorSprite;
 
     Animation* animePlanetTop;
     Animation* animeNeutronStar;

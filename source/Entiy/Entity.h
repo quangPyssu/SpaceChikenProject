@@ -3,8 +3,11 @@
 #include "../Animation/Animation.h"
 #include "../Animation/SpriteOnly.h"
 
+enum EntityState { Alive = 0, Dying = 1, Dead = 2 };
+
 class Entity : public SceneNode
-{
+{   
+
 public:
 
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -17,7 +20,7 @@ public:
 
     void ApplyPhysics();
 
-    bool isDead = false;
+    EntityState CurrentEnityState = EntityState::Alive;
 
 protected:
     Vector2f Velocity = { 0,0 };
@@ -27,6 +30,8 @@ protected:
 
     vector <Animation*> animations;
     vector <SpriteOnly*> sprites;
+
+    vector <Animation*> death_animation;
 
 protected:
 

@@ -16,6 +16,9 @@ MainMenu::MainMenu()
 	animeNeutronStar = new Animation(20, 80, 1, 1, WINDOW_SIZE + Vector2f(-NeutronStarSize.x / 60 * SCALE,-WINDOW_SIZE.y+NeutronStarSize.y * 0.5 * SCALE),{0,0}, "NeutronStar.png");
 	animeNeutronStar->PushToObject(animeNeutronStar, this);	
 
+
+	//CursorSprite.setTexture();
+
 	btn_Quit = new Button(sf::Vector2f(200, 600), sf::Vector2f(200, 100), "Quit"); 
 	btn_Quit->PushToObject(btn_Quit,this);
 
@@ -30,11 +33,12 @@ MainMenu::~MainMenu()
 void MainMenu::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(backgroundSprite);
+	//target.draw(CursorSprite);
 }	
 
 void MainMenu::updateCurrent(Event& event, Vector2f& MousePos)
 {
-	if (btn_Quit->isLeftClicked(event,MousePos)) isDead = true; else
+	if (btn_Quit->isLeftClicked(event,MousePos)) CurrentState = States::KillMe; else
 		if (btn_NewGame->isLeftClicked(event, MousePos))
 		{
 			CurrentState = States::NewGame;

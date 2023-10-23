@@ -19,16 +19,15 @@ Enemy::Enemy(EnemyType type, Vector2f StartPosition)
 
 		animations.push_back(new Animation(2, 50, 1, 0.7, { 0,0 }, { 0.5,0.5 }, Vector2f(0, 0), "ThanGa.png"));
 		animations.back()->makePingPong();
-		animations.back()->PushToObject(animations.back(), this);
+		animations.back()->PushToObject(animations.back(), this);		
 
-		texture = ResourceManager::getTexture("Cursor2.png");
-
-		HitPoints = 1;
+		HitPoints = 3;
 
 		ApplyPhysics();
 		Velocity = { 50,(float) 0+rand()%20+10 };
 		Acceleration = { 0,0 };
 
+		reloadFrameID = rand() % 150;
 		reloadFrameIDMax = 150;
 		break;
 	default:

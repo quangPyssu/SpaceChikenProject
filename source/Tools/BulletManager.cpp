@@ -47,25 +47,23 @@ void BulletManager::takeTimeCurrent()
 {
 	for (int i = 0; i < BulletList.size(); i++)
 	{
-		if (BulletList[i]->isDead)
+		if (BulletList[i]->CurrentEnityState == EntityState::Dead)
 		{
 			deleteBullet(i);
 			continue;
 		}
 
-		//BulletList[i]->takeTimeCurrent();
-
 		for (int j=0;j < TargetList.size();j++)
 		{
+			if (TargetList[j]->CurrentEnityState == EntityState::Dead)
+			{
+				TargetList.erase(TargetList.begin() + j);
+				j--;
+			}
+			else
 			if (BulletList[i]->CollitionDetection(*TargetList[j]))
 			{
 				TargetList[j]->takeDamage(BulletList[i]->Damage);				
-
-				if (TargetList[j]->isDead)
-				{
-					TargetList.erase(TargetList.begin() + j);
-					j--;
-				}
 
 				if (BulletList[i]->Destructible)
 				{

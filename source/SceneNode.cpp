@@ -14,7 +14,7 @@ void SceneNode::PushToObject(SceneNode* tmp, SceneNode* Father)
 
 SceneNode::Ptr SceneNode::detachChild(const SceneNode& node)
 {
-    auto found = find_if(Children.begin(), Children.end(), [&](Ptr& p) -> bool { return p.get() == &node; });
+    auto found = std::find_if(Children.begin(), Children.end(),[&](Ptr& p) -> bool { return p.get() == &node; });
     assert(found != Children.end());
     Ptr result = std::move(*found);
     result->Parent = nullptr;

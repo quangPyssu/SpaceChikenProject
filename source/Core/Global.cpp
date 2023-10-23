@@ -72,7 +72,7 @@ namespace getScale
         return res2;
     }
 
-sf::Vector2f getScale(sf::Vector2f Oject, sf::Vector2f Target)
+sf::Vector2f getScaleStretch(sf::Vector2f Oject, sf::Vector2f Target)
 	{
         sf::Vector2f res = sf::Vector2f(Target.x / Oject.x, Target.y / Oject.y);
 		return res;
@@ -121,6 +121,34 @@ namespace ResourceManager
             } else throw std::runtime_error("Failed to load texture: " + ID);
         }
     }    
+    
+
+    void MakeSound(const std::string& ID, bool loop, float volume) {
+        auto it = soundBuffers.find(ID);
+
+        if (it != soundBuffers.end()) {
+            sf::Sound sound;
+            sound.setBuffer(it->second);
+            sound.setLoop(loop);
+            sound.setVolume(volume);
+            sound.play();
+           // std::cout << "Playing sound: " << volume << "\n";
+        }
+        else {
+            sf::SoundBuffer buffer;
+            if (buffer.loadFromFile("Assets/Sounds/" + ID )) {
+                soundBuffers.emplace(ID, buffer);
+                sf::Sound sound;
+                sound.setBuffer(buffer);
+                sound.setLoop(loop);
+                sound.setVolume(volume);
+                sound.play();
+            }
+            else {
+                throw std::runtime_error("Failed to load sound effect: " + ID);
+            }
+        }
+    }
 
     void unloadTexture(const std::string& ID)
     {

@@ -5,10 +5,13 @@
 #include "States/State.h"
 #include "States/MainMenu.h"
 #include "States/GameState.h"
+#include "States/GameOverScreen.h"
+#include "States/PauseMenu.h"
 
 class StateSteak : private sf::NonCopyable { // StateSteak to Store all states of the screen
 public: 
 	StateSteak();
+	~StateSteak();
 
 	void pushState(States::ID stateID);
 	void popState();

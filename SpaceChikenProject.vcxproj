@@ -151,8 +151,10 @@
     <ClCompile Include="source\Entiy\Player.cpp" />
     <ClCompile Include="source\SceneNode.cpp" />
     <ClCompile Include="source\StateSteak.cpp" />
+    <ClCompile Include="source\States\GameOverScreen.cpp" />
     <ClCompile Include="source\States\GameState.cpp" />
     <ClCompile Include="source\States\MainMenu.cpp" />
+    <ClCompile Include="source\States\PauseMenu.cpp" />
     <ClCompile Include="source\States\State.cpp" />
     <ClCompile Include="source\Tools\BulletManager.cpp" />
   </ItemGroup>
@@ -168,8 +170,10 @@
     <ClInclude Include="source\Entiy\Player.h" />
     <ClInclude Include="source\SceneNode.h" />
     <ClInclude Include="source\StateSteak.h" />
+    <ClInclude Include="source\States\GameOverScreen.h" />
     <ClInclude Include="source\States\GameState.h" />
     <ClInclude Include="source\States\MainMenu.h" />
+    <ClInclude Include="source\States\PauseMenu.h" />
     <ClInclude Include="source\States\State.h" />
     <ClInclude Include="source\Tools\BulletManager.h" />
   </ItemGroup>

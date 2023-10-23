@@ -15,6 +15,7 @@ namespace States {
 		Pause,
 		GameOver,
 		Difficulty,
+		KillMe
     };
 };
 
@@ -23,11 +24,7 @@ public:
     typedef std::unique_ptr<State> Ptr;
 
 	Ptr makeUnique(State* state);
-
-	bool isDead=false;
 	States::ID CurrentState=States::None;
 
-	//void updateCurrent(Event& event, Vector2f& MousePos);
-	//void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
-	//void takeTimeCurrent(Time& dt);	
+	State* parentState=nullptr;
 };

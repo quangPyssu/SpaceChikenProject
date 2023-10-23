@@ -7,12 +7,38 @@ void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) cons
 
 void Entity::takeTimeCurrent()
 {
-	Acceleration += sf::Vector2f(D_Acceleration.x * TIME_PER_FRAME.asSeconds(), D_Acceleration.y * TIME_PER_FRAME.asSeconds());
-	Velocity += sf::Vector2f(Acceleration.x * TIME_PER_FRAME.asSeconds(), Acceleration.y * TIME_PER_FRAME.asSeconds());
-	setPosition(getPosition() + sf::Vector2f(Velocity.x * TIME_PER_FRAME.asSeconds(), Velocity.y * TIME_PER_FRAME.asSeconds()));
-	hitbox.setPosition(getPosition());
+	switch (CurrentEnityState)
+	{
+		case EntityState::Alive:
 
-	outScope();
+			Acceleration += sf::Vector2f(D_Acceleration.x * TIME_PER_FRAME.asSeconds(), D_Acceleration.y * TIME_PER_FRAME.asSeconds());
+			Velocity += sf::Vector2f(Acceleration.x * TIME_PER_FRAME.asSeconds(), Acceleration.y * TIME_PER_FRAME.asSeconds());
+			setPosition(getPosition() + sf::Vector2f(Velocity.x * TIME_PER_FRAME.asSeconds(), Velocity.y * TIME_PER_FRAME.asSeconds()));
+			hitbox.setPosition(getPosition());
+
+			outScope();
+			break;
+		
+		case EntityState::Dying:
+			for (int i = 0; i < death_animation.size(); i++)
+				if (death_animation[i]->isAnimationFinished())
+				{
+					detachChild(*death_animation[i]);
+					death_animation.erase(death_animation.begin() + i);
+					i--;
+				}
+
+			if (death_animation.empty()) CurrentEnityState = EntityState::Dead;
+
+			break;
+
+		case EntityState::Dead:
+
+			break;
+	}
+	
+
+	
 }
 
 void Entity::setVelocity(sf::Vector2f velocity)
@@ -22,10 +48,13 @@ void Entity::setVelocity(sf::Vector2f velocity)
 
 void Entity::takeDamage(int damage)
 {
-	HitPoints -= damage;
-	if (HitPoints <= 0)
+	if (CurrentEnityState == EntityState::Alive)
 	{
-		isDead = true;
+		HitPoints -= damage;
+		if (HitPoints <= 0)
+		{
+			CurrentEnityState = EntityState::Dying;
+		}
 	}
 }
 
@@ -52,5 +81,5 @@ void Entity::outScope()
 			if (getPosition().x < 0 || getPosition().x > WINDOW_SIZE.x) setVelocity({ -Velocity.x,Velocity.y });
 			if (getPosition().y < 0 || getPosition().y > WINDOW_SIZE.y) setVelocity({ Velocity.x,-Velocity.y });
 		}
-		else isDead = true;
+		else CurrentEnityState = EntityState::Dead;
 }

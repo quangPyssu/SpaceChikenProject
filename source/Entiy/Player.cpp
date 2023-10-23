@@ -25,7 +25,7 @@ Player::Player()
 		sprites.back()->setOrigin({ 0.5, 0.5 });
 	}
 
-	HitPoints = 10;
+	HitPoints = 2;
 }
 
 Player::~Player()
@@ -57,6 +57,7 @@ void Player::takeTimeCurrent()
 		{
 			reloadFrameID = 0;
 			isFiring = true;
+			ResourceManager::MakeSound("(laser).ogg");
 		}
 		else
 		{

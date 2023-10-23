@@ -15,6 +15,8 @@ private:
 	//We can find this by dividing the width of the image by the frame width.
 	unsigned short totalFrames;
 
+	unsigned short totalTime = 0;
+
 	sf::Sprite sprite;
 
 	sf::Texture texture;
@@ -23,18 +25,24 @@ private:
 
 	bool isRootSet = true;
 	bool isPingPong = false;
+	bool hasLimitedTime = false;
+
 	int pingPongDirection = 1;
+	int resetFrame = 0;
+
+
 public:
 	Animation(unsigned short animationSpeed, unsigned short widthCnt, unsigned short floorCnt,double Scale,Vector2f Position, Vector2f Origin, const std::string& i_texture_location);
-	Animation(unsigned short animationSpeed, unsigned short widthCnt, unsigned short floorCnt, double Scale, Vector2f Position, Vector2f Origin,Vector2f divation, const std::string& i_texture_location);
-	
+	Animation(unsigned short animationSpeed, unsigned short widthCnt, unsigned short floorCnt, double Scale, Vector2f Position, Vector2f Origin, Vector2f divation, const std::string& i_texture_location);
+	Animation(unsigned short animationSpeed, unsigned short widthCnt, unsigned short floorCnt, double Scale, Vector2f Position, Vector2f Origin, Vector2f divation, const std::string& i_texture_location, int TotalTime);
+
+	bool isAnimationFinished();
 
 	unsigned short floorCnt,currentFloor,FramePerFloor;
 	unsigned short widthCnt;
 
 	void takeTimeCurrent() override;
 	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
-	void updateCurrent(Event& event, Vector2f& MousePos) override;
 
 	void setPosition(Vector2f pos) ;
 	void setOrigin(Vector2f origin) ;
@@ -42,6 +50,7 @@ public:
 	void setRotation(float rotation) ;
 	void setDivation(Vector2f divation) ;
 
+	void setResetFrame(int resetFrame);
 	void makePingPong();
 
 	void reset();

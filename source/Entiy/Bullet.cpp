@@ -21,7 +21,7 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 			Destructible = true;
 			Damage = 1;
 
-			Velocity = { 0, -100 };
+			Velocity = { 0, -400 };
 			Acceleration = {0,-25};
 		break;
 

@@ -1,7 +1,9 @@
 #include "GameState.h"
 
-GameState::GameState() 
+GameState::GameState(State& parentState)
 {
+	this->parentState = &parentState;
+
 	ResourceManager::unloadTexture("TerraTop.png");
 	ResourceManager::unloadTexture("NeutronStar.png");
 	textureBack = ResourceManager::getTexture("Blue_Blank_Background.png");
@@ -45,37 +47,47 @@ void GameState::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) c
 
 void GameState::updateCurrent(Event& event, Vector2f& MousePos)
 {
-	if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) isDead = true;	
+	if (wasPaused)
+	{
+		wasPaused = false;
+		cout << "wasPaused" << endl;
+	}
+
+	if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) CurrentState=States::Pause,wasPaused=true;	
+	
 }
 
 void GameState::takeTimeCurrent()
 {
-	if (player->isDead) // Game Over
+	//cout << player->CurrentEnityState << endl;
+	if (player->CurrentEnityState == EntityState::Dead) // Game Over
 	{
-		isDead = true;
+		CurrentState = States::GameOver;
 		return;
 	}
 	
 	if (player->isFiring)	// Player Fire
 	{
-		//cout << "Player Fire" << endl;
+		cout << "Player Fire" << endl;
 		PlayerBullets_Standard->addBullet(Player_Bullet_Normal, player->getPosition()-Vector2f(0,30));
 		player->resetGun();
 	} 
 
-	for (int i = 0; i < enemy.size(); i++) // Enemy Fire	
+	for (auto it = enemy.begin(); it != enemy.end(); ) // Enemy Fire	
 	{
-		if (enemy[i]->isDead)
+		if ((*it)->CurrentEnityState == EntityState::Dead)
 		{
-			this->detachChild(*enemy[i]);
-			enemy.erase(enemy.begin() + i);
-			i--;continue;
+			this->detachChild(**it);
+			it=enemy.erase(it); 
 		}
-
-		if (enemy[i]->isFiring)
+		else
 		{
-			EnimesBullets->addBullet(Enemy_Bullet_Normal, enemy[i]->getPosition());
-			enemy[i]->resetGun();
+			if ((*it)->CurrentEnityState == EntityState::Alive && (*it)->isFiring)
+			{
+				EnimesBullets->addBullet(Enemy_Bullet_Normal, (*it)->getPosition());
+				(*it)->resetGun();
+			}
+			it++;
 		}
 	}
 

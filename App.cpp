@@ -43,12 +43,14 @@ App::~App()
 void App::Run()
 {
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+	std::thread logicThread(&App::GameLogicThread, this);
 
 	while (window->isOpen()) {
 		ProcessInput(); 
 
 		sf::Time elapsedTime = clock.restart();
 		timeSinceLastUpdate += elapsedTime;
+
 		while (timeSinceLastUpdate > TIME_PER_FRAME) 
 		{
 			timeSinceLastUpdate -= TIME_PER_FRAME;
@@ -58,6 +60,25 @@ void App::Run()
 
 		render();
 	}
+
+	logicThread.join();
+}
+
+void App::GameLogicThread() {
+	/*sf::Time timeSinceLastUpdate = sf::Time::Zero;
+
+	while (window->isOpen()) 
+	{
+		sf::Time elapsedTime = clock.restart();
+		timeSinceLastUpdate += elapsedTime;
+
+		while (timeSinceLastUpdate > TIME_PER_FRAME)
+		{
+			timeSinceLastUpdate -= TIME_PER_FRAME;
+			TakeTime(TIME_PER_FRAME);
+		}
+		TakeTime(TIME_PER_FRAME);
+	}*/
 }
 
 void App::ProcessInput()
@@ -75,7 +96,6 @@ void App::ProcessInput()
 
 		update(event,MousePos);		
 		//std::cout << MousePos.x << " " << MousePos.y << std::endl;
-		//std::cout << window->getSize().x << " " << window->getSize().y << std::endl;
 	}
 }
 

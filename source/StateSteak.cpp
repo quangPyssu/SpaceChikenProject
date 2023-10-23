@@ -20,7 +20,19 @@ void StateSteak::CreateState(States::ID &stateID)
 		break;
 
 	case States::NewGame:
-		Stack.push_back(Dummy.makeUnique(new GameState()));
+		Stack.push_back(Dummy.makeUnique(new GameState(*Stack.back())));
+		break;
+
+	case States::GameOver:
+		Stack.push_back(Dummy.makeUnique(new GameOverScreen(*Stack.back())));
+		break;
+
+	case States::KillMe:
+		while (Stack.size() > 0 && Stack.back()->CurrentState==States::KillMe) Stack.pop_back();
+		break;
+
+	case States::Pause:
+		Stack.push_back(Dummy.makeUnique(new PauseMenu(*Stack.back())));
 		break;
 
 	/*case States::HighScore:
@@ -30,12 +42,6 @@ void StateSteak::CreateState(States::ID &stateID)
 		return new Load;
 		break;
 	
-	case States::Pause:
-		return new Pause;
-		break;
-	case States::GameOver:
-		return new GameOver;
-		break;
 	default:
 		return nullptr;
 		break;*/
@@ -67,10 +73,6 @@ bool StateSteak::isEmpty() const
 
 void StateSteak::update(Event& event, Vector2f& MousePos)
 {
-	if (!Stack.empty() && (Stack.back()->isDead)) Stack.pop_back();
-
-	if (!Stack.empty())	CreateState(Stack.back()->CurrentState);
-
 	if (!Stack.empty())	Stack.back()->update(event, MousePos);
 }
 
@@ -82,7 +84,13 @@ void StateSteak::draw(RenderTarget& target, RenderStates states) const
 
 void StateSteak::takeTime()
 {
-	if (!Stack.empty())
-	Stack.back()->takeTime();
+	if (!Stack.empty())	CreateState(Stack.back()->CurrentState);
+	if (!Stack.empty()) Stack.back()->takeTime();
+
+	//cout << Stack.size() << endl;
 }
 
+StateSteak::~StateSteak()
+{
+	clearStates();
+}
