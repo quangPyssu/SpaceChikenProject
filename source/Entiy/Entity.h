@@ -9,6 +9,7 @@ class Entity : public SceneNode
 {   
 
 public:
+    ~Entity();
 
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -22,16 +23,21 @@ public:
 
     EntityState CurrentEnityState = EntityState::Alive;
 
+    //int HitPoints = 1;
+
 protected:
     Vector2f Velocity = { 0,0 };
     Vector2f Acceleration = { 0,0 };
     Vector2f D_Acceleration = { 0,0 };
+    virtual void addDeathAnimation();
 
 
     vector <Animation*> animations;
     vector <SpriteOnly*> sprites;
+    vector <Sound*> sounds;
 
-    vector <Animation*> death_animation;
+    void CleanDeadAssets();
+
 
 protected:
 
@@ -41,6 +47,7 @@ protected:
     bool hasPhysics = false;
 
     void takeDamage(int damage);
+    void playSound(string soundName);
 
 protected:
    

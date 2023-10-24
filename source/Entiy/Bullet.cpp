@@ -18,6 +18,8 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 			animations.back()->setRotation(-90);
 			animations.back()->PushToObject(animations.back(), this);
 
+			playSound("(laser).ogg");
+
 			Destructible = true;
 			Damage = 1;
 

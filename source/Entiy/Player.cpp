@@ -25,11 +25,7 @@ Player::Player()
 		sprites.back()->setOrigin({ 0.5, 0.5 });
 	}
 
-	HitPoints = 2;
-}
-
-Player::~Player()
-{
+	HitPoints = 10;
 }
 
 void Player::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
@@ -57,7 +53,7 @@ void Player::takeTimeCurrent()
 		{
 			reloadFrameID = 0;
 			isFiring = true;
-			ResourceManager::MakeSound("(laser).ogg");
+			//ResourceManager::MakeSound("(laser).ogg");
 		}
 		else
 		{
@@ -72,3 +68,11 @@ void Player::resetGun()
 	isFiring = false;
 }
 
+void Player::addDeathAnimation()
+{
+	Entity::addDeathAnimation();
+	animations.push_back(new Animation(6, 18, 1, 0.5, { 0,0 }, { 0.5,0.5 }, Vector2f(0, 0), "Battlecruiser_Destruction.png", 95));
+	PushToObject(animations.back(), this);
+
+	playSound("PlayerExplode.ogg");
+}

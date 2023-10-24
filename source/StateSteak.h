@@ -10,7 +10,7 @@
 
 class StateSteak : private sf::NonCopyable { // StateSteak to Store all states of the screen
 public: 
-	StateSteak();
+	StateSteak(RenderWindow& window);
 	~StateSteak();
 
 	void pushState(States::ID stateID);
@@ -28,4 +28,5 @@ private:
 	State Dummy;
 
 	void CreateState(States::ID &stateID);
+	RenderWindow* window;
 };

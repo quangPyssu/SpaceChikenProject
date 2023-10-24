@@ -157,6 +157,7 @@
     <ClCompile Include="source\States\PauseMenu.cpp" />
     <ClCompile Include="source\States\State.cpp" />
     <ClCompile Include="source\Tools\BulletManager.cpp" />
+    <ClCompile Include="source\Tools\ProgressBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="source\States\PauseMenu.h" />
     <ClInclude Include="source\States\State.h" />
     <ClInclude Include="source\Tools\BulletManager.h" />
+    <ClInclude Include="source\Tools\ProgressBar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

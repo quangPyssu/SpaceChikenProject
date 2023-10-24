@@ -23,6 +23,12 @@ void BulletManager::addTarget(Entity& target)
 	TargetList.push_back(&target);
 }
 
+void BulletManager::removeTarget(Entity& target)
+{
+	// Search for the target in the list of targets and remove it
+	TargetList.erase(std::remove(TargetList.begin(), TargetList.end(), &target), TargetList.end());
+}
+
 void BulletManager::updateCurrent(sf::Event& event, sf::Vector2f& MousePos)
 {
 
@@ -54,13 +60,6 @@ void BulletManager::takeTimeCurrent()
 		}
 
 		for (int j=0;j < TargetList.size();j++)
-		{
-			if (TargetList[j]->CurrentEnityState == EntityState::Dead)
-			{
-				TargetList.erase(TargetList.begin() + j);
-				j--;
-			}
-			else
 			if (BulletList[i]->CollitionDetection(*TargetList[j]))
 			{
 				TargetList[j]->takeDamage(BulletList[i]->Damage);				
@@ -70,8 +69,7 @@ void BulletManager::takeTimeCurrent()
 					deleteBullet(i);
 					break;
 				}
-			}
-		}
+			}		
 	}
 
 

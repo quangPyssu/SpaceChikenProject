@@ -4,12 +4,13 @@
 #include "../Entiy/Player.h"
 #include "../Entiy/Enemy.h"
 #include "../Tools/BulletManager.h"
+#include "../Tools/ProgressBar.h"
 #include "GameOverScreen.h"
 
 class GameState: public State
 {
 public:
-    GameState(State& parentState);
+    GameState(State& parentState,RenderWindow& window);
     ~GameState();
 
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -30,7 +31,10 @@ private:
 
     BulletManager* PlayerBullets_Standard;
     BulletManager* PlayerBullets_Detroyer;
-    BulletManager* EnimesBullets;    
+    BulletManager* EnimesBullets;   
+
+    // UI
+    ProgressBar* PBplayerHealth;
 
 
     bool wasPaused = false;

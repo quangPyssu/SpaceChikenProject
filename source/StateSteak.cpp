@@ -1,8 +1,9 @@
 #include "StateSteak.h"
 
-StateSteak::StateSteak() 
+StateSteak::StateSteak(RenderWindow& window) : window(&window)
 {
 	Stack.clear();
+	Dummy.parentState = nullptr;
 	Dummy.CurrentState = States::Main;
 	CreateState(Dummy.CurrentState);	
 }
@@ -20,7 +21,7 @@ void StateSteak::CreateState(States::ID &stateID)
 		break;
 
 	case States::NewGame:
-		Stack.push_back(Dummy.makeUnique(new GameState(*Stack.back())));
+		Stack.push_back(Dummy.makeUnique(new GameState(*Stack.back(),*window)));
 		break;
 
 	case States::GameOver:

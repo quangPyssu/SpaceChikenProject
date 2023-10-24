@@ -29,7 +29,7 @@ App::App()
 
 	Constants::WINDOW_SIZE = sf::Vector2f(window->getSize().x,window->getSize().y);
 
-	state_stk = new StateSteak();
+	state_stk = new StateSteak(*window);
 
 	//delete later	
 }

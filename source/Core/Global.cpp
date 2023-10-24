@@ -5,6 +5,8 @@ namespace Constants {
 
     const int T = 3;
 
+    int PlayerMaxHP = 10;
+
     const double pi = 3.14159265;
     const double SCALE_X = (double)(sf::VideoMode::getDesktopMode().width) / (800);
     const double SCALE_Y = (double)(sf::VideoMode::getDesktopMode().height) / (600);
@@ -121,32 +123,30 @@ namespace ResourceManager
             } else throw std::runtime_error("Failed to load texture: " + ID);
         }
     }    
-    
 
-    void MakeSound(const std::string& ID, bool loop, float volume) {
+    sf::SoundBuffer& getSoundBuffer(const std::string& ID)
+    {
+		auto it = soundBuffers.find(ID);
+
+        if (it != soundBuffers.end()) return it->second; else
+        {
+			sf::SoundBuffer buffer;
+            if (buffer.loadFromFile("Assets/Sounds/" + ID))
+            {
+				soundBuffers.emplace(ID, buffer);
+				return soundBuffers[ID];
+			} else throw std::runtime_error("Failed to load sound effect: " + ID);
+		}
+	}
+
+    void unloadSoundBuffer(const std::string& ID)
+    {
         auto it = soundBuffers.find(ID);
 
-        if (it != soundBuffers.end()) {
-            sf::Sound sound;
-            sound.setBuffer(it->second);
-            sound.setLoop(loop);
-            sound.setVolume(volume);
-            sound.play();
-           // std::cout << "Playing sound: " << volume << "\n";
-        }
-        else {
-            sf::SoundBuffer buffer;
-            if (buffer.loadFromFile("Assets/Sounds/" + ID )) {
-                soundBuffers.emplace(ID, buffer);
-                sf::Sound sound;
-                sound.setBuffer(buffer);
-                sound.setLoop(loop);
-                sound.setVolume(volume);
-                sound.play();
-            }
-            else {
-                throw std::runtime_error("Failed to load sound effect: " + ID);
-            }
+        if (it != soundBuffers.end())
+        {
+            //std::cout << " Unloading Sound: " << ID << "\n";
+            soundBuffers.erase(it);
         }
     }
 
@@ -156,7 +156,7 @@ namespace ResourceManager
 
         if (it != textures.end())
         {
-            std::cout << " Unloading texture: " << ID << "\n";
+            //std::cout << " Unloading texture: " << ID << "\n";
             textures.erase(it);
         }
     }

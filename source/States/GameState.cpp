@@ -1,6 +1,6 @@
 #include "GameState.h"
 
-GameState::GameState(State& parentState)
+GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 {
 	this->parentState = &parentState;
 
@@ -22,7 +22,10 @@ GameState::GameState(State& parentState)
 	PlayerBullets_Detroyer = new BulletManager();
 	PushToObject(PlayerBullets_Detroyer, this);	
 
-	for (int i = 0; i < 2; i++)
+	PBplayerHealth = new ProgressBar({ 10,WINDOW_SIZE.y-20 },Vector2f(WINDOW_SIZE.x-20,20), Colors::green,Colors::grey,"HP",player->HitPoints,PlayerMaxHP);
+	PushToObject(PBplayerHealth, this);
+
+	for (int i = 0; i < 10; i++)
 	{
 		enemy.push_back(new Enemy(Enemy_Chicken_1, Vector2f(rand()%1000, 100)));
 		PushToObject(enemy.back(), this);
@@ -33,11 +36,17 @@ GameState::GameState(State& parentState)
 
 		EnimesBullets->addTarget(*player);
 	}
+
+	window.setMouseCursorVisible(false);
 }
 
 GameState::~GameState()
 {
 	ResourceManager::unloadTexture("Blue_Blank_Background.png");
+	ResourceManager::unloadTexture("Battlecruiser_Base.png");
+	ResourceManager::unloadTexture("FireJet.png");
+	ResourceManager::unloadTexture("Bullet.png");
+	window->setMouseCursorVisible(true);
 }
 
 void GameState::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
@@ -47,47 +56,55 @@ void GameState::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) c
 
 void GameState::updateCurrent(Event& event, Vector2f& MousePos)
 {
-	if (wasPaused)
+	if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape))
 	{
-		wasPaused = false;
-		cout << "wasPaused" << endl;
+		CurrentState = States::Pause, wasPaused = true;
+		window->setMouseCursorVisible(true);
 	}
-
-	if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) CurrentState=States::Pause,wasPaused=true;	
-	
 }
 
 void GameState::takeTimeCurrent()
 {
+	if (wasPaused)
+	{
+		window->setMouseCursorVisible(false);
+		wasPaused = false;
+
+		sf::Vector2i pixelPosition = window->mapCoordsToPixel(player->getPosition());
+		sf::Mouse::setPosition(pixelPosition);
+	}
+
 	//cout << player->CurrentEnityState << endl;
 	if (player->CurrentEnityState == EntityState::Dead) // Game Over
 	{
 		CurrentState = States::GameOver;
+		window->setMouseCursorVisible(true);
 		return;
 	}
 	
 	if (player->isFiring)	// Player Fire
 	{
-		cout << "Player Fire" << endl;
 		PlayerBullets_Standard->addBullet(Player_Bullet_Normal, player->getPosition()-Vector2f(0,30));
 		player->resetGun();
 	} 
 
-	for (auto it = enemy.begin(); it != enemy.end(); ) // Enemy Fire	
+	for (int i = 0; i < enemy.size(); i++)
 	{
-		if ((*it)->CurrentEnityState == EntityState::Dead)
+		if (enemy[i]->CurrentEnityState == EntityState::Dead)
 		{
-			this->detachChild(**it);
-			it=enemy.erase(it); 
+			// Detach the child
+			this->detachChild(*enemy[i]);
+
+			PlayerBullets_Standard->removeTarget(*enemy[i]);
+
+			// Erase it from the enemy vector
+			enemy.erase(enemy.begin() + i);
+			i--; 
 		}
-		else
+		else if (enemy[i]->CurrentEnityState == EntityState::Alive && enemy[i]->isFiring)
 		{
-			if ((*it)->CurrentEnityState == EntityState::Alive && (*it)->isFiring)
-			{
-				EnimesBullets->addBullet(Enemy_Bullet_Normal, (*it)->getPosition());
-				(*it)->resetGun();
-			}
-			it++;
+			EnimesBullets->addBullet(Enemy_Bullet_Normal, enemy[i]->getPosition());
+			enemy[i]->resetGun();
 		}
 	}
 

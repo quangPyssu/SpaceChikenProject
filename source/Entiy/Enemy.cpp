@@ -2,6 +2,8 @@
 
 Enemy::Enemy(EnemyType type, Vector2f StartPosition) 
 {
+	this->type = type;
+
 	setPosition(StartPosition);
 	hitbox.setPosition(StartPosition);
 	Texture texture;
@@ -29,6 +31,23 @@ Enemy::Enemy(EnemyType type, Vector2f StartPosition)
 
 		reloadFrameID = rand() % 150;
 		reloadFrameIDMax = 150;
+		break;
+	default:
+		break;
+	}
+}
+
+void Enemy::addDeathAnimation()
+{
+	Entity::addDeathAnimation();
+	switch (type)
+	{	
+	case Enemy_Chicken_1:		
+
+		animations.push_back(new Animation(10, 8, 1, 1.2, { 0,0 }, { 0.5,0.5 }, Vector2f(0, 0), "Explosion.png",79));
+		PushToObject(animations.back(), this);
+
+		playSound("chicken1a(die).ogg");
 		break;
 	default:
 		break;

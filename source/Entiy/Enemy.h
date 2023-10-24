@@ -13,9 +13,14 @@ class Enemy : public Entity
 
 	void resetGun();
 
+	
+
 private:
 	
 		short unsigned int reloadFrameID = 0;
 		short unsigned int reloadFrameIDMax = 50;
+		EnemyType type;
+
+		void addDeathAnimation() override;
 };
 

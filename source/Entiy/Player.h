@@ -10,7 +10,6 @@ class Player : public Entity
 {
 	public:
 	Player();
-	~Player();
 
 	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void updateCurrent(Event& event, Vector2f& MousePos) override;
@@ -22,9 +21,12 @@ class Player : public Entity
 
 	private:
 
+		void addDeathAnimation() override;
 		Texture texturePlayer;
 		short unsigned int reloadFrameID = 0;
 		short unsigned int reloadFrameIDMax = 50;
+
+		friend class GameState;
 
 };
 

@@ -42,6 +42,8 @@ namespace Constants
     extern const sf::Vector2f ButtonTypeHead[3];
     extern const sf::Vector2f ButtonTypeTail[3];
 
+    extern int PlayerMaxHP;
+
     enum TextAlign {Left,Middle,Right};
 
     enum BulletType { Player_Bullet_Normal,Enemy_Bullet_Normal,Player_Bullet_Destroyer };
@@ -89,8 +91,8 @@ namespace ResourceManager
 
     sf::Font& getFont(const std::string& ID);
     sf::Texture& getTexture(const std::string& ID);
+    sf::SoundBuffer& getSoundBuffer(const std::string& ID);
 
-    void MakeSound(const std::string& ID, bool loop = false, float volume = 100);
-
+    void unloadSoundBuffer(const std::string& ID);
     void unloadTexture(const std::string& ID);
 }

@@ -1,5 +1,10 @@
 #include "Entity.h"
 
+Entity::~Entity()
+{
+	for (int i = 0; i < sounds.size(); i++) delete sounds[i];
+}
+
 void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(hitbox);
@@ -16,19 +21,15 @@ void Entity::takeTimeCurrent()
 			setPosition(getPosition() + sf::Vector2f(Velocity.x * TIME_PER_FRAME.asSeconds(), Velocity.y * TIME_PER_FRAME.asSeconds()));
 			hitbox.setPosition(getPosition());
 
+			CleanDeadAssets();
+
 			outScope();
 			break;
 		
 		case EntityState::Dying:
-			for (int i = 0; i < death_animation.size(); i++)
-				if (death_animation[i]->isAnimationFinished())
-				{
-					detachChild(*death_animation[i]);
-					death_animation.erase(death_animation.begin() + i);
-					i--;
-				}
+			CleanDeadAssets();
 
-			if (death_animation.empty()) CurrentEnityState = EntityState::Dead;
+			if (animations.empty() || sounds.empty()) CurrentEnityState = EntityState::Dead;
 
 			break;
 
@@ -36,9 +37,25 @@ void Entity::takeTimeCurrent()
 
 			break;
 	}
-	
+}
 
-	
+void Entity::CleanDeadAssets()
+{
+	for (int i = 0; i < animations.size(); i++)
+		if (animations[i]->isAnimationFinished())
+		{
+			detachChild(*animations[i]);
+			animations.erase(animations.begin() + i);
+			i--;
+		}
+
+	for (int i = 0; i < sounds.size(); i++)
+		if (sounds[i]->getStatus() == sf::Sound::Stopped)
+		{
+			delete sounds[i];
+			sounds.erase(sounds.begin() + i);
+			i--;
+		}
 }
 
 void Entity::setVelocity(sf::Vector2f velocity)
@@ -54,6 +71,7 @@ void Entity::takeDamage(int damage)
 		if (HitPoints <= 0)
 		{
 			CurrentEnityState = EntityState::Dying;
+			addDeathAnimation();
 		}
 	}
 }
@@ -82,4 +100,20 @@ void Entity::outScope()
 			if (getPosition().y < 0 || getPosition().y > WINDOW_SIZE.y) setVelocity({ Velocity.x,-Velocity.y });
 		}
 		else CurrentEnityState = EntityState::Dead;
+}
+
+void Entity::addDeathAnimation()
+{
+	for (int i = 0; i < animations.size(); i++) detachChild(*animations[i]);
+	for (int i = 0; i < sprites.size(); i++) detachChild(*sprites[i]);
+
+	animations.clear();
+	sprites.clear();
+}
+
+void Entity::playSound(string soundName)
+{
+	sounds.push_back(new Sound);
+	sounds.back()->setBuffer(ResourceManager::getSoundBuffer(soundName));
+	sounds.back()->play();
 }

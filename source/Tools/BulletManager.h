@@ -16,6 +16,7 @@ class BulletManager : public SceneNode
 	int getBulletCount() { return BulletList.size(); }
 
 	void addTarget(Entity& target);
+	void removeTarget(Entity& target);
 
 	private:
 	std::vector<Bullet*> BulletList;
