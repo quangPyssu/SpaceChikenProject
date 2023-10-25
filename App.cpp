@@ -9,6 +9,7 @@ App::App()
 	window = new sf::RenderWindow(sf::VideoMode(800 * Constants::SCALE, 600 * Constants::SCALE), "Chieken", sf::Style::Fullscreen,settings);
 
 	window->setFramerateLimit(60);
+	window->setVerticalSyncEnabled(true);
 
 	// Use the minimum scaling factor to maintain the aspect ratio
 

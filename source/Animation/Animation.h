@@ -30,7 +30,6 @@ private:
 	int pingPongDirection = 1;
 	int resetFrame = 0;
 
-
 public:
 	Animation(unsigned short animationSpeed, unsigned short widthCnt, unsigned short floorCnt,double Scale,Vector2f Position, Vector2f Origin, const std::string& i_texture_location);
 	Animation(unsigned short animationSpeed, unsigned short widthCnt, unsigned short floorCnt, double Scale, Vector2f Position, Vector2f Origin, Vector2f divation, const std::string& i_texture_location);

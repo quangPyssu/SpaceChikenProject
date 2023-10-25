@@ -21,6 +21,8 @@ public:
 
     void ApplyPhysics();
 
+    void setRootPos(Vector2f& rootPos);
+
     EntityState CurrentEnityState = EntityState::Alive;
 
     //int HitPoints = 1;
@@ -29,6 +31,10 @@ protected:
     Vector2f Velocity = { 0,0 };
     Vector2f Acceleration = { 0,0 };
     Vector2f D_Acceleration = { 0,0 };
+
+    Vector2f* RootPos = nullptr;
+    Vector2f Divation = { 0,0 };
+
     virtual void addDeathAnimation();
 
 
@@ -49,7 +55,14 @@ protected:
     void takeDamage(int damage);
     void playSound(string soundName);
 
+    int timerStart = 0, timerEnd = -1;
+    void setTimer(int timerStart,int timerEnd);
+    
+
 protected:
+    bool Destructible = true;
+
+    void killEntity();
    
     void outScope(); //check if the entity is out of the screen 
 

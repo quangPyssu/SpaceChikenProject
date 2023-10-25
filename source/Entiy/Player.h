@@ -16,8 +16,12 @@ class Player : public Entity
 	void takeTimeCurrent() override;
 
 	void resetGun();
+	void resetSpecial();
 
 	bool isFiring=false;
+	bool isSpecialing = false;
+
+	Vector2f PlayerCurPos;
 
 	private:
 
@@ -26,7 +30,11 @@ class Player : public Entity
 		short unsigned int reloadFrameID = 0;
 		short unsigned int reloadFrameIDMax = 50;
 
-		friend class GameState;
+		short unsigned int specialFrameID = 0;
+		short unsigned int specialFrameIDMax = 200;
 
+		short hasSpeacial = 5;
+
+		friend class GameState;
 };
 

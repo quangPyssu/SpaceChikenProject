@@ -46,7 +46,7 @@ namespace Constants
 
     enum TextAlign {Left,Middle,Right};
 
-    enum BulletType { Player_Bullet_Normal,Enemy_Bullet_Normal,Player_Bullet_Destroyer };
+    enum BulletType { Player_Bullet_Normal,Enemy_Bullet_Normal,Player_Bullet_Destroyer,Player_Laser_Destroyer };
     
 };
 

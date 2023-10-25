@@ -38,6 +38,7 @@ void Player::updateCurrent(Event& event, Vector2f& MousePos)
 {
 	setPosition(MousePos);
 	hitbox.setPosition(MousePos);	
+	PlayerCurPos = MousePos;
 }
 
 void Player::takeTimeCurrent()
@@ -47,18 +48,32 @@ void Player::takeTimeCurrent()
 	reloadFrameID++;
 	reloadFrameID=min(reloadFrameID,reloadFrameIDMax);
 
+	specialFrameID++;
+	specialFrameID=min(specialFrameID, specialFrameIDMax);
+
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		if (reloadFrameID == reloadFrameIDMax)
 		{
 			reloadFrameID = 0;
 			isFiring = true;
-			//ResourceManager::MakeSound("(laser).ogg");
 		}
 		else
 		{
 			isFiring = false;
 		}
+	} 
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+	{
+		if (hasSpeacial && specialFrameID == specialFrameIDMax)
+		{
+			specialFrameID = 0;
+			isSpecialing = true;
+			hasSpeacial--;
+		}
+		else isSpecialing = false;
+
 	}
 }
 
@@ -66,6 +81,12 @@ void Player::resetGun()
 {
 	reloadFrameID = 0;
 	isFiring = false;
+}
+
+void Player::resetSpecial()
+{
+	specialFrameID = 0;
+	isSpecialing = false;
 }
 
 void Player::addDeathAnimation()
