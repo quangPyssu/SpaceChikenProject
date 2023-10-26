@@ -22,7 +22,7 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 		playSound("(laser).ogg");
 
 		isBulletDestructible = true;
-		Damage = 1;
+		Damage = 20;
 
 		Velocity = { 0, -400 };
 		Acceleration = { 0,-25 };
@@ -50,20 +50,21 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 
 	case Constants::Player_Laser_Destroyer:
 	{
-		hitbox.setFillColor(Colors::red);
-		hitbox.setOutlineColor(Colors::red);
-		hitbox.setOutlineThickness(1);
+		//hitbox.setFillColor(Colors::red);
+		//hitbox.setOutlineColor(Colors::red);
+		//hitbox.setOutlineThickness(1);
+
+		hitbox.setFillColor(Colors::trans);
 		hitbox.setSize({ 20,1000 });
 		hitbox.setOrigin(hitbox.getSize().x / 2, hitbox.getSize().y);
 
-		//RootPos = &StartPosition;
-
-		/*animations.push_back(new Animation(10, 11, 1, 0.5, { 0,0 }, { 0.5,0.5 }, Vector2f(0, 0), "Bullet.png"));
+		animations.push_back(new Animation(10,4, 1,1, { 0,0 }, { 0,0.5 }, Vector2f(0,-30), "QuicklyBeam.png"));
+		animations.back()->setScale({4.3,1});
 		animations.back()->setRotation(-90);
-		animations.back()->PushToObject(animations.back(), this);*/
+		animations.back()->PushToObject(animations.back(), this);
 
 		playSound("laserSmall.ogg");
-		setTimer(20, 100);
+		setTimer(10, 30);
 
 		isBulletDestructible = false;
 		Damage = 1;

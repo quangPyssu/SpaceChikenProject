@@ -18,7 +18,8 @@ class BulletManager : public SceneNode
 	void addTarget(BulletManager& target);
 	void removeTarget(Entity& target);
 
-	private:
+	
+private:
 	std::vector<Bullet*> BulletList;
 	std::vector<Entity*> TargetList;
 	std::vector<BulletManager*> BulletManagerList;
@@ -26,5 +27,6 @@ class BulletManager : public SceneNode
 	Player* player=null;	
 
 	friend class GameState;
+	friend class BulletPattern;
 };
 

@@ -25,12 +25,15 @@ public:
 
     EntityState CurrentEnityState = EntityState::Alive;
 
+    void killEntity();
+
+    void setDivation(Vector2f divation);
+
     //int HitPoints = 1;
 
 protected:
     Vector2f Velocity = { 0,0 };
     Vector2f Acceleration = { 0,0 };
-    Vector2f D_Acceleration = { 0,0 };
 
     Vector2f* RootPos = nullptr;
     Vector2f Divation = { 0,0 };
@@ -61,8 +64,6 @@ protected:
 
 protected:
     bool Destructible = true;
-
-    void killEntity();
    
     void outScope(); //check if the entity is out of the screen 
 

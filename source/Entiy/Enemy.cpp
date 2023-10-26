@@ -23,7 +23,7 @@ Enemy::Enemy(EnemyType type, Vector2f StartPosition)
 		animations.back()->makePingPong();
 		animations.back()->PushToObject(animations.back(), this);		
 
-		HitPoints = 3;
+		HitPoints = 60;
 
 		ApplyPhysics();
 		Velocity = { 50,(float) 0+rand()%20+10 };
@@ -44,7 +44,7 @@ void Enemy::addDeathAnimation()
 	{	
 	case Enemy_Chicken_1:		
 
-		animations.push_back(new Animation(10, 8, 1, 1.2, { 0,0 }, { 0.5,0.5 }, Vector2f(0, 0), "Explosion.png",79));
+		animations.push_back(new Animation(10, 8, 1, 1.2, WINDOW_SIZE, { 0.5,0.5 }, Vector2f(0, 0), "Explosion.png",70));
 		PushToObject(animations.back(), this);
 
 		playSound("chicken1a(die).ogg");

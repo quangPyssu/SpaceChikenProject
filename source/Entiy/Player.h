@@ -33,7 +33,7 @@ class Player : public Entity
 		short unsigned int specialFrameID = 0;
 		short unsigned int specialFrameIDMax = 200;
 
-		short hasSpeacial = 5;
+		short hasSpeacial = 100;
 
 		friend class GameState;
 };

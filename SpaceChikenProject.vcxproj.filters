@@ -84,6 +84,15 @@
     <ClCompile Include="source\Tools\ProgressBar.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="source\Tools\EnemyManager.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\BulletPattern.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tools\Pattern.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SceneNode.h">
@@ -138,6 +147,15 @@
       <Filter>States</Filter>
     </ClInclude>
     <ClInclude Include="source\Tools\ProgressBar.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tools\EnemyManager.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Entiy\BulletPattern.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tools\Pattern.h">
       <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>

@@ -23,7 +23,7 @@ void BulletManager::addBullet(BulletType type,sf::Vector2f position)
 	case Constants::Player_Bullet_Destroyer:
 		break;
 	case Constants::Player_Laser_Destroyer:
-		tmp->setRootPos(player->PlayerCurPos);
+		tmp->setRootPos(player->PlayerCurPos);//remember to split this into two
 		break;
 	default:
 		break;
@@ -66,34 +66,39 @@ void BulletManager::takeTimeCurrent()
 			continue;
 		}
 
-		for (int j=0;j < TargetList.size();j++)
-			if (BulletList[i]->CollitionDetection(*TargetList[j]))
-			{
-				TargetList[j]->takeDamage(BulletList[i]->Damage);				
+		if (BulletList[i]->timerStart) continue;
 
-				if (BulletList[i]->isBulletDestructible)
+		if (BulletList[i]->CurrentEnityState == EntityState::Alive)
+			for (int j = 0; j < TargetList.size(); j++)
+				if (BulletList[i]->CollitionDetection(*TargetList[j]))
 				{
-					deleteBullet(i);
-					break;
-				}
-			}		
-
-		for (int j = 0; j < BulletManagerList.size(); j++)
-		{
-			for (int k = 0; k < BulletManagerList[j]->BulletList.size(); k++)
-			{
-				if (BulletList[i]->CollitionDetection(*BulletManagerList[j]->BulletList[k]))
-				{
-					BulletManagerList[j]->BulletList[k]->takeDamage(BulletList[i]->Damage);
+					TargetList[j]->takeDamage(BulletList[i]->Damage);
 
 					if (BulletList[i]->isBulletDestructible)
 					{
-						deleteBullet(i);
+						BulletList[i]->killEntity();
 						break;
 					}
 				}
+
+		if (BulletList[i]->CurrentEnityState == EntityState::Alive)
+			for (int j = 0; j < BulletManagerList.size(); j++)
+			{
+				for (int k = 0; k < BulletManagerList[j]->BulletList.size(); k++)
+				{
+					if (BulletList[i]->CollitionDetection(*BulletManagerList[j]->BulletList[k]))
+					{
+						BulletManagerList[j]->BulletList[k]->takeDamage(BulletList[i]->Damage);
+
+						if (BulletList[i]->isBulletDestructible)
+						{
+							BulletList[i]->killEntity();
+							break;
+						}
+					}
+				}
 			}
-		}
+		
 	}
 
 	

@@ -43,6 +43,7 @@ namespace Constants
     extern const sf::Vector2f ButtonTypeTail[3];
 
     extern int PlayerMaxHP;
+    extern int CurrentLevel;
 
     enum TextAlign {Left,Middle,Right};
 

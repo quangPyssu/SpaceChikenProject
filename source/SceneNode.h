@@ -46,6 +46,8 @@ public:
     virtual void Disable();
     virtual void Able();
 
-
+protected:
+    bool rotationDependent = false;
+    float RotationDivation = 0;
 };
 

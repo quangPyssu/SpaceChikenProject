@@ -39,7 +39,6 @@ void Entity::takeTimeCurrent()
 			}
 			else
 			{
-				Acceleration += sf::Vector2f(D_Acceleration.x * TIME_PER_FRAME.asSeconds(), D_Acceleration.y * TIME_PER_FRAME.asSeconds());
 				Velocity += sf::Vector2f(Acceleration.x * TIME_PER_FRAME.asSeconds(), Acceleration.y * TIME_PER_FRAME.asSeconds());
 				setPosition(getPosition() + sf::Vector2f(Velocity.x * TIME_PER_FRAME.asSeconds(), Velocity.y * TIME_PER_FRAME.asSeconds()));
 				hitbox.setPosition(getPosition());
@@ -52,8 +51,7 @@ void Entity::takeTimeCurrent()
 		
 		case EntityState::Dying:
 			CleanDeadAssets();
-
-			if (animations.empty() || sounds.empty()) CurrentEnityState = EntityState::Dead;
+			if (animations.empty() && sounds.empty()) CurrentEnityState = EntityState::Dead;
 
 			break;
 
@@ -122,7 +120,10 @@ void Entity::outScope()
 			if (getPosition().x < 0 || getPosition().x > WINDOW_SIZE.x) setVelocity({ -Velocity.x,Velocity.y });
 			if (getPosition().y < 0 || getPosition().y > WINDOW_SIZE.y) setVelocity({ Velocity.x,-Velocity.y });
 		}
-		else killEntity();
+		else if(getPosition().x < -300 || getPosition().x > WINDOW_SIZE.x+300 || getPosition().y < -300 || getPosition().y > WINDOW_SIZE.y+300)
+		{
+			killEntity();
+		}
 }
 
 void Entity::killEntity()
@@ -159,4 +160,9 @@ void Entity::setTimer(int timerStart,int timerEnd)
 void Entity::setRootPos(sf::Vector2f& rootPos)
 {
 	RootPos = &rootPos;
+}
+
+void Entity::setDivation(sf::Vector2f divation)
+{
+	Divation = divation;
 }

@@ -146,6 +146,7 @@
     <ClCompile Include="source\Button.cpp" />
     <ClCompile Include="source\Core\Global.cpp" />
     <ClCompile Include="source\Entiy\Bullet.cpp" />
+    <ClCompile Include="source\Entiy\BulletPattern.cpp" />
     <ClCompile Include="source\Entiy\Enemy.cpp" />
     <ClCompile Include="source\Entiy\Entity.cpp" />
     <ClCompile Include="source\Entiy\Player.cpp" />
@@ -157,6 +158,8 @@
     <ClCompile Include="source\States\PauseMenu.cpp" />
     <ClCompile Include="source\States\State.cpp" />
     <ClCompile Include="source\Tools\BulletManager.cpp" />
+    <ClCompile Include="source\Tools\EnemyManager.cpp" />
+    <ClCompile Include="source\Tools\Pattern.cpp" />
     <ClCompile Include="source\Tools\ProgressBar.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +169,7 @@
     <ClInclude Include="source\Button.h" />
     <ClInclude Include="source\Core\Global.h" />
     <ClInclude Include="source\Entiy\Bullet.h" />
+    <ClInclude Include="source\Entiy\BulletPattern.h" />
     <ClInclude Include="source\Entiy\Enemy.h" />
     <ClInclude Include="source\Entiy\Entity.h" />
     <ClInclude Include="source\Entiy\Player.h" />
@@ -177,6 +181,8 @@
     <ClInclude Include="source\States\PauseMenu.h" />
     <ClInclude Include="source\States\State.h" />
     <ClInclude Include="source\Tools\BulletManager.h" />
+    <ClInclude Include="source\Tools\EnemyManager.h" />
+    <ClInclude Include="source\Tools\Pattern.h" />
     <ClInclude Include="source\Tools\ProgressBar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
