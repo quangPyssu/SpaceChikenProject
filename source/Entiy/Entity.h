@@ -30,6 +30,8 @@ public:
     void setDivation(Vector2f divation);
 
     //int HitPoints = 1;
+    bool rotationDependent = false;
+    float RotationDivation = 0;
 
 protected:
     Vector2f Velocity = { 0,0 };
@@ -38,8 +40,8 @@ protected:
     Vector2f* RootPos = nullptr;
     Vector2f Divation = { 0,0 };
 
-    virtual void addDeathAnimation();
 
+    virtual void addDeathAnimation();
 
     vector <Animation*> animations;
     vector <SpriteOnly*> sprites;
@@ -72,5 +74,6 @@ protected:
     RectangleShape hitbox;
 
     friend class BulletManager;
+    friend class pattern;
 };
 

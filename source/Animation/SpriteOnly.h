@@ -10,7 +10,7 @@ class SpriteOnly :  public SceneNode
 	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void takeTimeCurrent() override;
 
-	void setRotation(float angle);
+	void setRotationDivation(float angle) { rotationDivation = angle; }
 	void setScale(float x);
 	void setOrigin(Vector2f Origin);
 	void setPosition(Vector2f Position);
@@ -19,6 +19,7 @@ class SpriteOnly :  public SceneNode
 		sf::Texture texture;
 		sf::Sprite sprite;
 		sf::Vector2f divation;
+		float rotationDivation = 0;
 
 		bool isRootSet = true;
 };

@@ -6,13 +6,15 @@
 
 enum BulletPatternType
 {
-	Normal_Circle_Spin_NonKill
+	Enemy_Normal_Circle,
+	Enemy_Normal_Square,
 };
 
 class BulletPattern :  public Pattern
 {
 	public:
-	BulletPattern(BulletPatternType type, BulletManager& bulletManager,Vector2f Position,Vector2f Velocity);
+	BulletPattern(BulletPatternType type, BulletManager& bulletManager, Vector2f Position, Vector2f Velocity, int total, float width, int widthCnt);
+	BulletPattern(BulletPatternType type, BulletManager& bulletManager, Vector2f Position, Vector2f Velocity, int total, float width, int widthCnt, RotationType rotationType);
 
 	void takeTimeCurrent() override;
 	private:

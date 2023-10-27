@@ -15,7 +15,7 @@ Player::Player()
 
 	{
 		animations.push_back(new Animation(10, 10, 6, 1, { 0,0 }, { 0,0.5 }, Vector2f( 0, texturePlayer.getSize().y / 4 ), "FireJet.png"));
-		animations.back()->setRotation(90);
+		animations.back()->setRotationDivation(90);
 		animations.back()->PushToObject(animations.back(), this);
 	}
 

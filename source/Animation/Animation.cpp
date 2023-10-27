@@ -72,6 +72,9 @@ void Animation::takeTimeCurrent()
 	{
 		setPosition(this->Parent->getPosition() + divation);
 	}
+
+	setRotation(this->Parent->getRotation() + rotationDivation);
+	sprite.setRotation(getRotation());
 }
 
 bool Animation::isAnimationFinished()
@@ -89,9 +92,9 @@ void Animation::setOrigin(Vector2f origin)
 	sprite.setPosition(origin);
 }
 
-void Animation::setRotation(float rotation)
+void Animation::setRotationDivation(float rotationDivation)
 {
-	sprite.setRotation(rotation);
+	this->rotationDivation = rotationDivation;
 }
 
 void Animation::setScale(Vector2f scale)

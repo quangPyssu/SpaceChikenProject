@@ -30,7 +30,7 @@ Enemy::Enemy(EnemyType type, Vector2f StartPosition)
 		Acceleration = { 0,0 };
 
 		reloadFrameID = rand() % 150;
-		reloadFrameIDMax = 150;
+		reloadFrameIDMax = 200;
 		break;
 	default:
 		break;

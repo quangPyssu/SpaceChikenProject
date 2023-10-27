@@ -3,30 +3,37 @@
 EnemyManager::EnemyManager(Player& player, BulletManager& PlayerBullets_Standard, BulletManager& PlayerBullets_Detroyer, BulletManager& EnimesBullets)
 	: player(&player), PlayerBullets_Standard(&PlayerBullets_Standard), PlayerBullets_Detroyer(&PlayerBullets_Detroyer), EnimesBullets(&EnimesBullets)
 {
-	for (int i = 0; i < 0; i++) addEnemy(Enemy_Chicken_1);
+	for (int i = 0; i < 10; i++) addEnemy(Enemy_Chicken_1);
 
-	{	//Target setting
-		for (int i = 0; i < enemy.size(); i++)
-		{
-			PlayerBullets_Standard.addTarget(*enemy[i]);
-			PlayerBullets_Detroyer.addTarget(*enemy[i]);
-		}
+	EnimesBullets.addTarget(player);
 
-		EnimesBullets.addTarget(player);
-	}
+	//EnemyPatternList.push_back(new EnemyPattern(Chicken_Circle, *this, Vector2f(500, 500), Vector2f(-2, 0), 10, 300, 10));
+	//PushToObject(EnemyPatternList.back(), this);
 
+	//BulletPatternList.push_back(new BulletPattern(Enemy_Normal_Circle, EnimesBullets, Vector2f(500, 500), Vector2f(-2, 0),10,300,10));
+	//PushToObject(BulletPatternList.back(), this);
 
-	BulletPatternList.push_back(new BulletPattern(Normal_Circle_Spin_NonKill, EnimesBullets, Vector2f(500, 500), Vector2f(0, 0)));
-	PushToObject(BulletPatternList.back(), this);
+	//BulletPatternList.push_back(new BulletPattern(Enemy_Normal_Square, EnimesBullets, Vector2f(500, 500), Vector2f(60, 50), 10, 300, 4,WithVelocity));
+	//PushToObject(BulletPatternList.back(), this);
+
 }
 
 EnemyManager::~EnemyManager()
 {
+	for (int i = 0; i < enemy.size(); i++)
+	{
+		detachChild(*enemy[i]);
+	}
+	enemy.clear();
 }
 
 void EnemyManager::addEnemy(EnemyType type)
 {
 	enemy.push_back(new Enemy(type, Vector2f(rand() % 1000, 100)));
+
+	PlayerBullets_Standard->addTarget(*enemy.back());
+	PlayerBullets_Detroyer->addTarget(*enemy.back());
+
 	PushToObject(enemy.back(), this);
 }
 
@@ -66,10 +73,18 @@ void EnemyManager::takeTimeCurrent()
 		}
 	}
 
-	if (BulletPatternList.size() && BulletPatternList.back()->CurrentEnityState == Dead)
+	// Clean up the dead patterns
+
+	for (int i = 0; i < BulletPatternList.size(); i++)
 	{
-		detachChild(*BulletPatternList.back());
-		BulletPatternList.pop_back();
+		if (BulletPatternList[i]->CurrentEnityState == EntityState::Dead)
+		{
+			detachChild(*BulletPatternList[i]);
+			BulletPatternList.erase(BulletPatternList.begin() + i);
+			i--;
+		}
 	}
+
+	//cout << "BulletPatternList.size() " << BulletPatternList.size() << endl;
 }
 

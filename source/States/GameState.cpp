@@ -85,6 +85,8 @@ void GameState::takeTimeCurrent()
 		player->resetSpecial();
 	}
 
+
+
 	//cout << enemyManager->enemy.size() << endl;
 	//cout << "PlayerBullets_Standard->getBulletCount() " << PlayerBullets_Standard->getBulletCount() << endl;
 	//cout << "PlayerBullets_Detroyer->getBulletCount() " << PlayerBullets_Detroyer->getBulletCount() << endl;

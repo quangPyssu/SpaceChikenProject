@@ -22,6 +22,7 @@ private:
 	sf::Texture texture;
 
 	sf::Vector2f divation;
+	float rotationDivation = 0;
 
 	bool isRootSet = true;
 	bool isPingPong = false;
@@ -46,8 +47,9 @@ public:
 	void setPosition(Vector2f pos) ;
 	void setOrigin(Vector2f origin) ;
 	void setScale(Vector2f scale) ;
-	void setRotation(float rotation) ;
 	void setDivation(Vector2f divation) ;
+
+	void setRotationDivation(float rotationDivation);
 
 	void setResetFrame(int resetFrame);
 	void makePingPong();

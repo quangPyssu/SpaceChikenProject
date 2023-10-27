@@ -44,15 +44,8 @@ void SceneNode::takeTime()
 {
     if (isDisable) return;
     takeTimeCurrent();
-    for (const auto& child : Children)
-    {
-        child->takeTime();
 
-        if (child->rotationDependent)
-        {
-			child->setRotation(getRotation() + child->RotationDivation);
-		}
-    }
+    for (const auto& child : Children) child->takeTime();
 }
 
 void SceneNode::Disable()

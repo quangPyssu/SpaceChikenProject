@@ -93,6 +93,9 @@
     <ClCompile Include="source\Tools\Pattern.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="source\Entiy\EnemyPattern.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SceneNode.h">
@@ -157,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="source\Tools\Pattern.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Entiy\EnemyPattern.h">
+      <Filter>Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

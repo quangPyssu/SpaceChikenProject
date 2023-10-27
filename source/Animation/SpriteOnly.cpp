@@ -25,11 +25,9 @@ void SpriteOnly::takeTimeCurrent()
 	{
 		setPosition(this->Parent->getPosition()+divation);
 	}
-}
 
-void SpriteOnly::setRotation(float angle)
-{
-	sprite.setRotation(angle);
+	setRotation(this->Parent->getRotation() + rotationDivation);
+	sprite.setRotation(getRotation());
 }
 
 void SpriteOnly::setScale(float x)

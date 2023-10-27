@@ -16,7 +16,7 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 		hitbox.setOrigin(hitbox.getSize().x / 2, hitbox.getSize().y / 2);
 
 		animations.push_back(new Animation(10, 11, 1, 0.5, { 0,0 }, { 0.5,0.5 }, Vector2f(0, 0), "Bullet.png"));
-		animations.back()->setRotation(-90);
+		animations.back()->setRotationDivation(-90);
 		animations.back()->PushToObject(animations.back(), this);
 
 		playSound("(laser).ogg");
@@ -60,7 +60,7 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 
 		animations.push_back(new Animation(10,4, 1,1, { 0,0 }, { 0,0.5 }, Vector2f(0,-30), "QuicklyBeam.png"));
 		animations.back()->setScale({4.3,1});
-		animations.back()->setRotation(-90);
+		animations.back()->setRotationDivation(-90);
 		animations.back()->PushToObject(animations.back(), this);
 
 		playSound("laserSmall.ogg");

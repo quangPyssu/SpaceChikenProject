@@ -23,7 +23,6 @@ void Entity::takeTimeCurrent()
 		if (!timerEnd)
 		{
 			killEntity();
-
 		}
 		timerEnd = max(timerEnd - 1, 0);
 	}
@@ -44,14 +43,18 @@ void Entity::takeTimeCurrent()
 				hitbox.setPosition(getPosition());
 			}
 
+			if (rotationDependent)	setRotation(Parent->getRotation() + RotationDivation);
+
+			hitbox.setRotation(getRotation());			
+
 			CleanDeadAssets();
 
 			outScope();
 			break;
 		
 		case EntityState::Dying:
-			CleanDeadAssets();
-			if (animations.empty() && sounds.empty()) CurrentEnityState = EntityState::Dead;
+			CleanDeadAssets(); 
+			if (animations.empty() && sounds.empty()) this->CurrentEnityState = EntityState::Dead;
 
 			break;
 

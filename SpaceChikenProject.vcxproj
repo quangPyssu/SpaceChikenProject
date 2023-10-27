@@ -148,6 +148,7 @@
     <ClCompile Include="source\Entiy\Bullet.cpp" />
     <ClCompile Include="source\Entiy\BulletPattern.cpp" />
     <ClCompile Include="source\Entiy\Enemy.cpp" />
+    <ClCompile Include="source\Entiy\EnemyPattern.cpp" />
     <ClCompile Include="source\Entiy\Entity.cpp" />
     <ClCompile Include="source\Entiy\Player.cpp" />
     <ClCompile Include="source\SceneNode.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="source\Entiy\Bullet.h" />
     <ClInclude Include="source\Entiy\BulletPattern.h" />
     <ClInclude Include="source\Entiy\Enemy.h" />
+    <ClInclude Include="source\Entiy\EnemyPattern.h" />
     <ClInclude Include="source\Entiy\Entity.h" />
     <ClInclude Include="source\Entiy\Player.h" />
     <ClInclude Include="source\SceneNode.h" />
