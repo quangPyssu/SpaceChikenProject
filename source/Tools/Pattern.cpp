@@ -2,7 +2,6 @@
 
 Pattern::~Pattern()
 {
-	for (int i = 0; i < entityList.size(); i++)	entityList[i]->killEntity();
 }
 
 void Pattern::setUpPattern(PatternType type)
@@ -22,6 +21,7 @@ void Pattern::setUpPattern(PatternType type)
 		tmp->setRootPos(CurrentPos);
 		tmp->rotationDependent = true;
 		tmp->setRotation(tmp->RotationDivation);
+		tmp->setTimer( timerStart,timerEnd);
 
 		entityListIndex.push_back(i);
 	}

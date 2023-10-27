@@ -6,6 +6,8 @@
 #include "../Tools/BulletManager.h"
 #include "../Tools/ProgressBar.h"
 #include "../Tools/EnemyManager.h"
+#include "../Entiy/BulletPattern.h"
+#include "../Entiy/EnemyPattern.h"
 #include "GameOverScreen.h"
 
 
@@ -35,6 +37,9 @@ private:
     BulletManager* EnimesBullets;   
 
     EnemyManager* enemyManager;
+
+    vector <BulletPattern*> BulletPatternList;
+    vector <EnemyPattern*> EnemyPatternList;
 
     // UI
     ProgressBar* PBplayerHealth;

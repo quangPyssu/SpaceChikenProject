@@ -30,6 +30,15 @@ GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 	PushToObject(PBplayerHealth, this);
 
 	window.setMouseCursorVisible(false);
+
+	EnemyPatternList.push_back(new EnemyPattern(Chicken_Square, *enemyManager, Vector2f(500, 200), Vector2f(-20, -8), 25, 300, 5,WithVelocity));
+	PushToObject(EnemyPatternList.back(), this);
+
+	//BulletPatternList.push_back(new BulletPattern(Enemy_Normal_Circle, *EnimesBullets, Vector2f(500, 500), Vector2f(60, 50), 10, 300, 4,WithVelocity));
+	//PushToObject(BulletPatternList.back(), this);
+
+	//BulletPatternList.push_back(new BulletPattern(Enemy_Normal_Square, EnimesBullets, Vector2f(500, 500), Vector2f(60, 50), 10, 300, 4,WithVelocity));
+	//PushToObject(BulletPatternList.back(), this);
 }
 
 GameState::~GameState()
@@ -83,6 +92,28 @@ void GameState::takeTimeCurrent()
 	{
 		PlayerBullets_Detroyer->addBullet(Player_Laser_Destroyer, player->getPosition() + Vector2f(0,10));
 		player->resetSpecial();
+	}
+
+	// Clean up the dead patterns
+
+	for (int i = 0; i < BulletPatternList.size(); i++)
+	{
+		if (BulletPatternList[i]->CurrentEnityState == EntityState::Dead)
+		{
+			detachChild(*BulletPatternList[i]);
+			BulletPatternList.erase(BulletPatternList.begin() + i);
+			i--;
+		}
+	}
+
+	for (int i = 0; i < EnemyPatternList.size(); i++)
+	{
+		if (EnemyPatternList[i]->CurrentEnityState == EntityState::Dead)
+		{
+			detachChild(*EnemyPatternList[i]);
+			EnemyPatternList.erase(EnemyPatternList.begin() + i);
+			i--;
+		}
 	}
 
 

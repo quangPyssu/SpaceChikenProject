@@ -23,6 +23,8 @@ public:
 
     void setRootPos(Vector2f& rootPos);
 
+    void setTimer(int timerStart, int timerEnd);
+
     EntityState CurrentEnityState = EntityState::Alive;
 
     void killEntity();
@@ -61,7 +63,7 @@ protected:
     void playSound(string soundName);
 
     int timerStart = 0, timerEnd = -1;
-    void setTimer(int timerStart,int timerEnd);
+    
     
 
 protected:

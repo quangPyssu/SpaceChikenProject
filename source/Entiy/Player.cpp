@@ -1,3 +1,4 @@
+
 #include "Player.h"
 
 Player::Player()
@@ -26,6 +27,9 @@ Player::Player()
 	}
 
 	HitPoints = 10;
+
+	setPosition({ 800,800 });
+	hitbox.setPosition(getPosition());
 }
 
 void Player::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const

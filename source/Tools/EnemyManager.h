@@ -4,8 +4,6 @@
 #include "../Entiy/Enemy.h"
 #include "BulletManager.h"
 #include "../Entiy/BulletPattern.h"
-//#include "../Entiy/EnemyPattern.h"
-//#include "../Tools/Pattern.h"
 
 class EnemyManager : public SceneNode
 {
@@ -28,8 +26,5 @@ private:
 	BulletManager* PlayerBullets_Standard;
 	BulletManager* PlayerBullets_Detroyer;
 	BulletManager* EnimesBullets;
-
-	vector <BulletPattern*> BulletPatternList;
-	//vector <EnemyPattern*> EnemyPatternList;
 };
 
