@@ -5,10 +5,13 @@
 #include "BulletManager.h"
 #include "../Entiy/BulletPattern.h"
 
+enum EnemyAttackType { Attack_Chicken_1, };
+
 class EnemyManager : public SceneNode
 {
 public:
-	EnemyManager(Player& player, BulletManager& PlayerBullets_Standard,	BulletManager& PlayerBullets_Detroyer,BulletManager& EnimesBullets);
+	EnemyManager(Player& player, BulletManager& PlayerBullets_Standard,	BulletManager& PlayerBullets_Detroyer
+		,BulletManager& EnimesBullets, BulletManager& EnimesBullets_Vulnerable);
 	~EnemyManager();
 
 	void takeTimeCurrent() override;
@@ -16,6 +19,9 @@ public:
 	void addEnemy(EnemyType type);
 	void removeEnemy(Entity& target); 
 	vector <Enemy*> enemy;
+
+	std::queue <EnemyAttackType> AttackQueueType;
+	std::queue <Vector2f> AttackQueuePosition;
 
 private:
 
@@ -26,5 +32,6 @@ private:
 	BulletManager* PlayerBullets_Standard;
 	BulletManager* PlayerBullets_Detroyer;
 	BulletManager* EnimesBullets;
+	BulletManager* EnimesBullets_Vulnerable;
 };
 

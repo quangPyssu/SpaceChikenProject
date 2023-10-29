@@ -5,12 +5,14 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <unordered_map>
+#include <queue>
 
 #define ff first
 #define ss second
 
 #define null NULL
 
+using IntArray7 = std::array<int, 7>;
 
 namespace Constants
 {
@@ -44,15 +46,13 @@ namespace Constants
 
     extern int PlayerMaxHP;
     extern int CurrentLevel;
+    extern int CurrentWave;
 
-    enum TextAlign {Left,Middle,Right};
+    extern int breakTime;
+    extern int breakTimeMax;
 
-    enum BulletType { Player_Bullet_Normal,Enemy_Bullet_Normal,Player_Bullet_Destroyer,Player_Laser_Destroyer };
-    
+    enum TextAlign {Left,Middle,Right};    
 };
-
-namespace Var {
-}
 
 namespace Colors
 {

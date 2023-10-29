@@ -29,8 +29,8 @@ Enemy::Enemy(EnemyType type, Vector2f StartPosition)
 		Velocity = { 50,(float) 0+rand()%20+10 };
 		Acceleration = { 0,0 };
 
-		reloadFrameID = rand() % 150;
-		reloadFrameIDMax = 200;
+		reloadFrameID = rand() % 300;
+		reloadFrameIDMax = 300;
 		break;
 	default:
 		break;
@@ -57,6 +57,7 @@ void Enemy::addDeathAnimation()
 void Enemy::takeTimeCurrent()
 {
 	Entity::takeTimeCurrent();
+	if (timerStart > 0) return;
 
 	reloadFrameID++;
 	reloadFrameID = min(reloadFrameID, reloadFrameIDMax);

@@ -31,6 +31,8 @@ public:
 
     void setDivation(Vector2f divation);
 
+    Vector2f getVelocity();
+
     //int HitPoints = 1;
     bool rotationDependent = false;
     float RotationDivation = 0;

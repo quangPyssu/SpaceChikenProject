@@ -169,3 +169,8 @@ void Entity::setDivation(sf::Vector2f divation)
 {
 	Divation = divation;
 }
+
+sf::Vector2f Entity::getVelocity()
+{
+	return Velocity;
+}

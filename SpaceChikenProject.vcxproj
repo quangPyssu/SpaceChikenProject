@@ -160,6 +160,7 @@
     <ClCompile Include="source\States\State.cpp" />
     <ClCompile Include="source\Tools\BulletManager.cpp" />
     <ClCompile Include="source\Tools\EnemyManager.cpp" />
+    <ClCompile Include="source\Tools\LevelReader.cpp" />
     <ClCompile Include="source\Tools\Pattern.cpp" />
     <ClCompile Include="source\Tools\ProgressBar.cpp" />
   </ItemGroup>
@@ -184,6 +185,7 @@
     <ClInclude Include="source\States\State.h" />
     <ClInclude Include="source\Tools\BulletManager.h" />
     <ClInclude Include="source\Tools\EnemyManager.h" />
+    <ClInclude Include="source\Tools\LevelReader.h" />
     <ClInclude Include="source\Tools\Pattern.h" />
     <ClInclude Include="source\Tools\ProgressBar.h" />
   </ItemGroup>

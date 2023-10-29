@@ -1,10 +1,20 @@
 #include "EnemyPattern.h"
 
-EnemyPattern::EnemyPattern(EnemyPatternType type, EnemyManager& enemyManager, Vector2f Position, Vector2f Velocity, int total, float width, int widthCnt)
+EnemyPattern::EnemyPattern(EnemyPatternType type, EnemyManager& enemyManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, int total, float width, int widthCnt)
 {
 	this->enemyManager = &enemyManager;
 
+	Position = Vector2f(Position.x * SCALE, Position.y * SCALE);
+	Velocity = Vector2f(Velocity.x * SCALE, Velocity.y * SCALE);
+	Acceleration = Vector2f(Acceleration.x * SCALE, Acceleration.y * SCALE);
+	width = width * SCALE;
+
 	setVelocity(Velocity);
+	setAcceleration(Acceleration);
+	setPosition(Position);
+
+	setVelocity(Velocity);
+	setAcceleration(Acceleration);
 	setPosition(Position);
 
 	this->total = total;
@@ -42,6 +52,7 @@ EnemyPattern::EnemyPattern(EnemyPatternType type, EnemyManager& enemyManager, Ve
 			entityList.push_back(tmp);
 		}
 
+		rotationType = tiltUp;
 		setUpPattern(Square);
 		ApplyPhysics();
 		angleVelocity = 0.1;
@@ -54,15 +65,10 @@ EnemyPattern::EnemyPattern(EnemyPatternType type, EnemyManager& enemyManager, Ve
 	}
 }
 
-EnemyPattern::EnemyPattern(EnemyPatternType type, EnemyManager& enemyManager, Vector2f Position, Vector2f Velocity, 
-	int total, float width, int widthCnt, RotationType roationType) : EnemyPattern(type, enemyManager, Position, Velocity, total, width, widthCnt)
+EnemyPattern::EnemyPattern(EnemyPatternType type, EnemyManager& enemyManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
+	int total, float width, int widthCnt, RotationType roationType) : EnemyPattern(type, enemyManager, Position, Velocity, Acceleration, total, width, widthCnt)
 {
 	this->rotationType = roationType;
-}
-
-void EnemyPattern::takeTimeCurrent()
-{
-	Pattern::takeTimeCurrent();	
 }
 
 

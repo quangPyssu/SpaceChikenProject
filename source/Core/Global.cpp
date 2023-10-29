@@ -6,7 +6,11 @@ namespace Constants {
     const int T = 3;
 
     int PlayerMaxHP = 10;
-    int CurrentLevel = 1;
+    int CurrentLevel = 0;
+    int CurrentWave = 0;
+
+    int breakTime = 300;
+    int breakTimeMax = 300;
 
     const double pi = 3.14159265;
     const double SCALE_X = (double)(sf::VideoMode::getDesktopMode().width) / (800);

@@ -11,6 +11,7 @@ namespace States {
 		HighScore,
 		Load,
 		NewGame,
+		LevelComplete,
 		Settings,
 		Pause,
 		GameOver,

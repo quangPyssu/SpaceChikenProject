@@ -4,12 +4,12 @@
 
 enum PatternType
 {
-	Circle,Square
+	Circle,Square,Shower,Firework
 };
 
 enum RotationType
 {
-	Spin,WithVelocity,tiltUp
+	Spin,WithVelocity,tiltUp,WithOwnVelocity
 };
 
 class Pattern : public Entity
@@ -18,9 +18,12 @@ class Pattern : public Entity
 	~Pattern();
 
 	void takeTimeCurrent() override;
+
+	void setTimer(int timerStart, int timerEnd);
+
 	protected:
 
-	void setUpPattern(PatternType type);
+	void setUpPattern(PatternType type);	
 
 	PatternType type;
 	RotationType rotationType=Spin;

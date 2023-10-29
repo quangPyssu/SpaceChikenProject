@@ -28,7 +28,8 @@ Player::Player()
 
 	HitPoints = 10;
 
-	setPosition({ 800,800 });
+	sf::Mouse::setPosition(Vector2i(WINDOW_SIZE.x/2,WINDOW_SIZE.y*2/3));
+	setPosition(WINDOW_SIZE);
 	hitbox.setPosition(getPosition());
 }
 

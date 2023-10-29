@@ -96,6 +96,9 @@
     <ClCompile Include="source\Entiy\EnemyPattern.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="source\Tools\LevelReader.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SceneNode.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="source\Entiy\EnemyPattern.h">
       <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tools\LevelReader.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@
 #include "../Tools/EnemyManager.h"
 #include "../Entiy/BulletPattern.h"
 #include "../Entiy/EnemyPattern.h"
+#include "../Tools/LevelReader.h"
 #include "GameOverScreen.h"
 
 
@@ -27,6 +28,8 @@ private:
 
     sf::Sprite backgroundSprite;
 
+    LevelReader levelReader;
+
 
     // Player, Enimes, 
 
@@ -35,16 +38,31 @@ private:
     BulletManager* PlayerBullets_Standard;
     BulletManager* PlayerBullets_Detroyer;
     BulletManager* EnimesBullets;   
+    BulletManager* EnimesBullets_Vulnerable;
 
     EnemyManager* enemyManager;
 
     vector <BulletPattern*> BulletPatternList;
-    vector <EnemyPattern*> EnemyPatternList;
+    vector <EnemyPattern*> EnemyPatternList;    
+
+    void addEnemyPattern(EnemyPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, int total, float width, int widthCnt);
+    void addBulletPattern(BulletPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, int total, float width, int widthCnt);
+
+    void readAttackQueue();
+    void readWaveQueue();
+
+    void BGLoop();
+
+    bool isWaveEmpty();
 
     // UI
     ProgressBar* PBplayerHealth;
 
 
     bool wasPaused = false;
+
+    //data
+    float scrollSpeed = 25.0f;
+    float BGHeight = 0.0f;
 };
 

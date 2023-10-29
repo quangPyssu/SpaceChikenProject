@@ -22,5 +22,7 @@ private:
 		EnemyType type;
 
 		void addDeathAnimation() override;
+
+		friend class EnemyManager;
 };
 

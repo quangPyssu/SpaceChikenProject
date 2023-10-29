@@ -7,7 +7,7 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 
 	switch (type)
 	{
-	case Constants::Player_Bullet_Normal:
+	case Player_Bullet_Normal:
 	{
 		hitbox.setFillColor(Colors::trans);
 		hitbox.setOutlineColor(Colors::red);
@@ -29,7 +29,7 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 		break;
 	}
 
-	case Constants::Enemy_Bullet_Normal:
+	case Enemy_Bullet_Normal:
 	{
 		hitbox.setFillColor(Colors::purple);
 		hitbox.setSize({ 5,20 });
@@ -48,7 +48,7 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 		break;
 	}
 
-	case Constants::Player_Laser_Destroyer:
+	case Player_Laser_Destroyer:
 	{
 		//hitbox.setFillColor(Colors::red);
 		//hitbox.setOutlineColor(Colors::red);
@@ -73,7 +73,25 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 		Acceleration = { 0,0 };
 		break;
 	}
+	case Enemy_Astroid:
+	{
+		hitbox.setFillColor(Colors::purple);
+		hitbox.setSize({ 70,70 });
+		hitbox.setOrigin(hitbox.getSize().x / 2, hitbox.getSize().y / 2);
 
+
+		sprites.push_back(new SpriteOnly("egg.png", Vector2f(0, 0)));
+		sprites.back()->PushToObject(sprites.back(), this);
+		sprites.back()->setOrigin({ 0.5, 0.5 });
+		sprites.back()->setScale(0.5);
+
+		isBulletDestructible = true;
+		Damage = 1;
+
+		Velocity = { 0, 100 };
+		Acceleration = { 0,0 };
+		break;
+	}
 	default:
 		break;
 

@@ -1,15 +1,13 @@
 #include "EnemyManager.h"
 
-EnemyManager::EnemyManager(Player& player, BulletManager& PlayerBullets_Standard, BulletManager& PlayerBullets_Detroyer, BulletManager& EnimesBullets)
-	: player(&player), PlayerBullets_Standard(&PlayerBullets_Standard), PlayerBullets_Detroyer(&PlayerBullets_Detroyer), EnimesBullets(&EnimesBullets)
+EnemyManager::EnemyManager(Player& player, BulletManager& PlayerBullets_Standard, BulletManager& PlayerBullets_Detroyer
+	, BulletManager& EnimesBullets, BulletManager& EnimesBullets_Vulnerable)
+	: player(&player), PlayerBullets_Standard(&PlayerBullets_Standard), PlayerBullets_Detroyer(&PlayerBullets_Detroyer)
+	, EnimesBullets(&EnimesBullets) , EnimesBullets_Vulnerable(&EnimesBullets_Vulnerable)
 {
-	//for (int i = 0; i < 10; i++) addEnemy(Enemy_Chicken_1);
 
 	EnimesBullets.addTarget(player);
-
-	//EnemyPatternList.push_back(new EnemyPattern(Chicken_Circle, *this, Vector2f(500, 500), Vector2f(-2, 0), 10, 300, 10));
-	//PushToObject(EnemyPatternList.back(), this);
-
+	EnimesBullets_Vulnerable.addTarget(player);
 }
 
 EnemyManager::~EnemyManager()
@@ -62,12 +60,19 @@ void EnemyManager::takeTimeCurrent()
 		}
 		else if (enemy[i]->CurrentEnityState == EntityState::Alive && enemy[i]->isFiring)
 		{
-			EnimesBullets->addBullet(Enemy_Bullet_Normal, enemy[i]->getPosition());
+			switch (enemy[i]->type)
+			{
+				case Enemy_Chicken_1:
+				{
+					AttackQueuePosition.push(enemy[i]->getPosition());
+					AttackQueueType.push(EnemyAttackType::Attack_Chicken_1);
+				}
+				break;
+			}
+
 			enemy[i]->resetGun();
 		}
-	}
-
-	
+	}	
 
 	//cout << "BulletPatternList.size() " << BulletPatternList.size() << endl;
 }

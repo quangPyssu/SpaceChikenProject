@@ -12,10 +12,9 @@ enum EnemyPatternType
 class EnemyPattern : public Pattern
 {
 	public:
-	EnemyPattern(EnemyPatternType type, EnemyManager& enemyManager, Vector2f Position, Vector2f Velocity, int total, float width, int widthCnt);
-	EnemyPattern(EnemyPatternType type, EnemyManager& enemyManager, Vector2f Position, Vector2f Velocity, int total, float width, int widthCnt,RotationType roationType);
+	EnemyPattern(EnemyPatternType type, EnemyManager& enemyManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, int total, float width, int widthCnt);
+	EnemyPattern(EnemyPatternType type, EnemyManager& enemyManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, int total, float width, int widthCnt,RotationType roationType);
 
-	void takeTimeCurrent() override;
 	private:
 
 	EnemyManager* enemyManager;
