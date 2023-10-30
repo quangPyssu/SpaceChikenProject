@@ -48,5 +48,8 @@ public:
 
     bool rotationDependent = false;
     float RotationDivation = 0;
+
+protected:
+    int timerStart = 0;
 };
 

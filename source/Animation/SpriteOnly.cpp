@@ -21,10 +21,7 @@ void SpriteOnly::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) 
 
 void SpriteOnly::takeTimeCurrent()
 {
-	if (!isRootSet)
-	{
-		setPosition(this->Parent->getPosition()+divation);
-	}
+	if (!isRootSet)	setPosition(this->Parent->getPosition()+divation);	
 
 	setRotation(this->Parent->getRotation() + rotationDivation);
 	sprite.setRotation(getRotation());

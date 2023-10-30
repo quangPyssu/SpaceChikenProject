@@ -58,7 +58,7 @@ void Pattern::setUpPattern(PatternType type)
 				tmp->rotationDependent = true;
 				tmp->setRotation(tmp->RotationDivation);
 
-				// each fly out from origin
+				// rain down 
 				tmp->setVelocity(Vector2f((float)SCALE * this->Velocity.x , (float)SCALE * this->Velocity.y));
 				tmp->setAcceleration(Vector2f((float)SCALE * this->Acceleration.x, (float)SCALE * this->Acceleration.y));
 			}
@@ -84,6 +84,25 @@ void Pattern::setUpPattern(PatternType type)
 					,(float)SCALE * sin(tmp->RotationDivation * pi / 180) * this->Velocity.y ));
 				tmp->setAcceleration(Vector2f((float)SCALE * cos(tmp->RotationDivation * pi / 180) * this->Acceleration.x
 					,(float)SCALE * sin(tmp->RotationDivation * pi / 180) * this->Acceleration.y ));
+			}
+
+			this->Velocity = { 0,0 };
+			this->Acceleration = { 0,0 };
+		}
+		break;
+
+		case None:
+		{
+			for (int i = 0; i < total; i++)
+			{
+				Entity* tmp = entityList[i];
+
+				tmp->rotationDependent = true;
+				tmp->setRotation(tmp->RotationDivation);
+
+				// each own do own thing
+				tmp->setVelocity(Vector2f((float)SCALE * this->Velocity.x, (float)SCALE * this->Velocity.y));
+				tmp->setAcceleration(Vector2f((float)SCALE * this->Acceleration.x, (float)SCALE * this->Acceleration.y));
 			}
 
 			this->Velocity = { 0,0 };

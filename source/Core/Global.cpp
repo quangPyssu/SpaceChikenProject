@@ -61,6 +61,7 @@ namespace Colors {
     sf::Color Insert_Color = orange;
     sf::Color Search_Color = pink;
     sf::Color Default_Color = black;
+    sf::Color tran_Yellow = sf::Color(255, 255, 153, 128);
 };
 
 namespace getScale

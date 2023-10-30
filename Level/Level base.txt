@@ -1,6 +1,7 @@
-1 < -- - Number of Wave
-
-1 < -number of enemy pattern + bullet pattern
-
-1 2 20 300 5 0 -1 <--  Pattern Bool, Pattern type, total, width, widthCnt, start timer, kill timer (int)
-100 100 -5 0 0 0 0 <-- Position, Velocity, Acceleration (Vector2f)
+//  1 < -- Number of Wave
+//
+//	1 < -- number of enemy pattern + bullet pattern
+//	Pattern Bool = 1 -> Enemy Pattern, 0 -> Bullet Pattern
+//	1 2 20 300 5 0 -1 < --   Pattern Bool, Pattern type, total, width, widthCnt, start timer, kill timer(int)
+//	100 100 -5 0 0 0 0 < --  Position, Velocity, Acceleration(Vector2f)
+//  1 0 < -- LoopCnt, LoopTimer(int)

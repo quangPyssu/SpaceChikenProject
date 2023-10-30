@@ -5,6 +5,9 @@ Player::Player()
 {
 	hitbox.setOutlineThickness(1);
 	isFiring = false;
+	isSpecialing = false;
+	isInvincibleWhenFlicker = true;
+	totalTime = 50;
 
 	texturePlayer = ResourceManager::getTexture("Battlecruiser_Base.png");	
 

@@ -49,6 +49,8 @@ void Entity::takeTimeCurrent()
 
 			CleanDeadAssets();
 
+			takeTimeFlicker();
+
 			outScope();
 			break;
 		
@@ -92,7 +94,12 @@ void Entity::takeDamage(int damage)
 {
 	if (CurrentEnityState == EntityState::Alive)
 	{
+		if (isFlickering && isInvincibleWhenFlicker) return;
+
 		HitPoints -= damage;
+
+		if (!isFlickering) makeFlicker();
+
 		if (HitPoints <= 0)
 		{
 			killEntity();
@@ -173,4 +180,14 @@ void Entity::setDivation(sf::Vector2f divation)
 sf::Vector2f Entity::getVelocity()
 {
 	return Velocity;
+}
+
+void Entity::takeTimeFlicker() 
+{
+	if (!isFlickering) return;
+	Flicker::takeTimeFlicker();
+
+	for (int i = 0; i < animations.size(); i++)	 animations[i]->setFlickerColor(flickerColor);
+	
+	for (int i = 0; i <sprites.size(); i++)	 sprites[i]->setFlickerColor(flickerColor);
 }

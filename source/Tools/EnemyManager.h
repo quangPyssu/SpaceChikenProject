@@ -11,7 +11,7 @@ class EnemyManager : public SceneNode
 {
 public:
 	EnemyManager(Player& player, BulletManager& PlayerBullets_Standard,	BulletManager& PlayerBullets_Detroyer
-		,BulletManager& EnimesBullets, BulletManager& EnimesBullets_Vulnerable);
+		,BulletManager& EnimesBullets, BulletManager& EnimesBullets_Vulnerable, BulletManager& EnimesBullets_Indestructible);
 	~EnemyManager();
 
 	void takeTimeCurrent() override;
@@ -33,5 +33,6 @@ private:
 	BulletManager* PlayerBullets_Detroyer;
 	BulletManager* EnimesBullets;
 	BulletManager* EnimesBullets_Vulnerable;
+	BulletManager* EnimesBullets_Indestructible;
 };
 

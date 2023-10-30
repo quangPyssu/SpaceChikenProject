@@ -12,7 +12,7 @@
 
 #define null NULL
 
-using IntArray7 = std::array<int, 7>;
+typedef std::pair<int,int> ii;
 
 namespace Constants
 {
@@ -75,6 +75,7 @@ namespace Colors
     extern sf::Color Delete_Color;
     extern sf::Color Insert_Color;
     extern sf::Color Search_Color;
+    extern sf::Color tran_Yellow;
 };
 
 namespace getScale

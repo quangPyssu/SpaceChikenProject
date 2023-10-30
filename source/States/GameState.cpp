@@ -18,6 +18,7 @@ GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 
 	EnimesBullets = new BulletManager(*player);
 	EnimesBullets_Vulnerable = new BulletManager(*player);
+	EnimesBullets_Indestructible = new BulletManager(*player);
 	PlayerBullets_Standard = new BulletManager(*player);
 	PlayerBullets_Detroyer = new BulletManager(*player);
 
@@ -25,17 +26,21 @@ GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 	PlayerBullets_Detroyer->addTarget(*EnimesBullets_Vulnerable);
 	PlayerBullets_Standard->addTarget(*EnimesBullets_Vulnerable);
 
-	enemyManager = new EnemyManager(*player, *PlayerBullets_Standard, *PlayerBullets_Detroyer, *EnimesBullets,*EnimesBullets_Vulnerable);
+	enemyManager = new EnemyManager(*player, *PlayerBullets_Standard, *PlayerBullets_Detroyer, *EnimesBullets,*EnimesBullets_Vulnerable,*EnimesBullets_Indestructible);
 
 	PushToObject(enemyManager, this);
 	PushToObject(EnimesBullets, this);
 	PushToObject(EnimesBullets_Vulnerable, this);
+	PushToObject(EnimesBullets_Indestructible, this);
 	PushToObject(player,this);	
 	PushToObject(PlayerBullets_Standard, this);
 	PushToObject(PlayerBullets_Detroyer, this);	
 
 	PBplayerHealth = new ProgressBar({ 10,WINDOW_SIZE.y-20 },Vector2f(WINDOW_SIZE.x-20,20), Colors::green,Colors::grey,"HP",player->HitPoints,PlayerMaxHP);
 	PushToObject(PBplayerHealth, this);
+
+	warningZone = new WarningZone();
+	PushToObject(warningZone, this);
 
 	window.setMouseCursorVisible(false);
 
@@ -62,15 +67,17 @@ GameState::~GameState()
 	window->setMouseCursorVisible(true);
 }
 
-void GameState::addEnemyPattern(EnemyPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, int total, float width, int widthCnt)
+void GameState::addEnemyPattern(EnemyPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, 
+	int total, float width, int widthCnt)
 {
 	EnemyPatternList.push_back(new EnemyPattern(type, *enemyManager, Position, Velocity, Acceleration, total, width, widthCnt));
 	PushToObject(EnemyPatternList.back(), this);
 }
 
-void GameState::addBulletPattern(BulletPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, int total, float width, int widthCnt)
+void GameState::addBulletPattern(BulletPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, 
+	int total, float width, int widthCnt, int timerStart, int timerEnd)
 {
-	BulletPatternList.push_back(new BulletPattern(type, *EnimesBullets, Position, Velocity, Acceleration, total, width, widthCnt));
+	BulletPatternList.push_back(new BulletPattern(type, *EnimesBullets, Position, Velocity, Acceleration, total, width, widthCnt,*warningZone,timerStart,timerEnd));
 	PushToObject(BulletPatternList.back(), this);
 }
 
@@ -117,7 +124,6 @@ void GameState::takeTimeCurrent()
 	if (isWaveEmpty())
 	{
 		breakTime--;
-		cout << "breakTime " << breakTime << endl;
 
 		if (breakTime <= 0)
 		{
@@ -201,7 +207,7 @@ void GameState::readAttackQueue()
 
 void GameState::readWaveQueue()
 {
-	if (levelReader.isWaveFinished()) // Wave is empty
+	if (levelReader.isLevelFinished()) // Level is empty
 		return;
 	
 	for (int i = 0; i < levelReader.WaveData.front().size(); i++)
@@ -213,20 +219,28 @@ void GameState::readWaveQueue()
 		{
 			if (levelReader.WaveData.front()[i][0])	// Enemy Pattern
 			{
-				addEnemyPattern((EnemyPatternType)levelReader.WaveData.front()[0][1], levelReader.WavePosition.front()[i], levelReader.WaveVelocity.front()[i],
-					levelReader.WaveAcceleration.front()[i], levelReader.WaveData.front()[0][2], levelReader.WaveData.front()[0][3],
-					levelReader.WaveData.front()[0][4]);
-				EnemyPatternList.back()->setTimer(0, levelReader.WaveData.front()[0][6]);
+				addEnemyPattern((EnemyPatternType)levelReader.WaveData.front()[i][1], levelReader.WavePosition.front()[i], levelReader.WaveVelocity.front()[i],
+					levelReader.WaveAcceleration.front()[i], levelReader.WaveData.front()[i][2], levelReader.WaveData.front()[i][3],
+					levelReader.WaveData.front()[i][4]);
+				EnemyPatternList.back()->setTimer(0, levelReader.WaveData.front()[i][6]);
 			}
 			else  // Bullet Pattern
 			{
-				addBulletPattern((BulletPatternType)levelReader.WaveData.front()[0][1], levelReader.WavePosition.front()[i], levelReader.WaveVelocity.front()[i],
-					levelReader.WaveAcceleration.front()[i], levelReader.WaveData.front()[0][2], levelReader.WaveData.front()[0][3],
-					levelReader.WaveData.front()[0][4]);
-				BulletPatternList.back()->setTimer(0, levelReader.WaveData.front()[0][6]);
+				addBulletPattern((BulletPatternType)levelReader.WaveData.front()[i][1], levelReader.WavePosition.front()[i], levelReader.WaveVelocity.front()[i],
+					levelReader.WaveAcceleration.front()[i], levelReader.WaveData.front()[i][2], levelReader.WaveData.front()[i][3],
+					levelReader.WaveData.front()[i][4], levelReader.WaveLoop.front()[i].ss/5, levelReader.WaveData.front()[i][6]);
+				//BulletPatternList.back()->setTimer();
 			}
 
-			levelReader.clearPattern(i);
+			if (levelReader.WaveLoop.front()[i].ff)
+			{
+				levelReader.WaveLoop.front()[i].ff--;
+				levelReader.WaveData.front()[i][5] = levelReader.WaveLoop.front()[i].ss;
+			}
+			else
+			{
+				if (levelReader.clearPattern(i)) i--;
+			}
 		}
 	}
 }

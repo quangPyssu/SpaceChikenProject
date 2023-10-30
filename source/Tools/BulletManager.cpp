@@ -113,8 +113,3 @@ void BulletManager::takeTimeCurrent()
 	
 
 };
-
-
-
-
-

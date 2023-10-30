@@ -42,7 +42,14 @@ void SceneNode::update(Event& event, Vector2f& MousePos)
 
 void SceneNode::takeTime()
 {
+    if (timerStart)
+    {
+        timerStart=max(timerStart-1,0);
+        Disable();
+    } else Able();
+
     if (isDisable) return;
+
     takeTimeCurrent();
 
     for (const auto& child : Children) child->takeTime();

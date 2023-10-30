@@ -2,10 +2,11 @@
 #include "../SceneNode.h"
 #include "../Animation/Animation.h"
 #include "../Animation/SpriteOnly.h"
+#include "../Animation/Flicker.h"
 
 enum EntityState { Alive = 0, Dying = 1, Dead = 2 };
 
-class Entity : public SceneNode
+class Entity : public SceneNode, protected Flicker
 {   
 
 public:
@@ -53,6 +54,7 @@ protected:
 
     void CleanDeadAssets();
 
+    void takeTimeFlicker() override;
 
 protected:
 
@@ -60,12 +62,12 @@ protected:
     int Damage = 0;    
 
     bool hasPhysics = false;
+    bool isInvincibleWhenFlicker = false;
 
     void takeDamage(int damage);
     void playSound(string soundName);
 
-    int timerStart = 0, timerEnd = -1;
-    
+    int timerEnd = -1;    
     
 
 protected:

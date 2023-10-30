@@ -1,8 +1,10 @@
 #include "BulletPattern.h"
 
-BulletPattern::BulletPattern(BulletPatternType type, BulletManager& bulletManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, int total, float width, int widthCnt)
+BulletPattern::BulletPattern(BulletPatternType type, BulletManager& bulletManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, 
+	int total, float width, int widthCnt, WarningZone& warningZong, int timerStart, int timerEnd)
 {
 	this->bulletManager = &bulletManager;
+	this->warningZone = &warningZong;
 
 	Position = Vector2f(Position.x * SCALE, Position.y * SCALE);
 	Velocity = Vector2f(Velocity.x * SCALE, Velocity.y * SCALE);
@@ -33,10 +35,22 @@ BulletPattern::BulletPattern(BulletPatternType type, BulletManager& bulletManage
 			entityList.push_back(tmp);
 		}
 
+		{
+			CircleShape* shape = new CircleShape();
+			shape->setRadius(width);
+			shape->setOrigin(width, width);
+			shape->setPosition(Position);
+			shape->setOutlineThickness(2);
+			shape->setFillColor(trans);
+			shape->setOutlineColor(Colors::tran_Yellow);
+
+			warningZone->addWarningZone(*shape, timerStart);
+		}
+
 		setUpPattern(Circle);
 		ApplyPhysics();
 		angleVelocity = 0.1;
-		setTimer(0, -1);
+		setTimer(timerStart, timerEnd);
 	}	
 		break;
 
@@ -50,10 +64,19 @@ BulletPattern::BulletPattern(BulletPatternType type, BulletManager& bulletManage
 			entityList.push_back(tmp);
 		}
 
+		{
+			RectangleShape* shape = new RectangleShape();
+			shape->setSize(Vector2f(width,(width*(total/widthCnt)/width)));
+			shape->setPosition(Position);
+			shape->setFillColor(Colors::tran_Yellow);
+
+			warningZone->addWarningZone(*shape, timerStart);
+		}
+
 		setUpPattern(Square);
 		ApplyPhysics();		
 		angleVelocity = 0.1;
-		setTimer(0, -1);
+		setTimer(timerStart, timerEnd);
 	}
 		break;
 
@@ -76,7 +99,7 @@ BulletPattern::BulletPattern(BulletPatternType type, BulletManager& bulletManage
 		rotationType = WithOwnVelocity;
 
 		setUpPattern(Shower);
-		setTimer(0, -1);
+		setTimer(timerStart, timerEnd);
 	}
 			break;	
 	
@@ -94,18 +117,29 @@ BulletPattern::BulletPattern(BulletPatternType type, BulletManager& bulletManage
 		setRotation(270);
 		rotationType = WithOwnVelocity;
 		setUpPattern(Firework);
-		setTimer(0, -1);
+		setTimer(timerStart, timerEnd);
+
+		{
+			CircleShape* shape = new CircleShape();
+			width = 20;
+			shape->setRadius(width);
+			shape->setOrigin(width, width);
+			shape->setPosition(Position);
+			shape->setFillColor(Colors::tran_Yellow);
+
+			warningZone->addWarningZone(*shape, timerStart);
+		}
 	}
 			break;
 
 	default:
 		break;
 	}
-
 }
 
 BulletPattern::BulletPattern(BulletPatternType type, BulletManager& bulletManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
-	int total, float width, int widthCnt, RotationType rotationType) : BulletPattern(type, bulletManager, Position, Velocity, Acceleration, total, width, widthCnt)
+	int total, float width, int widthCnt, WarningZone& warningZong, int timerStart, int timerEnd, RotationType rotationType)
+	: BulletPattern(type, bulletManager, Position, Velocity, Acceleration, total, width, widthCnt, warningZong, timerStart, timerEnd)
 {
 	this->rotationType = rotationType;
 }

@@ -17,7 +17,7 @@ public:
 
 	void pushEmptyWave();
 
-	void clearPattern(int id);
+	bool clearPattern(int id);
 
 	int waveCount = 0;
 
@@ -25,6 +25,8 @@ public:
 	std::queue <std::vector <sf::Vector2f>> WavePosition;
 	std::queue <std::vector <sf::Vector2f>> WaveVelocity;
 	std::queue <std::vector <sf::Vector2f>> WaveAcceleration;
+	std::queue <std::vector <ii> > WaveLoop; // first = number of loop, second = start timer
+	std::queue <int> WaveEnemyPatternCnt;  //number of enemy pattern in a wave
 };
 
 //	1 < -- - Number of Wave

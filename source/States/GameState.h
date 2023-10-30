@@ -9,6 +9,7 @@
 #include "../Entiy/BulletPattern.h"
 #include "../Entiy/EnemyPattern.h"
 #include "../Tools/LevelReader.h"
+#include "../Animation/WarningZone.h"
 #include "GameOverScreen.h"
 
 
@@ -39,14 +40,17 @@ private:
     BulletManager* PlayerBullets_Detroyer;
     BulletManager* EnimesBullets;   
     BulletManager* EnimesBullets_Vulnerable;
+    BulletManager* EnimesBullets_Indestructible;
 
     EnemyManager* enemyManager;
 
     vector <BulletPattern*> BulletPatternList;
     vector <EnemyPattern*> EnemyPatternList;    
 
-    void addEnemyPattern(EnemyPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, int total, float width, int widthCnt);
-    void addBulletPattern(BulletPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, int total, float width, int widthCnt);
+    void addEnemyPattern(EnemyPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, 
+        int total, float width, int widthCnt);
+    void addBulletPattern(BulletPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, 
+        int total, float width, int widthCnt,int timerStart,int timerEnd);
 
     void readAttackQueue();
     void readWaveQueue();
@@ -57,6 +61,8 @@ private:
 
     // UI
     ProgressBar* PBplayerHealth;
+
+    WarningZone* warningZone;
 
 
     bool wasPaused = false;

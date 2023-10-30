@@ -142,7 +142,9 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\Animation\Animation.cpp" />
+    <ClCompile Include="source\Animation\Flicker.cpp" />
     <ClCompile Include="source\Animation\SpriteOnly.cpp" />
+    <ClCompile Include="source\Animation\WarningZone.cpp" />
     <ClCompile Include="source\Button.cpp" />
     <ClCompile Include="source\Core\Global.cpp" />
     <ClCompile Include="source\Entiy\Bullet.cpp" />
@@ -167,7 +169,9 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="source\Animation\Animation.h" />
+    <ClInclude Include="source\Animation\Flicker.h" />
     <ClInclude Include="source\Animation\SpriteOnly.h" />
+    <ClInclude Include="source\Animation\WarningZone.h" />
     <ClInclude Include="source\Button.h" />
     <ClInclude Include="source\Core\Global.h" />
     <ClInclude Include="source\Entiy\Bullet.h" />

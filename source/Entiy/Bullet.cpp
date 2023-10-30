@@ -4,6 +4,7 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 {
 	setPosition(StartPosition);
 	hitbox.setPosition(StartPosition);
+	canFlicker = false;
 
 	switch (type)
 	{
@@ -103,8 +104,3 @@ void Bullet::takeTimeCurrent()
 	Entity::takeTimeCurrent();
 
 }
-
-
-
-
-

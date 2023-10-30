@@ -27,6 +27,8 @@ void LevelReader::ReadLevel(int id)
 		std::vector <sf::Vector2f> patternPosition;
 		std::vector <sf::Vector2f> patternVelocity;
 		std::vector <sf::Vector2f> patternAcceleration;
+		std::vector <ii> patternLoop;
+		int EnemyPatternCnt = 0;
 
 		for (int j = 0; j < patternCount; j++)
 		{
@@ -34,7 +36,7 @@ void LevelReader::ReadLevel(int id)
 
 			int patternType; fin >> patternType;
 
-			int total; fin >> total;
+			int total; fin >> total; 
 
 			int width; fin >> width;
 
@@ -65,13 +67,21 @@ void LevelReader::ReadLevel(int id)
 
 			patternPosition.push_back(position);
 			patternVelocity.push_back(velocity);
-			patternAcceleration.push_back(acceleration);			
+			patternAcceleration.push_back(acceleration);		
+
+			int LoopCnt; fin >> LoopCnt;
+			int LoopTimer; fin >> LoopTimer;
+			patternLoop.push_back({ LoopCnt,LoopTimer });
+
+			if (patternBool == 1) EnemyPatternCnt++;
 		}
 
 		WaveData.push(patternData);
 		WavePosition.push(patternPosition);
 		WaveVelocity.push(patternVelocity);
 		WaveAcceleration.push(patternAcceleration);
+		WaveLoop.push(patternLoop);
+		WaveEnemyPatternCnt.push(EnemyPatternCnt);
 	}
 	
 	fin.close();
@@ -83,16 +93,11 @@ void LevelReader::ReadLevel(int id)
 //	Pattern Bool = 1 -> Enemy Pattern, 0 -> Bullet Pattern
 //	1 2 20 300 5 0 -1 < --   Pattern Bool, Pattern type, total, width, widthCnt, start timer, kill timer(int)
 //	100 100 -5 0 0 0 0 < --  Position, Velocity, Acceleration(Vector2f)
+//  1 0 < -- LoopCnt, LoopTimer(int)
 
 void LevelReader::gotoWave(int idWave)
 {
-	for (int i = 0; i <= idWave; i++)
-	{
-		WaveData.pop();
-		WavePosition.pop();
-		WaveVelocity.pop();
-		WaveAcceleration.pop();
-	}
+	for (int i = 0; i <= idWave; i++) gotoNextWave();
 }
 
 void LevelReader::gotoNextWave()
@@ -101,6 +106,8 @@ void LevelReader::gotoNextWave()
 	WavePosition.pop();
 	WaveVelocity.pop();
 	WaveAcceleration.pop();
+	WaveLoop.pop();
+	WaveEnemyPatternCnt.pop();
 }
 
 void LevelReader::pushEmptyWave()
@@ -109,11 +116,15 @@ void LevelReader::pushEmptyWave()
 	std::vector <sf::Vector2f> patternPosition;
 	std::vector <sf::Vector2f> patternVelocity;
 	std::vector <sf::Vector2f> patternAcceleration;
+	std::vector <std::pair <int, int>> patternLoop;
+
 
 	WaveData.push(patternData);
 	WavePosition.push(patternPosition);
 	WaveVelocity.push(patternVelocity);
 	WaveAcceleration.push(patternAcceleration);
+	WaveLoop.push(patternLoop);
+	WaveEnemyPatternCnt.push(0);
 }
 
 void LevelReader::cleanLevel()
@@ -124,6 +135,8 @@ void LevelReader::cleanLevel()
 		WavePosition.pop();
 		WaveVelocity.pop();
 		WaveAcceleration.pop();
+		WaveLoop.pop();
+		WaveEnemyPatternCnt.pop();
 	}
 }
 
@@ -135,15 +148,20 @@ bool LevelReader::isLevelFinished()
 bool LevelReader::isWaveFinished()
 {
 	if (WaveData.empty()) return true;
-	return WaveData.front().empty();
+	return (WaveEnemyPatternCnt.front() == 0);
 }
 
-void LevelReader::clearPattern(int id)
+bool LevelReader::clearPattern(int id)
 {
-	if (WaveData.empty()) return;
+	if (WaveData.empty() || id>= WaveData.front().size()) return false;
+
+	if (WaveData.front()[id][0] == 1) WaveEnemyPatternCnt.front()--;
 
 	WaveData.front().erase(WaveData.front().begin() + id);
 	WavePosition.front().erase(WavePosition.front().begin() + id);
 	WaveVelocity.front().erase(WaveVelocity.front().begin() + id);
 	WaveAcceleration.front().erase(WaveAcceleration.front().begin() + id);
+	WaveLoop.front().erase(WaveLoop.front().begin() + id);
+
+	return true;
 }

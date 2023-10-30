@@ -1,13 +1,14 @@
 #include "EnemyManager.h"
 
 EnemyManager::EnemyManager(Player& player, BulletManager& PlayerBullets_Standard, BulletManager& PlayerBullets_Detroyer
-	, BulletManager& EnimesBullets, BulletManager& EnimesBullets_Vulnerable)
+	, BulletManager& EnimesBullets, BulletManager& EnimesBullets_Vulnerable, BulletManager& EnimesBullets_Indestructible)
 	: player(&player), PlayerBullets_Standard(&PlayerBullets_Standard), PlayerBullets_Detroyer(&PlayerBullets_Detroyer)
-	, EnimesBullets(&EnimesBullets) , EnimesBullets_Vulnerable(&EnimesBullets_Vulnerable)
+	, EnimesBullets(&EnimesBullets) , EnimesBullets_Vulnerable(&EnimesBullets_Vulnerable), EnimesBullets_Indestructible(&EnimesBullets_Indestructible)
 {
 
 	EnimesBullets.addTarget(player);
 	EnimesBullets_Vulnerable.addTarget(player);
+	EnimesBullets_Indestructible.addTarget(player);
 }
 
 EnemyManager::~EnemyManager()

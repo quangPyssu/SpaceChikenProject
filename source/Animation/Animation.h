@@ -48,6 +48,7 @@ public:
 	void setOrigin(Vector2f origin) ;
 	void setScale(Vector2f scale) ;
 	void setDivation(Vector2f divation) ;
+	void setFlickerColor(sf::Color color) ;
 
 	void setRotationDivation(float rotationDivation);
 

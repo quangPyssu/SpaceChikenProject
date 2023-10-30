@@ -68,10 +68,7 @@ void Animation::takeTimeCurrent()
 
 	sprite.setTextureRect(sf::IntRect(currentFrame%FramePerFloor * Width, Height*currentFloor, Width, Height));
 
-	if (!isRootSet)
-	{
-		setPosition(this->Parent->getPosition() + divation);
-	}
+	if (!isRootSet)	setPosition(this->Parent->getPosition() + divation);
 
 	setRotation(this->Parent->getRotation() + rotationDivation);
 	sprite.setRotation(getRotation());
@@ -127,4 +124,9 @@ void Animation::setDivation(Vector2f divation)
 void Animation::setResetFrame(int resetFrame)
 {
 	this->resetFrame = resetFrame;
+}
+
+void Animation::setFlickerColor(sf::Color color)
+{
+	sprite.setColor(color);
 }

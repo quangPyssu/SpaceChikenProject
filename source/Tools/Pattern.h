@@ -4,7 +4,7 @@
 
 enum PatternType
 {
-	Circle,Square,Shower,Firework
+	None,Circle,Square,Shower,Firework
 };
 
 enum RotationType
