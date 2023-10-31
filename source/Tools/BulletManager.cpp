@@ -8,6 +8,8 @@ BulletManager::BulletManager(Player& player) : player(&player)
 BulletManager::~BulletManager()
 {
 	BulletList.clear();
+	TargetList.clear();
+	BulletManagerList.clear();
 }
 
 void BulletManager::addBullet(BulletType type,sf::Vector2f position)

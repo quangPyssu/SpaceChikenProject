@@ -51,9 +51,15 @@ void Pattern::setUpPattern(PatternType type)
 
 		case Shower:
 		{
+			if (width <= 0) width = 300 * SCALE;
+
 			for (int i = 0; i < total; i++)
 			{
+				int x = (rand() % (int)(width * 2)) - width;
+				int y = (rand() % (int)(width * 2)) - width;
 				Entity* tmp = entityList[i];
+
+				tmp->setPosition(tmp->getPosition()+Vector2f(x, y));
 
 				tmp->rotationDependent = true;
 				tmp->setRotation(tmp->RotationDivation);
@@ -76,7 +82,7 @@ void Pattern::setUpPattern(PatternType type)
 				Entity* tmp = entityList[i];
 
 				tmp->rotationDependent = true;
-				tmp->RotationDivation += i * 360 / total;
+				tmp->RotationDivation += i * 360 / total; 		
 				tmp->setRotation(tmp->RotationDivation);
 
 				// each fly out from origin
@@ -203,7 +209,6 @@ void Pattern::takeTimeCurrent()
 			}
 				break;
 		}
-	
 }
 
 void Pattern::setTimer(int timerStart, int timerEnd)

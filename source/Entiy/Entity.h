@@ -24,6 +24,8 @@ public:
 
     void setRootPos(Vector2f& rootPos);
 
+    void setPosition(Vector2f position) ;
+
     void setTimer(int timerStart, int timerEnd);
 
     EntityState CurrentEnityState = EntityState::Alive;

@@ -9,7 +9,7 @@ enum PatternType
 
 enum RotationType
 {
-	Spin,WithVelocity,tiltUp,WithOwnVelocity
+	defaultRotation,Spin,WithVelocity,tiltUp,WithOwnVelocity,SpinOwn
 };
 
 class Pattern : public Entity

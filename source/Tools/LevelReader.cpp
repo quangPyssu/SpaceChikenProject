@@ -20,80 +20,72 @@ void LevelReader::ReadLevel(int id)
 
 	for (int i = 0; i < waveCount; i++)
 	{
-		int patternCount;
-		fin >> patternCount;
-
+		int enemyPatternCnt; fin >> enemyPatternCnt;
+		int bulletPatternCnt; fin >> bulletPatternCnt;
+		
 		std::vector <std::vector <int>> patternData;
-		std::vector <sf::Vector2f> patternPosition;
-		std::vector <sf::Vector2f> patternVelocity;
-		std::vector <sf::Vector2f> patternAcceleration;
-		std::vector <ii> patternLoop;
-		int EnemyPatternCnt = 0;
+		std::vector <std::vector <sf::Vector2f>> patternAttribute;
+		std::vector <std::pair <int, int>> patternLoop;
 
-		for (int j = 0; j < patternCount; j++)
+		for (int j = 0; j < enemyPatternCnt; j++)
 		{
-			int patternBool; fin >> patternBool;
+			int enemyType, patternType, rotationType, total, width, widthCnt, startTimer, killTimer;
+			fin >> enemyType >> patternType >> rotationType >> total >> width >> widthCnt >> startTimer >> killTimer;
 
-			int patternType; fin >> patternType;
+			patternData.push_back({ enemyType, patternType, rotationType, total, width, widthCnt, startTimer, killTimer });
 
-			int total; fin >> total; 
+			float x, y, vx, vy, ax, ay;
+			fin >> x >> y >> vx >> vy >> ax >> ay;
 
-			int width; fin >> width;
+			patternAttribute.push_back({ {x, y}, {vx, vy}, {ax, ay} });
 
-			int widthCnt; fin >> widthCnt;
+			int loopCnt, loopTimer;
+			fin >> loopCnt >> loopTimer;
 
-			int startTimer; fin >> startTimer;
-
-			int killTimer; fin >> killTimer;
-
-			std::vector <int> pType;
-			patternData.push_back(pType);
-			
-			{
-				patternData.back().push_back(patternBool);
-				patternData.back().push_back(patternType);
-				patternData.back().push_back(total);
-				patternData.back().push_back(width);
-				patternData.back().push_back(widthCnt);
-				patternData.back().push_back(startTimer);
-				patternData.back().push_back(killTimer);
-			}
-
-			sf::Vector2f position;	fin >> position.x >> position.y;
-
-			sf::Vector2f velocity;  fin >> velocity.x >> velocity.y;
-
-			sf::Vector2f acceleration;	fin >> acceleration.x >> acceleration.y;
-
-			patternPosition.push_back(position);
-			patternVelocity.push_back(velocity);
-			patternAcceleration.push_back(acceleration);		
-
-			int LoopCnt; fin >> LoopCnt;
-			int LoopTimer; fin >> LoopTimer;
-			patternLoop.push_back({ LoopCnt,LoopTimer });
-
-			if (patternBool == 1) EnemyPatternCnt++;
+			patternLoop.push_back({ loopCnt, loopTimer });
 		}
 
-		WaveData.push(patternData);
-		WavePosition.push(patternPosition);
-		WaveVelocity.push(patternVelocity);
-		WaveAcceleration.push(patternAcceleration);
-		WaveLoop.push(patternLoop);
-		WaveEnemyPatternCnt.push(EnemyPatternCnt);
-	}
+		EnemyWaveData.push(patternData); patternData.clear();
+		EnemyWaveAttribute.push(patternAttribute);	patternAttribute.clear();
+		EnemyWaveLoop.push(patternLoop); patternLoop.clear();
+
+		for (int j=0; j<bulletPatternCnt; j++)
+		{
+			int bulletType, patternType, rotationType, total, width, widthCnt, startTimer, killTimer;
+			fin >> bulletType >> patternType >> rotationType >> total >> width >> widthCnt >> startTimer >> killTimer;
+
+			patternData.push_back({ bulletType, patternType, rotationType, total, width, widthCnt, startTimer, killTimer });
+
+			float x, y, vx, vy, ax, ay;
+			fin >> x >> y >> vx >> vy >> ax >> ay;
+
+			patternAttribute.push_back({ {x, y}, {vx, vy}, {ax, ay} });
+
+			int loopCnt, loopTimer;
+			fin >> loopCnt >> loopTimer;
+
+			patternLoop.push_back({ loopCnt, loopTimer });
+		}
+
+		BulletWaveData.push(patternData); patternData.clear();
+		BulletWaveAttribute.push(patternAttribute); patternAttribute.clear();
+		BulletWaveLoop.push(patternLoop); patternLoop.clear();
+	}	
 	
 	fin.close();
 }
 
 //  1 < -- Number of Wave
 //
-//	1 < -- number of enemy pattern + bullet pattern
-//	Pattern Bool = 1 -> Enemy Pattern, 0 -> Bullet Pattern
-//	1 2 20 300 5 0 -1 < --   Pattern Bool, Pattern type, total, width, widthCnt, start timer, kill timer(int)
+//	1 1 < -- number of enemy pattern + bullet pattern
+
+//	0 2 0 10 300 5 0 -1 < --   enemyType, patternType, rotationType, total, width, widthCnt, start timer, kill timer(int)
 //	100 100 -5 0 0 0 0 < --  Position, Velocity, Acceleration(Vector2f)
-//  1 0 < -- LoopCnt, LoopTimer(int)
+// 	1 0 < -- LoopCnt, LoopTimer(int)
+
+//	0 1 0 20 300 5 100 -1 < --   bulletType, patternType, rotationType, total, width, widthCnt, start timer, kill timer(int)
+//	200 200 -5 0 0 0 0 < --  Position, Velocity, Acceleration(Vector2f)
+// 	100 500 < -- LoopCnt, LoopTimer(int)
 
 void LevelReader::gotoWave(int idWave)
 {
@@ -102,66 +94,67 @@ void LevelReader::gotoWave(int idWave)
 
 void LevelReader::gotoNextWave()
 {
-	WaveData.pop();
-	WavePosition.pop();
-	WaveVelocity.pop();
-	WaveAcceleration.pop();
-	WaveLoop.pop();
-	WaveEnemyPatternCnt.pop();
+	EnemyWaveData.pop();
+	EnemyWaveAttribute.pop();
+	EnemyWaveLoop.pop();
+
+	BulletWaveData.pop();
+	BulletWaveAttribute.pop();
+	BulletWaveLoop.pop();
 }
 
 void LevelReader::pushEmptyWave()
 {
 	std::vector <std::vector <int>> patternData;
-	std::vector <sf::Vector2f> patternPosition;
-	std::vector <sf::Vector2f> patternVelocity;
-	std::vector <sf::Vector2f> patternAcceleration;
+	std::vector <std::vector <sf::Vector2f>> patternAttribute;
 	std::vector <std::pair <int, int>> patternLoop;
 
 
-	WaveData.push(patternData);
-	WavePosition.push(patternPosition);
-	WaveVelocity.push(patternVelocity);
-	WaveAcceleration.push(patternAcceleration);
-	WaveLoop.push(patternLoop);
-	WaveEnemyPatternCnt.push(0);
+	EnemyWaveData.push(patternData);
+	EnemyWaveAttribute.push(patternAttribute);
+	EnemyWaveLoop.push(patternLoop);
+
+	BulletWaveData.push(patternData);
+	BulletWaveAttribute.push(patternAttribute);
+	BulletWaveLoop.push(patternLoop);	
 }
 
 void LevelReader::cleanLevel()
 {
-	while (!WaveData.empty())
+	while (!EnemyWaveData.empty())
 	{
-		WaveData.pop();
-		WavePosition.pop();
-		WaveVelocity.pop();
-		WaveAcceleration.pop();
-		WaveLoop.pop();
-		WaveEnemyPatternCnt.pop();
+		gotoNextWave();
 	}
 }
 
 bool LevelReader::isLevelFinished()
 {
-	return WaveData.empty();
+	return EnemyWaveData.empty();
 }
 
 bool LevelReader::isWaveFinished()
 {
-	if (WaveData.empty()) return true;
-	return (WaveEnemyPatternCnt.front() == 0);
+	if (EnemyWaveData.empty()) return true;
+	return (EnemyWaveData.front().empty());
 }
 
-bool LevelReader::clearPattern(int id)
+bool LevelReader::clearEnemyPattern(int id)
 {
-	if (WaveData.empty() || id>= WaveData.front().size()) return false;
+	if (EnemyWaveData.empty() || id >= EnemyWaveData.front().size()) return false;
 
-	if (WaveData.front()[id][0] == 1) WaveEnemyPatternCnt.front()--;
+	EnemyWaveData.front().erase(EnemyWaveData.front().begin() + id);
+	EnemyWaveAttribute.front().erase(EnemyWaveAttribute.front().begin() + id);
+	EnemyWaveLoop.front().erase(EnemyWaveLoop.front().begin() + id);
 
-	WaveData.front().erase(WaveData.front().begin() + id);
-	WavePosition.front().erase(WavePosition.front().begin() + id);
-	WaveVelocity.front().erase(WaveVelocity.front().begin() + id);
-	WaveAcceleration.front().erase(WaveAcceleration.front().begin() + id);
-	WaveLoop.front().erase(WaveLoop.front().begin() + id);
+	return true;
+}
+bool LevelReader::clearBulletPattern(int id)
+{
+	if (EnemyWaveData.empty() || id >= BulletWaveData.front().size()) return false;
+
+	BulletWaveAttribute.front().erase(BulletWaveAttribute.front().begin() + id);
+	BulletWaveData.front().erase(BulletWaveData.front().begin() + id);
+	BulletWaveLoop.front().erase(BulletWaveLoop.front().begin() + id);
 
 	return true;
 }

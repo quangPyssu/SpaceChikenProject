@@ -30,6 +30,9 @@ App::App()
 
 	Constants::WINDOW_SIZE = sf::Vector2f(window->getSize().x,window->getSize().y);
 
+	OutScopeX = { -300 * SCALE,WINDOW_SIZE.x * SCALE };
+	OutScopeY = { -300 * SCALE,WINDOW_SIZE.y * SCALE };
+
 	state_stk = new StateSteak(*window);
 
 	//delete later	

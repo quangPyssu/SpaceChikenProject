@@ -21,6 +21,8 @@ void WarningZone::takeTimeCurrent()
 	for (int i = 0; i < RectangleWarningZone.size(); i++)
 	{
 		RectangleWarningZone[i].ss--;
+		RectangleWarningZone[i].ff.setFillColor(RectangleWarningZone[i].ff.getFillColor() + sf::Color(0, 0, 0, 1));
+
 		if (RectangleWarningZone[i].ss <= 0)
 		{
 			RectangleWarningZone.erase(RectangleWarningZone.begin() + i);
@@ -31,6 +33,8 @@ void WarningZone::takeTimeCurrent()
 	for (int i = 0; i < CircleWarningZone.size(); i++)
 	{
 		CircleWarningZone[i].ss--;
+		CircleWarningZone[i].ff.setFillColor(CircleWarningZone[i].ff.getFillColor() + sf::Color(0, 0, 0, 1));
+
 		if (CircleWarningZone[i].ss <= 0)
 		{
 			CircleWarningZone.erase(CircleWarningZone.begin() + i);
@@ -41,10 +45,12 @@ void WarningZone::takeTimeCurrent()
 
 void WarningZone::addWarningZone(sf::RectangleShape shape, int timeToLive)
 {
+	shape.setFillColor(shape.getFillColor() - sf::Color(0, 0, 0, 255));
 	RectangleWarningZone.push_back(make_pair(shape, timeToLive));
 }
 
 void WarningZone::addWarningZone(sf::CircleShape shape, int timeToLive)
 {
+	shape.setFillColor(shape.getFillColor() - sf::Color(0, 0, 0, 255));
 	CircleWarningZone.push_back(make_pair(shape, timeToLive));
 }

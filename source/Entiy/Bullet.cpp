@@ -3,7 +3,6 @@
 Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 {
 	setPosition(StartPosition);
-	hitbox.setPosition(StartPosition);
 	canFlicker = false;
 
 	switch (type)
@@ -56,11 +55,11 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 		//hitbox.setOutlineThickness(1);
 
 		hitbox.setFillColor(Colors::trans);
-		hitbox.setSize({ 20,1000 });
+		hitbox.setSize(Vector2f( 20,(double) SCALE*1000 ));
 		hitbox.setOrigin(hitbox.getSize().x / 2, hitbox.getSize().y);
 
 		animations.push_back(new Animation(10,4, 1,1, { 0,0 }, { 0,0.5 }, Vector2f(0,-30), "QuicklyBeam.png"));
-		animations.back()->setScale({4.3,1});
+		animations.back()->setScale({5.5,1});
 		animations.back()->setRotationDivation(-90);
 		animations.back()->PushToObject(animations.back(), this);
 
@@ -74,22 +73,26 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 		Acceleration = { 0,0 };
 		break;
 	}
-	case Enemy_Astroid:
+
+	case Astroid:
 	{
-		hitbox.setFillColor(Colors::purple);
-		hitbox.setSize({ 70,70 });
+		hitbox.setFillColor(Colors::trans);
+		hitbox.setOutlineColor(Colors::purple);
+		hitbox.setSize({ 80,80 });
 		hitbox.setOrigin(hitbox.getSize().x / 2, hitbox.getSize().y / 2);
 
-
-		sprites.push_back(new SpriteOnly("egg.png", Vector2f(0, 0)));
+		int astroidId = rand() % 3;
+		std::string path = "Astroid_" + std::to_string(astroidId) + ".png";
+		sprites.push_back(new SpriteOnly(path, Vector2f(0, 0)));
 		sprites.back()->PushToObject(sprites.back(), this);
 		sprites.back()->setOrigin({ 0.5, 0.5 });
-		sprites.back()->setScale(0.5);
+		sprites.back()->setScale(1);
 
 		isBulletDestructible = true;
-		Damage = 1;
+		HitPoints = 75;
+		Damage = 5;
 
-		Velocity = { 0, 100 };
+		Velocity = { 100, 100 };
 		Acceleration = { 0,0 };
 		break;
 	}

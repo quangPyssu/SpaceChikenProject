@@ -14,11 +14,16 @@ GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 	backgroundSprite.setScale(getScale::getScaleMax(sf::Vector2f(backgroundSprite.getTextureRect().width, backgroundSprite.getTextureRect().height), Constants::WINDOW_SIZE));
 	backgroundSprite.setPosition(0.0f, WINDOW_SIZE.y - BGHeight * SCALE );
 
+	BulletFilter[Enemy_Bullet_Normal] = 0;
+	BulletFilter[Astroid] = 1;
+	BulletFilter[Player_Bullet_Normal] = 2;
+	BulletFilter[Player_Laser_Destroyer] = 3;
+	BulletFilter[Player_Bullet_Destroyer] = 3;
+
 	player = new Player(); 
 
 	EnimesBullets = new BulletManager(*player);
 	EnimesBullets_Vulnerable = new BulletManager(*player);
-	EnimesBullets_Indestructible = new BulletManager(*player);
 	PlayerBullets_Standard = new BulletManager(*player);
 	PlayerBullets_Detroyer = new BulletManager(*player);
 
@@ -26,15 +31,17 @@ GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 	PlayerBullets_Detroyer->addTarget(*EnimesBullets_Vulnerable);
 	PlayerBullets_Standard->addTarget(*EnimesBullets_Vulnerable);
 
-	enemyManager = new EnemyManager(*player, *PlayerBullets_Standard, *PlayerBullets_Detroyer, *EnimesBullets,*EnimesBullets_Vulnerable,*EnimesBullets_Indestructible);
+	enemyManager = new EnemyManager(*player, *PlayerBullets_Standard, *PlayerBullets_Detroyer, *EnimesBullets,*EnimesBullets_Vulnerable);
 
 	PushToObject(enemyManager, this);
 	PushToObject(EnimesBullets, this);
 	PushToObject(EnimesBullets_Vulnerable, this);
-	PushToObject(EnimesBullets_Indestructible, this);
 	PushToObject(player,this);	
 	PushToObject(PlayerBullets_Standard, this);
 	PushToObject(PlayerBullets_Detroyer, this);	
+
+	//BulletManagerList.push_back(EnimesBullets); BulletManagerList.push_back(EnimesBullets_Vulnerable);
+	//BulletManagerList.push_back(PlayerBullets_Standard); BulletManagerList.push_back(PlayerBullets_Detroyer);
 
 	PBplayerHealth = new ProgressBar({ 10,WINDOW_SIZE.y-20 },Vector2f(WINDOW_SIZE.x-20,20), Colors::green,Colors::grey,"HP",player->HitPoints,PlayerMaxHP);
 	PushToObject(PBplayerHealth, this);
@@ -48,11 +55,12 @@ GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 	levelReader.ReadLevel(CurrentLevel);
 
 	{
+		//enemyManager->addEnemy(EnemyType::Enemy_Chicken_1);
 		//addEnemyPattern(Chicken_Circle, { 400,100 }, { 10,0 }, {-1,-1}, 10, 10, 7);
 		//addEnemyPattern(Chicken_Square, { 400,100 }, { -10,0 }, { -1,-1 }, 21, 400, 7);
 		//addBulletPattern(Enemy_Normal_Square, { 400,100 }, { 10,0 }, { -1,-1 }, 30, 200, 10);
 		//addBulletPattern(Enemy_Normal_Circle, { 400,100 }, {-10,0 }, { -1,-1 }, 30, 200, 1);
-		//BulletPatternList.back()->setTimer(0,600);
+		//addBulletPattern(Astroid_Shower, { 0,0 }, { 5,5 }, { 0,0 }, 5, 300, 1, 0, -1);
 		//addBulletPattern(Enemy_Normal_Firework, { 400,100 }, { 20,20 }, { -5,-5 }, 30, 0, 1);
 		//addBulletPattern(Enemy_Normal_Shower, { 0,0 }, { 20,20 }, { 0,0 }, 25, 300, 1);
 	}
@@ -64,20 +72,25 @@ GameState::~GameState()
 	ResourceManager::unloadTexture("Battlecruiser_Base.png");
 	ResourceManager::unloadTexture("FireJet.png");
 	ResourceManager::unloadTexture("Bullet.png");
+	ResourceManager::unloadTexture("Enemy_Bullet.png");
+	ResourceManager::unloadTexture("ThanGa.png");
+
 	window->setMouseCursorVisible(true);
+
+	BulletManagerList.clear();
 }
 
-void GameState::addEnemyPattern(EnemyPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, 
+void GameState::addEnemyPattern(EnemyType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
 	int total, float width, int widthCnt)
 {
-	EnemyPatternList.push_back(new EnemyPattern(type, *enemyManager, Position, Velocity, Acceleration, total, width, widthCnt));
+	EnemyPatternList.push_back(new EnemyPattern(type,patternType, rotationType, *enemyManager, Position, Velocity, Acceleration, total, width, widthCnt));
 	PushToObject(EnemyPatternList.back(), this);
 }
 
-void GameState::addBulletPattern(BulletPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, 
+void GameState::addBulletPattern(BulletType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
 	int total, float width, int widthCnt, int timerStart, int timerEnd)
 {
-	BulletPatternList.push_back(new BulletPattern(type, *EnimesBullets, Position, Velocity, Acceleration, total, width, widthCnt,*warningZone,timerStart,timerEnd));
+	BulletPatternList.push_back(new BulletPattern(type, patternType, rotationType, *EnimesBullets, Position, Velocity, Acceleration, total, width, widthCnt,*warningZone,timerStart,timerEnd));
 	PushToObject(BulletPatternList.back(), this);
 }
 
@@ -198,7 +211,6 @@ void GameState::readAttackQueue()
 			}
 			break;
 
-
 		}
 		enemyManager->AttackQueueType.pop();
 		enemyManager->AttackQueuePosition.pop();
@@ -207,41 +219,66 @@ void GameState::readAttackQueue()
 
 void GameState::readWaveQueue()
 {
-	if (levelReader.isLevelFinished()) // Level is empty
-		return;
+	if (levelReader.isLevelFinished()) return;
 	
-	for (int i = 0; i < levelReader.WaveData.front().size(); i++)
+	for (int i = 0; i < levelReader.EnemyWaveData.front().size(); i++)
 	{
-		//cout << levelReader.WaveData.front().size() << endl;
-		levelReader.WaveData.front()[i][5] = max(0, levelReader.WaveData.front()[i][5] - 1);
-		
-		if (levelReader.WaveData.front()[i][5] <= 0) // Time to add a new pattern with WaveData, WavePosition, WaveVelocity, WaveAcceleration;
-		{
-			if (levelReader.WaveData.front()[i][0])	// Enemy Pattern
-			{
-				addEnemyPattern((EnemyPatternType)levelReader.WaveData.front()[i][1], levelReader.WavePosition.front()[i], levelReader.WaveVelocity.front()[i],
-					levelReader.WaveAcceleration.front()[i], levelReader.WaveData.front()[i][2], levelReader.WaveData.front()[i][3],
-					levelReader.WaveData.front()[i][4]);
-				EnemyPatternList.back()->setTimer(0, levelReader.WaveData.front()[i][6]);
-			}
-			else  // Bullet Pattern
-			{
-				addBulletPattern((BulletPatternType)levelReader.WaveData.front()[i][1], levelReader.WavePosition.front()[i], levelReader.WaveVelocity.front()[i],
-					levelReader.WaveAcceleration.front()[i], levelReader.WaveData.front()[i][2], levelReader.WaveData.front()[i][3],
-					levelReader.WaveData.front()[i][4], levelReader.WaveLoop.front()[i].ss/5, levelReader.WaveData.front()[i][6]);
-				//BulletPatternList.back()->setTimer();
-			}
+		levelReader.EnemyWaveData.front()[i][6] = max(0, levelReader.EnemyWaveData.front()[i][6] - 1);
 
-			if (levelReader.WaveLoop.front()[i].ff)
+		if (!levelReader.EnemyWaveData.front()[i][6]) // add new enemy wave
+		{
+			EnemyType type = static_cast<EnemyType>(levelReader.EnemyWaveData.front()[i][0]);
+			PatternType patternType = static_cast<PatternType>(levelReader.EnemyWaveData.front()[i][1]);
+			RotationType rotationType = static_cast<RotationType>(levelReader.EnemyWaveData.front()[i][2]);
+			Vector2f Position = Vector2f(levelReader.EnemyWaveAttribute.front()[i][0].x, levelReader.EnemyWaveAttribute.front()[i][0].y);
+			Vector2f Velocity = Vector2f(levelReader.EnemyWaveAttribute.front()[i][1].x, levelReader.EnemyWaveAttribute.front()[i][1].y);
+			Vector2f Acceleration = Vector2f(levelReader.EnemyWaveAttribute.front()[i][2].x, levelReader.EnemyWaveAttribute.front()[i][2].y);
+			int total = levelReader.EnemyWaveData.front()[i][3];
+			float width = levelReader.EnemyWaveData.front()[i][4];
+			int widthCnt = levelReader.EnemyWaveData.front()[i][5];
+
+			//cout << type << " " << patternType << " " << rotationType << " " << Position.x << " " << Position.y << " " << Velocity.x << " " << Velocity.y << " " << Acceleration.x << " " << Acceleration.y << " " << total << " " << width << " " << widthCnt << endl;
+			addEnemyPattern(type, patternType, rotationType, Position, Velocity, Acceleration, total, width, widthCnt);
+			EnemyPatternList.back()->setTimer(0, levelReader.EnemyWaveData.front()[i][7]);
+
+			if (levelReader.EnemyWaveLoop.front()[i].ff)
 			{
-				levelReader.WaveLoop.front()[i].ff--;
-				levelReader.WaveData.front()[i][5] = levelReader.WaveLoop.front()[i].ss;
+				levelReader.EnemyWaveLoop.front()[i].ff--;
+				levelReader.EnemyWaveData.front()[i][6] = levelReader.EnemyWaveLoop.front()[i].ss;
 			}
-			else
+			else if (levelReader.clearEnemyPattern(i)) i--;
+		}		
+	}
+
+	for (int i = 0; i < levelReader.BulletWaveData.front().size(); i++)
+	{
+		levelReader.BulletWaveData.front()[i][6] = max(0, levelReader.BulletWaveData.front()[i][6] - 1);
+
+		if (!levelReader.BulletWaveData.front()[i][6]) // add new bullet wave
+		{
+			BulletType type = static_cast<BulletType>(levelReader.BulletWaveData.front()[i][0]);
+			PatternType patternType = static_cast<PatternType>(levelReader.BulletWaveData.front()[i][1]);
+			RotationType rotationType = static_cast<RotationType>(levelReader.BulletWaveData.front()[i][2]);
+			Vector2f Position = Vector2f(levelReader.BulletWaveAttribute.front()[i][0].x, levelReader.BulletWaveAttribute.front()[i][0].y);
+			Vector2f Velocity = Vector2f(levelReader.BulletWaveAttribute.front()[i][1].x, levelReader.BulletWaveAttribute.front()[i][1].y);
+			Vector2f Acceleration = Vector2f(levelReader.BulletWaveAttribute.front()[i][2].x, levelReader.BulletWaveAttribute.front()[i][2].y);
+			int total = levelReader.BulletWaveData.front()[i][3];
+			float width = levelReader.BulletWaveData.front()[i][4];
+			int widthCnt = levelReader.BulletWaveData.front()[i][5];
+			int timerStart = levelReader.BulletWaveLoop.front()[i].ss / 5;
+			int timerEnd = levelReader.BulletWaveData.front()[i][7];
+
+			//cout << type << " " << patternType << " " << rotationType << " " << Position.x << " " << Position.y << " " << Velocity.x << " " << Velocity.y << " " << Acceleration.x << " " << Acceleration.y << " " << total << " " << width << " " << widthCnt << endl;
+			//cout << timerStart << " " << timerEnd << endl;
+			addBulletPattern(type, patternType, rotationType, Position, Velocity, Acceleration, total, width, widthCnt, timerStart, timerEnd);
+
+			if (levelReader.BulletWaveLoop.front()[i].ff)
 			{
-				if (levelReader.clearPattern(i)) i--;
+				levelReader.BulletWaveLoop.front()[i].ff--;
+				levelReader.BulletWaveData.front()[i][6] = levelReader.BulletWaveLoop.front()[i].ss;
 			}
-		}
+			else if (levelReader.clearBulletPattern(i)) i--;
+		}		
 	}
 }
 

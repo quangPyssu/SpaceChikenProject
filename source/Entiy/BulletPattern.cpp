@@ -1,10 +1,13 @@
 #include "BulletPattern.h"
 
-BulletPattern::BulletPattern(BulletPatternType type, BulletManager& bulletManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, 
+BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, RotationType rotationType, 
+	BulletManager& bulletManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
 	int total, float width, int widthCnt, WarningZone& warningZong, int timerStart, int timerEnd)
 {
 	this->bulletManager = &bulletManager;
 	this->warningZone = &warningZong;
+	this->type = patternType;
+	this->rotationType = rotationType;
 
 	Position = Vector2f(Position.x * SCALE, Position.y * SCALE);
 	Velocity = Vector2f(Velocity.x * SCALE, Velocity.y * SCALE);
@@ -14,6 +17,7 @@ BulletPattern::BulletPattern(BulletPatternType type, BulletManager& bulletManage
 	setVelocity(Velocity);
 	setAcceleration(Acceleration);
 	setPosition(Position);	
+	HitPoints = 9999;
 
 	this->total = total;
 	this->width = width;
@@ -21,127 +25,97 @@ BulletPattern::BulletPattern(BulletPatternType type, BulletManager& bulletManage
 
 	setVelocity({ (float)SCALE * Velocity.x,(float)SCALE * Velocity.y });
 	Destructible = true;
-	rotationType = Spin;	
 
-	switch (type)
+	for (int i=0;i<total;i++)
 	{
-	case Enemy_Normal_Circle:
-	{	
-		for (int i = 0; i < total; i++)
-		{
-			bulletManager.addBullet(Enemy_Bullet_Normal, Position);
-			Bullet* tmp = bulletManager.BulletList.back();
-			tmp->RotationDivation = 90;
-			entityList.push_back(tmp);
-		}
+		bulletManager.addBullet(bulletType, Position);
+		Bullet* tmp = bulletManager.BulletList.back();
+		entityList.push_back(tmp);
+	}
 
+	switch (bulletType)
+	{
+		case Enemy_Bullet_Normal:
 		{
+			for (int i = 0; i < total; i++)
+			{
+				Bullet* tmp = bulletManager.BulletList[i];
+				tmp->RotationDivation = 90;
+			}
+
+		}
+			break;
+
+		case Astroid:
+		{
+			for (int i = 0; i < total; i++)
+			{
+				Bullet* tmp = bulletManager.BulletList[i];
+				tmp->RotationDivation = rand() % 360;
+			}
+		}
+		break;
+	}
+
+	switch (patternType)
+	{
+		case Circle:
+		{
+			//if (rotationType == defaultRotation) this->rotationType = Spin;
+			setUpPattern(Circle);
+
 			CircleShape* shape = new CircleShape();
 			shape->setRadius(width);
 			shape->setOrigin(width, width);
 			shape->setPosition(Position);
 			shape->setOutlineThickness(2);
 			shape->setFillColor(trans);
-			shape->setOutlineColor(Colors::tran_Yellow);
+			shape->setOutlineColor(Colors::yellow);
 
 			warningZone->addWarningZone(*shape, timerStart);
 		}
+			break;
 
-		setUpPattern(Circle);
-		ApplyPhysics();
-		angleVelocity = 0.1;
-		setTimer(timerStart, timerEnd);
-	}	
-		break;
-
-	case Enemy_Normal_Square:
-	{
-		for (int i = 0; i < total; i++)
+		case Square:
 		{
-			bulletManager.addBullet(Enemy_Bullet_Normal, Position);
-			Bullet* tmp = bulletManager.BulletList.back();
-			tmp->RotationDivation = 90;
-			entityList.push_back(tmp);
-		}
+			if (rotationType == defaultRotation) this->rotationType = WithVelocity;
+			setUpPattern(Square);
 
-		{
 			RectangleShape* shape = new RectangleShape();
-			shape->setSize(Vector2f(width,(width*(total/widthCnt)/width)));
+			shape->setSize(Vector2f(width, (width * (total / widthCnt) / width)));
 			shape->setPosition(Position);
-			shape->setFillColor(Colors::tran_Yellow);
+			shape->setFillColor(Colors::yellow);
 
 			warningZone->addWarningZone(*shape, timerStart);
 		}
+			break;
 
-		setUpPattern(Square);
-		ApplyPhysics();		
-		angleVelocity = 0.1;
-		setTimer(timerStart, timerEnd);
-	}
-		break;
-
-	case Enemy_Normal_Shower:
-	{
-		if (width <= 0) width = 200;
-
-		for (int i = 0; i < total; i++)
+		case Shower:
 		{
-			int x = (rand() % (int)(width*2)) - width;
-			int y = (rand() % (int)(width*2)) - width;
-			bulletManager.addBullet(Enemy_Bullet_Normal, Position+Vector2f(x,y));
-			Bullet* tmp = bulletManager.BulletList.back();
-			tmp->RotationDivation = 100;
-
-			entityList.push_back(tmp);
+			if (rotationType == defaultRotation) this->rotationType = WithOwnVelocity;
+			setUpPattern(Shower);
 		}
+			break;
 
-		setRotation(270);
-		rotationType = WithOwnVelocity;
-
-		setUpPattern(Shower);
-		setTimer(timerStart, timerEnd);
-	}
-			break;	
-	
-	case Enemy_Normal_Firework:
-	{
-		for (int i = 0; i < total; i++)
+		case Firework:
 		{
-			bulletManager.addBullet(Enemy_Bullet_Normal, Position);
-			Bullet* tmp = bulletManager.BulletList.back();
-			tmp->RotationDivation = 90;
-			//tmp->ApplyPhysics();
-			entityList.push_back(tmp);
-		}
+			if (rotationType == defaultRotation) this->rotationType = WithOwnVelocity;
+			setUpPattern(Firework);
 
-		setRotation(270);
-		rotationType = WithOwnVelocity;
-		setUpPattern(Firework);
-		setTimer(timerStart, timerEnd);
-
-		{
 			CircleShape* shape = new CircleShape();
 			width = 20;
 			shape->setRadius(width);
 			shape->setOrigin(width, width);
 			shape->setPosition(Position);
-			shape->setFillColor(Colors::tran_Yellow);
+			shape->setFillColor(Colors::yellow);
 
 			warningZone->addWarningZone(*shape, timerStart);
+			if (bulletType == Enemy_Bullet_Normal) setRotation(270);
 		}
-	}
 			break;
-
-	default:
-		break;
 	}
-}
 
-BulletPattern::BulletPattern(BulletPatternType type, BulletManager& bulletManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
-	int total, float width, int widthCnt, WarningZone& warningZong, int timerStart, int timerEnd, RotationType rotationType)
-	: BulletPattern(type, bulletManager, Position, Velocity, Acceleration, total, width, widthCnt, warningZong, timerStart, timerEnd)
-{
-	this->rotationType = rotationType;
+	setTimer(timerStart, timerEnd);
 }
 
 

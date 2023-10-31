@@ -26,6 +26,8 @@ namespace Constants
     extern const sf::Time TIME_PER_FRAME;
     extern sf::Vector2f WINDOW_SIZE;
 
+    extern std::pair <double, double> OutScopeX, OutScopeY;
+
     extern const float targetAspectRatio;
     extern bool IsPaused;
 

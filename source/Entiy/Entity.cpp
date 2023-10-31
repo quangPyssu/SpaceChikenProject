@@ -34,13 +34,11 @@ void Entity::takeTimeCurrent()
 			if (RootPos)
 			{
 				setPosition(*RootPos + Divation);
-				hitbox.setPosition(getPosition());
 			}
 			else
 			{
 				Velocity += sf::Vector2f(Acceleration.x * TIME_PER_FRAME.asSeconds(), Acceleration.y * TIME_PER_FRAME.asSeconds());
 				setPosition(getPosition() + sf::Vector2f(Velocity.x * TIME_PER_FRAME.asSeconds(), Velocity.y * TIME_PER_FRAME.asSeconds()));
-				hitbox.setPosition(getPosition());
 			}
 
 			if (rotationDependent)	setRotation(Parent->getRotation() + RotationDivation);
@@ -130,7 +128,7 @@ void Entity::outScope()
 			if (getPosition().x < 0 || getPosition().x > WINDOW_SIZE.x) setVelocity({ -Velocity.x,Velocity.y });
 			if (getPosition().y < 0 || getPosition().y > WINDOW_SIZE.y) setVelocity({ Velocity.x,-Velocity.y });
 		}
-		else if(getPosition().x < -300 || getPosition().x > WINDOW_SIZE.x+300 || getPosition().y < -300 || getPosition().y > WINDOW_SIZE.y+300)
+		else if(getPosition().x < OutScopeX.ff || getPosition().x > OutScopeX.ss || getPosition().y < OutScopeY.ff || getPosition().y > OutScopeY.ss)
 		{
 			killEntity();
 		}
@@ -165,6 +163,12 @@ void Entity::setTimer(int timerStart,int timerEnd)
 {
 	this->timerEnd = timerEnd;
 	this->timerStart = timerStart;
+}
+
+void Entity::setPosition(sf::Vector2f position)
+{
+	sf::Transformable::setPosition(position);
+	hitbox.setPosition(position);
 }
 
 void Entity::setRootPos(sf::Vector2f& rootPos)

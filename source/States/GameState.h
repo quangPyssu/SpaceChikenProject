@@ -36,20 +36,23 @@ private:
 
     Player* player;
 
+    BulletManager* EnimesBullets;
+    BulletManager* EnimesBullets_Vulnerable;
+
     BulletManager* PlayerBullets_Standard;
     BulletManager* PlayerBullets_Detroyer;
-    BulletManager* EnimesBullets;   
-    BulletManager* EnimesBullets_Vulnerable;
-    BulletManager* EnimesBullets_Indestructible;
+
+    vector <BulletManager*> BulletManagerList;
+    int BulletFilter[10];
 
     EnemyManager* enemyManager;
 
     vector <BulletPattern*> BulletPatternList;
     vector <EnemyPattern*> EnemyPatternList;    
 
-    void addEnemyPattern(EnemyPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, 
+    void addEnemyPattern(EnemyType type, PatternType patternType,RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, 
         int total, float width, int widthCnt);
-    void addBulletPattern(BulletPatternType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, 
+    void addBulletPattern(BulletType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
         int total, float width, int widthCnt,int timerStart,int timerEnd);
 
     void readAttackQueue();

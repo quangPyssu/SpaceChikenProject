@@ -18,6 +18,9 @@ namespace Constants {
     const double SCALE = std::min(SCALE_X, SCALE_Y);
     const sf::Time TIME_PER_FRAME = sf::seconds(1.f / 60.f);
 
+    std::pair <double, double> OutScopeX = {-300*SCALE,WINDOW_SIZE.x*SCALE};
+    std::pair <double, double> OutScopeY = { -300 * SCALE,WINDOW_SIZE.y * SCALE };
+
     const float targetAspectRatio = 1920.0f / 1080.0f;
 
     sf::Vector2f Constants::WINDOW_SIZE = sf::Vector2f(800.0f, 600.0f);
