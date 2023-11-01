@@ -13,4 +13,6 @@ class Bullet : public Entity
 	BulletType type;
 
 	bool isBulletDestructible = true;
+
+	void addDeathAnimation() override;
 };

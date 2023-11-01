@@ -13,18 +13,15 @@ void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) cons
 
 void Entity::takeTimeCurrent()
 {
-	if (timerStart > 0) {
-		timerStart--;
-		return;
-	}
-
 	if (timerEnd != -1)
 	{
+		timerEnd = max(timerEnd - 1, 0);
+
 		if (!timerEnd)
 		{
 			killEntity();
+			timerEnd = -1;
 		}
-		timerEnd = max(timerEnd - 1, 0);
 	}
 
 	switch (CurrentEnityState)
@@ -90,7 +87,7 @@ void Entity::setVelocity(sf::Vector2f velocity)
 
 void Entity::takeDamage(int damage)
 {
-	if (CurrentEnityState == EntityState::Alive)
+	if (CurrentEnityState == EntityState::Alive && !timerStart)
 	{
 		if (isFlickering && isInvincibleWhenFlicker) return;
 
@@ -130,7 +127,7 @@ void Entity::outScope()
 		}
 		else if(getPosition().x < OutScopeX.ff || getPosition().x > OutScopeX.ss || getPosition().y < OutScopeY.ff || getPosition().y > OutScopeY.ss)
 		{
-			killEntity();
+			if (Destructible) CurrentEnityState = EntityState::Dead;
 		}
 }
 

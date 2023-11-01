@@ -35,6 +35,8 @@ void Pattern::setUpPattern(PatternType type)
 				tmp->RotationDivation += i * 360 / total;
 				tmp->setRotation(tmp->RotationDivation);
 			}
+
+			if (rotationType==WithOwnVelocity) rotationType = SpinOwn;
 		}
 		break;
 
@@ -71,6 +73,8 @@ void Pattern::setUpPattern(PatternType type)
 
 			this->Velocity = { 0,0 };
 			this->Acceleration = { 0,0 };
+
+			if (rotationType == WithOwnVelocity) rotationType = WithOwnVelocity;
 		}
 
 		break;
@@ -117,6 +121,33 @@ void Pattern::setUpPattern(PatternType type)
 		break;
 		default:
 		break;
+	}
+
+	switch (rotationType) //set up rotation variables
+	{
+		case Spin:
+		{
+			angleVelocity = 0.5;
+			angleAcceleration = 0;
+		}
+		break;
+
+		case SpinOwn:
+		{
+			angleVelocity = 0.5;
+			angleAcceleration = 0;
+		}
+		break;
+
+		case WithOwnVelocity:
+		{
+			angleVelocity = 0;
+			angleAcceleration = 0;
+
+			if (hasPhysics) 
+				for (int i = 0; i < total; i++)
+					entityList[i]->ApplyPhysics();			
+		}
 	}
 }
 
@@ -181,9 +212,21 @@ void Pattern::takeTimeCurrent()
 				Entity* tmp = entityList[i];
 				float angleRad = std::atan2(tmp->getVelocity().y, tmp->getVelocity().x);
 				float angleDeg = angleRad * 180.0f / pi;
-				tmp->RotationDivation=angleDeg;
+				tmp->RotationDivation=angleDeg;				
 			}
 		}
+			break;
+
+		case SpinOwn:
+		{
+			for (int i = 0; i < entityList.size(); i++)
+			{
+				Entity* tmp = entityList[i];
+				tmp->RotationDivation += angleVelocity;
+				tmp->setRotation(tmp->RotationDivation);
+			}
+		}
+		break;
 	}
 	
 

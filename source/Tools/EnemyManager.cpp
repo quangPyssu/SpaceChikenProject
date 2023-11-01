@@ -7,7 +7,8 @@ EnemyManager::EnemyManager(Player& player, BulletManager& PlayerBullets_Standard
 {
 
 	EnimesBullets.addTarget(player);
-	EnimesBullets_Vulnerable.addTarget(player);
+	EnimesBullets.addTarget(EnimesBullets_Vulnerable);
+	EnimesBullets_Vulnerable.addTarget(player);	
 }
 
 EnemyManager::~EnemyManager()

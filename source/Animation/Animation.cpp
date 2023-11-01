@@ -70,8 +70,11 @@ void Animation::takeTimeCurrent()
 
 	if (!isRootSet)	setPosition(this->Parent->getPosition() + divation);
 
-	setRotation(this->Parent->getRotation() + rotationDivation);
-	sprite.setRotation(getRotation());
+	if (RotationDependent)
+	{
+		setRotation(this->Parent->getRotation() + rotationDivation);
+		sprite.setRotation(getRotation());
+	}
 }
 
 bool Animation::isAnimationFinished()
@@ -129,4 +132,9 @@ void Animation::setResetFrame(int resetFrame)
 void Animation::setFlickerColor(sf::Color color)
 {
 	sprite.setColor(color);
+}
+
+void Animation::setTransparency(float transparency)
+{
+	sprite.setColor(sf::Color(255, 255, 255, transparency*255));
 }

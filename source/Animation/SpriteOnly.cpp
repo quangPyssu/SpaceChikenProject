@@ -41,3 +41,8 @@ void SpriteOnly::setPosition(Vector2f Position)
 {
 	sprite.setPosition(Position);
 }
+
+void SpriteOnly::setTransparency(float transparency)
+{
+	sprite.setColor(sf::Color(255, 255, 255, transparency));
+}

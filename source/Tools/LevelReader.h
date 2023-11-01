@@ -25,10 +25,14 @@ public:
 	std::queue <std::vector <std::vector <int>>> EnemyWaveData;	// enemyType, patternType, rotationType, total, width, widthCnt, start timer, kill timer(int)
 	std::queue <std::vector <std::vector <sf::Vector2f>>> EnemyWaveAttribute; // Position, Velocity, Acceleration
 	std::queue <std::vector <ii> > EnemyWaveLoop; // LoopCnt, LoopTimer(int)
+	std::queue <std::vector <int>> EnemyWaveTimerMax;	// timerMax (first timerStart)
 
 	std::queue <std::vector <std::vector <int>>> BulletWaveData;	// bulletType, patternType, rotationType, total, width, widthCnt, start timer, kill timer(int)
 	std::queue <std::vector <std::vector <sf::Vector2f>>> BulletWaveAttribute; // Position, Velocity, Acceleration
 	std::queue <std::vector <ii> > BulletWaveLoop;	// LoopCnt, LoopTimer(int)
+	std::queue <std::vector <bool>> BulletWavePhysic;	// have physic
+	std::queue <std::vector <int>> BulletWaveTimerMax;	// timerMax (first timerStart)
+
 };
 
 //  1 < -- Number of Wave
@@ -42,3 +46,4 @@ public:
 //	0 1 0 20 300 5 100 -1 < --   bulletType, patternType, rotationType, total, width, widthCnt, start timer, kill timer(int)
 //	200 200 -5 0 0 0 0 < --  Position, Velocity, Acceleration(Vector2f)
 // 	100 500 < -- LoopCnt, LoopTimer(int)
+//  0   < -- have physic

@@ -16,6 +16,8 @@ class SpriteOnly :  public SceneNode
 	void setPosition(Vector2f Position);
 	void setFlickerColor(sf::Color color) { sprite.setColor(color); }
 
+	void setTransparency(float transparency);
+
 	private:
 		sf::Texture texture;
 		sf::Sprite sprite;

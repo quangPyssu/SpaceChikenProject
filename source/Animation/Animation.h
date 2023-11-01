@@ -28,6 +28,8 @@ private:
 	bool isPingPong = false;
 	bool hasLimitedTime = false;
 
+	bool RotationDependent = true;
+
 	int pingPongDirection = 1;
 	int resetFrame = 0;
 
@@ -54,6 +56,8 @@ public:
 
 	void setResetFrame(int resetFrame);
 	void makePingPong();
+
+	void setTransparency(float transparency);
 
 	void reset();
 };

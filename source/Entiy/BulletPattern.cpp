@@ -39,7 +39,7 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 		{
 			for (int i = 0; i < total; i++)
 			{
-				Bullet* tmp = bulletManager.BulletList[i];
+				Entity* tmp = entityList[i];
 				tmp->RotationDivation = 90;
 			}
 
@@ -50,23 +50,23 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 		{
 			for (int i = 0; i < total; i++)
 			{
-				Bullet* tmp = bulletManager.BulletList[i];
+				Entity* tmp = entityList[i];
 				tmp->RotationDivation = rand() % 360;
 			}
 		}
-		break;
+			break;
 	}
 
 	switch (patternType)
 	{
 		case Circle:
 		{
-			//if (rotationType == defaultRotation) this->rotationType = Spin;
+			if (rotationType == defaultRotation) this->rotationType = Spin;
 			setUpPattern(Circle);
 
 			CircleShape* shape = new CircleShape();
-			shape->setRadius(width);
-			shape->setOrigin(width, width);
+			shape->setRadius(width/2);
+			shape->setOrigin(width/2, width/2);
 			shape->setPosition(Position);
 			shape->setOutlineThickness(2);
 			shape->setFillColor(trans);
