@@ -25,7 +25,7 @@ class Pattern : public Entity
 
 	void setUpPattern(PatternType type);	
 
-	PatternType type;
+	PatternType type=None;
 	RotationType rotationType=Spin;
 
 	vector <Entity*> entityList;

@@ -26,6 +26,9 @@ namespace Constants
     extern const sf::Time TIME_PER_FRAME;
     extern sf::Vector2f WINDOW_SIZE;
 
+    extern std::string GameMusicTrack[5][2];
+    extern std::string MenuMusicTrack;
+
     extern std::pair <double, double> OutScopeX, OutScopeY;
 
     extern const float targetAspectRatio;

@@ -69,6 +69,12 @@ EnemyPattern::EnemyPattern(EnemyType enemyType, PatternType patternType, Rotatio
 		}
 		break;
 
+		case None:
+		{
+			setUpPattern(None);
+			setTimer(0, -1);
+		}
+
 	default:
 		break;
 	}

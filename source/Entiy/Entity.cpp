@@ -192,3 +192,16 @@ void Entity::takeTimeFlicker()
 	
 	for (int i = 0; i <sprites.size(); i++)	 sprites[i]->setFlickerColor(flickerColor);
 }
+
+float Entity::angleToB(Entity* B)
+{
+	float angle = atan2(B->getPosition().y - getPosition().y, B->getPosition().x - getPosition().x) * 180 / pi;
+	return angle;
+}
+
+float Entity::angleToB(sf::Vector2f B)
+{
+	float angle = atan2(B.y - getPosition().y, B.x - getPosition().x) * 180 / pi;
+	return angle;
+}
+

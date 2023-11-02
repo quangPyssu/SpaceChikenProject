@@ -47,13 +47,12 @@ private:
 
     EnemyManager* enemyManager;
 
-    vector <BulletPattern*> BulletPatternList;
+    //vector <BulletPattern*> BulletPatternList;
     vector <EnemyPattern*> EnemyPatternList;    
 
     void addEnemyPattern(EnemyType type, PatternType patternType,RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, 
         int total, float width, int widthCnt);
-    void addBulletPattern(BulletType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
-        int total, float width, int widthCnt,int timerStart,int timerEnd);
+    //void addBulletPattern(BulletType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, int total, float width, int widthCnt,int timerStart,int timerEnd);
 
     void readAttackQueue();
     void readWaveQueue();

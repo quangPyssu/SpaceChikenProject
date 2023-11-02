@@ -32,7 +32,7 @@ void Pattern::setUpPattern(PatternType type)
 				Entity* tmp = entityList[i];
 				tmp->setRootPos(CurrentPos);
 				tmp->rotationDependent = true;				
-				tmp->RotationDivation += i * 360 / total;
+				tmp->RotationDivation += (float) i * 360 / total;
 				tmp->setRotation(tmp->RotationDivation);
 			}
 
@@ -86,7 +86,7 @@ void Pattern::setUpPattern(PatternType type)
 				Entity* tmp = entityList[i];
 
 				tmp->rotationDependent = true;
-				tmp->RotationDivation += i * 360 / total; 		
+				tmp->RotationDivation += (float) i * 360 / total; 		
 				tmp->setRotation(tmp->RotationDivation);
 
 				// each fly out from origin
@@ -107,8 +107,7 @@ void Pattern::setUpPattern(PatternType type)
 			{
 				Entity* tmp = entityList[i];
 
-				tmp->rotationDependent = true;
-				tmp->setRotation(tmp->RotationDivation);
+				tmp->setPosition(getPosition());
 
 				// each own do own thing
 				tmp->setVelocity(Vector2f((float)SCALE * this->Velocity.x, (float)SCALE * this->Velocity.y));
@@ -117,6 +116,7 @@ void Pattern::setUpPattern(PatternType type)
 
 			this->Velocity = { 0,0 };
 			this->Acceleration = { 0,0 };
+			this->setPosition({ -300,-300 });
 		}
 		break;
 		default:
@@ -198,8 +198,8 @@ void Pattern::takeTimeCurrent()
 			if (angleDeg < 0) angleDeg += 360;
 			if (angleDeg > 360) angleDeg -= 360;
 
-			if (angleDeg > 60 && angleDeg<=180) angleDeg = 60;
-			if (angleDeg < 300 && angleDeg>180) angleDeg = 300;
+			if (angleDeg > 50 && angleDeg<=180) angleDeg = 50;
+			if (angleDeg < 310 && angleDeg>180) angleDeg = 310;
 
 			setRotation(angleDeg);
 		}
@@ -212,8 +212,10 @@ void Pattern::takeTimeCurrent()
 				Entity* tmp = entityList[i];
 				float angleRad = std::atan2(tmp->getVelocity().y, tmp->getVelocity().x);
 				float angleDeg = angleRad * 180.0f / pi;
-				tmp->RotationDivation=angleDeg;				
+				tmp->RotationDivation=angleDeg;	
 			}
+
+			
 		}
 			break;
 

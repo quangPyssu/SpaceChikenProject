@@ -25,6 +25,16 @@ namespace Constants {
 
     sf::Vector2f Constants::WINDOW_SIZE = sf::Vector2f(800.0f, 600.0f);
 
+    std::string GameMusicTrack[5][2] = { 
+        {"Assets/Sounds/Music/lullaby_deserted_hell.ogg", "Assets/Sounds/Music/BossTrack1.ogg",},
+        {"Assets/Sounds/Music/Track3.ogg","Assets/Sounds/Music/Track4.ogg",},
+		{"Assets/Sounds/Music/Track5.ogg", "Assets/Sounds/Music/Track6.ogg",},
+		{"Assets/Sounds/Music/Track7.ogg", "Assets/Sounds/Music/Track8.ogg",},
+		{"Assets/Sounds/Music/Track9.ogg", "Assets/Sounds/Music/Track10.ogg",} 
+        };
+
+    std::string MenuMusicTrack = "Assets/Sounds/Music/space_maiden_appear.ogg";
+
     const int font_size_small = 20;
     const int font_size_medium = 30;
     const int font_size_large = 40;

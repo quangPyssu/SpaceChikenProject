@@ -1,9 +1,9 @@
 #include "EnemyManager.h"
 
 EnemyManager::EnemyManager(Player& player, BulletManager& PlayerBullets_Standard, BulletManager& PlayerBullets_Detroyer
-	, BulletManager& EnimesBullets, BulletManager& EnimesBullets_Vulnerable)
+	, BulletManager& EnimesBullets, BulletManager& EnimesBullets_Vulnerable, WarningZone& warningZone)
 	: player(&player), PlayerBullets_Standard(&PlayerBullets_Standard), PlayerBullets_Detroyer(&PlayerBullets_Detroyer)
-	, EnimesBullets(&EnimesBullets) , EnimesBullets_Vulnerable(&EnimesBullets_Vulnerable)
+	, EnimesBullets(&EnimesBullets) , EnimesBullets_Vulnerable(&EnimesBullets_Vulnerable), warningZone(&warningZone)
 {
 
 	EnimesBullets.addTarget(player);
@@ -65,16 +65,48 @@ void EnemyManager::takeTimeCurrent()
 			{
 				case Enemy_Chicken_1:
 				{
-					AttackQueuePosition.push(enemy[i]->getPosition());
-					AttackQueueType.push(EnemyAttackType::Attack_Chicken_1);
+					EnimesBullets->addBullet(BulletType::Enemy_Bullet_Normal, enemy[i]->getPosition());
 				}
 				break;
+
+				case Boss_Chicken_1:
+				{
+					
+				}
 			}
 
 			enemy[i]->resetGun();
 		}
 	}	
 
-	//cout << "BulletPatternList.size() " << BulletPatternList.size() << endl;
+
+	// Clean up the dead bullet pattern
+	for (int i = 0; i < BulletPatternList.size(); i++)
+	{
+		if (BulletPatternList[i]->CurrentEnityState == EntityState::Dead)
+		{
+			detachChild(*BulletPatternList[i]);
+			BulletPatternList.erase(BulletPatternList.begin() + i);
+			i--;
+		}
+	}
 }
 
+
+void EnemyManager::addBulletPattern(BulletType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,bool Physics,
+	int total, float width, int widthCnt, int timerStart, int timerEnd)
+{
+	BulletManager* tmp = nullptr;
+
+	switch (type)
+	{
+		case Enemy_Bullet_Normal: {	tmp = EnimesBullets; } break;
+		case Astroid: {	tmp = EnimesBullets_Vulnerable; } break;
+
+		default: {tmp = EnimesBullets;} break;
+	}
+
+	BulletPatternList.push_back(new BulletPattern(type, patternType, rotationType, *tmp, Position, Velocity, Acceleration, Physics, total, width, widthCnt, *warningZone, timerStart, timerEnd));
+	
+	PushToObject(BulletPatternList.back(), this);
+}

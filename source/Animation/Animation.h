@@ -58,6 +58,7 @@ public:
 	void makePingPong();
 
 	void setTransparency(float transparency);
+	void setCurrentFrame(int currentFrame);
 
 	void reset();
 };

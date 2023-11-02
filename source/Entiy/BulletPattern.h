@@ -9,7 +9,7 @@ class BulletPattern :  public Pattern
 {
 	public:
 	BulletPattern(BulletType bulletType, PatternType patternType, RotationType rotationType,
-		BulletManager& bulletManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, 
+		BulletManager& bulletManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, bool PhysicsEnable,
 		int total, float width, int widthCnt,WarningZone& warningZong,int timerStart,int timerEnd);
 
 	private:

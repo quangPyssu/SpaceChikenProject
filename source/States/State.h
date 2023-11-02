@@ -32,6 +32,8 @@ public:
 
 	State* parentState=nullptr;
 
+	sf::Music* music=nullptr;
+
 protected:
 	RenderWindow* window=nullptr;
 };

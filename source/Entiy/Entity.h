@@ -40,6 +40,9 @@ public:
     bool rotationDependent = false;
     float RotationDivation = 0;
 
+    float angleToB(Entity* B);
+    float angleToB(Vector2f B);
+
 protected:
     Vector2f Velocity = { 0,0 };
     Vector2f Acceleration = { 0,0 };

@@ -138,3 +138,8 @@ void Animation::setTransparency(float transparency)
 {
 	sprite.setColor(sf::Color(255, 255, 255, transparency*255));
 }
+
+void Animation::setCurrentFrame(int currentFrame)
+{
+	this->currentFrame = currentFrame;
+}

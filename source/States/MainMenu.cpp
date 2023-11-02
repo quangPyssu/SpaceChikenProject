@@ -24,16 +24,21 @@ MainMenu::MainMenu()
 
 	btn_NewGame = new Button(sf::Vector2f(200, 100), sf::Vector2f(400, 100), "New Game");
 	btn_NewGame->PushToObject(btn_NewGame, this);
+
+	music = new Music();
+	music->openFromFile(Constants::MenuMusicTrack);
+	music->setLoop(true);
+	music->play();
 }
 
 MainMenu::~MainMenu()
 {
+	delete music;
 }
 
 void MainMenu::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(backgroundSprite);
-	//target.draw(CursorSprite);
 }	
 
 void MainMenu::updateCurrent(Event& event, Vector2f& MousePos)

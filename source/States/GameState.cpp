@@ -31,7 +31,9 @@ GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 	PlayerBullets_Detroyer->addTarget(*EnimesBullets_Vulnerable);
 	PlayerBullets_Standard->addTarget(*EnimesBullets_Vulnerable);	
 
-	enemyManager = new EnemyManager(*player, *PlayerBullets_Standard, *PlayerBullets_Detroyer, *EnimesBullets,*EnimesBullets_Vulnerable);
+	warningZone = new WarningZone();
+
+	enemyManager = new EnemyManager(*player, *PlayerBullets_Standard, *PlayerBullets_Detroyer, *EnimesBullets,*EnimesBullets_Vulnerable,*warningZone);
 
 	PushToObject(enemyManager, this);
 	PushToObject(EnimesBullets, this);
@@ -44,9 +46,7 @@ GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 	//BulletManagerList.push_back(PlayerBullets_Standard); BulletManagerList.push_back(PlayerBullets_Detroyer);
 
 	PBplayerHealth = new ProgressBar({ 10,WINDOW_SIZE.y-20 },Vector2f(WINDOW_SIZE.x-20,20), Colors::green,Colors::grey,"HP",player->HitPoints,PlayerMaxHP);
-	PushToObject(PBplayerHealth, this);
-
-	warningZone = new WarningZone();
+	PushToObject(PBplayerHealth, this);	
 	PushToObject(warningZone, this);
 
 	window.setMouseCursorVisible(false);
@@ -55,17 +55,22 @@ GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 	levelReader.ReadLevel(CurrentLevel);
 
 	{
-		enemyManager->addEnemy(EnemyType::Enemy_Chicken_1);
-		enemyManager->enemy.back()->setTimer(0,3);
 		//enemyManager->addEnemy(EnemyType::Enemy_Chicken_1);
 		//addEnemyPattern(Chicken_Circle, { 400,100 }, { 10,0 }, {-1,-1}, 10, 10, 7);
 		//addEnemyPattern(Chicken_Square, { 400,100 }, { -10,0 }, { -1,-1 }, 21, 400, 7);
-		//addBulletPattern(Enemy_Normal_Square, { 400,100 }, { 10,0 }, { -1,-1 }, 30, 200, 10);
-		//addBulletPattern(Enemy_Normal_Circle, { 400,100 }, {-10,0 }, { -1,-1 }, 30, 200, 1);
-		//addBulletPattern(Astroid_Shower, { 0,0 }, { 5,5 }, { 0,0 }, 5, 300, 1, 0, -1);
-		//addBulletPattern(Enemy_Normal_Firework, { 400,100 }, { 20,20 }, { -5,-5 }, 30, 0, 1);
-		//addBulletPattern(Enemy_Normal_Shower, { 0,0 }, { 20,20 }, { 0,0 }, 25, 300, 1);
+		//enemyManager->addBulletPattern(Enemy_Normal_Square, { 400,100 }, { 10,0 }, { -1,-1 }, 30, 200, 10);
+		//enemyManager->addBulletPattern(Enemy_Normal_Circle, { 400,100 }, {-10,0 }, { -1,-1 }, 30, 200, 1);
+		//enemyManager->addBulletPattern(Astroid_Shower, { 0,0 }, { 5,5 }, { 0,0 }, 5, 300, 1, 0, -1);
+		//enemyManager->addBulletPattern(Enemy_Normal_Firework, { 400,100 }, { 20,20 }, { -5,-5 }, 30, 0, 1);
+		//enemyManager->addBulletPattern(Enemy_Normal_Shower, { 0,0 }, { 20,20 }, { 0,0 }, 25, 300, 1);
 	}
+
+	parentState.music->stop();
+
+	music = new Music();
+	music->openFromFile(Constants::GameMusicTrack[CurrentLevel][0]);
+	music->setLoop(true);
+	music->play();
 }
 
 GameState::~GameState()
@@ -80,6 +85,11 @@ GameState::~GameState()
 	window->setMouseCursorVisible(true);
 
 	BulletManagerList.clear();
+
+	music->stop();
+	delete music;
+
+	parentState->music->play();
 }
 
 void GameState::addEnemyPattern(EnemyType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
@@ -87,23 +97,6 @@ void GameState::addEnemyPattern(EnemyType type, PatternType patternType, Rotatio
 {
 	EnemyPatternList.push_back(new EnemyPattern(type,patternType, rotationType, *enemyManager, Position, Velocity, Acceleration, total, width, widthCnt));
 	PushToObject(EnemyPatternList.back(), this);
-}
-
-void GameState::addBulletPattern(BulletType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
-	int total, float width, int widthCnt, int timerStart, int timerEnd)
-{
-	BulletManager* tmp = nullptr;
-
-	switch (type)
-	{
-		case Enemy_Bullet_Normal: {	tmp = EnimesBullets; } break;
-		case Astroid: {	tmp = EnimesBullets_Vulnerable; } break;
-		
-		default: break;
-	}
-
-	BulletPatternList.push_back(new BulletPattern(type, patternType, rotationType, *tmp, Position, Velocity, Acceleration, total, width, widthCnt,*warningZone,timerStart,timerEnd));
-	PushToObject(BulletPatternList.back(), this);
 }
 
 void GameState::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
@@ -163,17 +156,7 @@ void GameState::takeTimeCurrent()
 
 	BGLoop();
 
-	// Clean up the dead patterns
-
-	for (int i = 0; i < BulletPatternList.size(); i++)
-	{
-		if (BulletPatternList[i]->CurrentEnityState == EntityState::Dead)
-		{
-			detachChild(*BulletPatternList[i]);
-			BulletPatternList.erase(BulletPatternList.begin() + i);
-			i--;
-		}
-	}
+	// Clean up the dead Enemy patterns	
 
 	for (int i = 0; i < EnemyPatternList.size(); i++)
 	{
@@ -207,25 +190,6 @@ void GameState::readAttackQueue()
 	{
 		PlayerBullets_Detroyer->addBullet(Player_Laser_Destroyer, player->getPosition() + Vector2f(0, 10));
 		player->resetSpecial();
-	}
-
-	while (!enemyManager->AttackQueueType.empty())
-	{
-		EnemyAttackType tmp = enemyManager->AttackQueueType.front();
-		Vector2f pos = enemyManager->AttackQueuePosition.front();
-
-		switch (tmp)
-		{
-			case EnemyAttackType::Attack_Chicken_1:
-			{
-				EnimesBullets->addBullet(BulletType::Enemy_Bullet_Normal, pos);
-				//addBulletPattern(Enemy_Normal_Circle, Vector2f(pos.x/SCALE,pos.y/SCALE), { 0,20 }, { 0,0 }, 3, 20, 1);
-			}
-			break;
-
-		}
-		enemyManager->AttackQueueType.pop();
-		enemyManager->AttackQueuePosition.pop();
 	}
 }
 
@@ -273,14 +237,14 @@ void GameState::readWaveQueue()
 			Vector2f Position = Vector2f(levelReader.BulletWaveAttribute.front()[i][0].x, levelReader.BulletWaveAttribute.front()[i][0].y);
 			Vector2f Velocity = Vector2f(levelReader.BulletWaveAttribute.front()[i][1].x, levelReader.BulletWaveAttribute.front()[i][1].y);
 			Vector2f Acceleration = Vector2f(levelReader.BulletWaveAttribute.front()[i][2].x, levelReader.BulletWaveAttribute.front()[i][2].y);
+			bool Physics = levelReader.BulletWavePhysic.front()[i];
 			int total = levelReader.BulletWaveData.front()[i][3];
 			float width = levelReader.BulletWaveData.front()[i][4];
 			int widthCnt = levelReader.BulletWaveData.front()[i][5];
 			int timerStart = levelReader.BulletWaveTimerMax.front()[i];
 			int timerEnd = levelReader.BulletWaveData.front()[i][7];
 
-			addBulletPattern(type, patternType, rotationType, Position, Velocity, Acceleration, total, width, widthCnt, timerStart, timerEnd);
-			if (levelReader.BulletWavePhysic.front()[i]) BulletPatternList.back()->ApplyPhysics();
+			enemyManager->addBulletPattern(type, patternType, rotationType, Position, Velocity, Acceleration, Physics, total, width, widthCnt, timerStart, timerEnd);
 
 			if (levelReader.BulletWaveLoop.front()[i].ff)
 			{

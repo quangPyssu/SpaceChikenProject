@@ -1,13 +1,15 @@
 #include "BulletPattern.h"
 
 BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, RotationType rotationType, 
-	BulletManager& bulletManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
+	BulletManager& bulletManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, bool PhysicsEnable,
 	int total, float width, int widthCnt, WarningZone& warningZong, int timerStart, int timerEnd)
 {
 	this->bulletManager = &bulletManager;
 	this->warningZone = &warningZong;
 	this->type = patternType;
 	this->rotationType = rotationType;
+
+	if (PhysicsEnable) ApplyPhysics();
 
 	Position = Vector2f(Position.x * SCALE, Position.y * SCALE);
 	Velocity = Vector2f(Velocity.x * SCALE, Velocity.y * SCALE);
@@ -116,6 +118,8 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 	}
 
 	setTimer(timerStart, timerEnd);
+
+	
 }
 
 
