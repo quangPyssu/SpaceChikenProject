@@ -213,9 +213,26 @@ void Pattern::takeTimeCurrent()
 				float angleRad = std::atan2(tmp->getVelocity().y, tmp->getVelocity().x);
 				float angleDeg = angleRad * 180.0f / pi;
 				tmp->RotationDivation=angleDeg;	
-			}
+			}			
+		}
+			break;
 
-			
+		case WithOwnVelocityTiltUp:
+		{
+			for (int i = 0; i < entityList.size(); i++)
+			{
+				Entity* tmp = entityList[i];
+				float angleRad = std::atan2(tmp->getVelocity().y, tmp->getVelocity().x);
+				float angleDeg = angleRad * 180.0f / pi;
+
+				if (angleDeg < 0) angleDeg += 360;
+				if (angleDeg > 360) angleDeg -= 360;
+
+				if (angleDeg > 50 && angleDeg <= 180) angleDeg = 50;
+				if (angleDeg < 310 && angleDeg > 180) angleDeg = 310;
+
+				tmp->RotationDivation = angleDeg;
+			}
 		}
 			break;
 
@@ -228,7 +245,7 @@ void Pattern::takeTimeCurrent()
 				tmp->setRotation(tmp->RotationDivation);
 			}
 		}
-		break;
+			break;
 	}
 	
 
@@ -261,4 +278,9 @@ void Pattern::setTimer(int timerStart, int timerEnd)
 	Entity::setTimer(timerStart, timerEnd);
 
 	for (int i = 0; i < entityList.size(); i++) entityList[i]->setTimer(timerStart, timerEnd);
+}
+
+void Pattern::setVelocity(Vector2f Velocity)
+{
+	Entity::setVelocity(Velocity);
 }

@@ -25,10 +25,7 @@ MainMenu::MainMenu()
 	btn_NewGame = new Button(sf::Vector2f(200, 100), sf::Vector2f(400, 100), "New Game");
 	btn_NewGame->PushToObject(btn_NewGame, this);
 
-	music = new Music();
-	music->openFromFile(Constants::MenuMusicTrack);
-	music->setLoop(true);
-	music->play();
+	playMusic(Constants::MenuMusicTrack, 0);
 }
 
 MainMenu::~MainMenu()

@@ -38,9 +38,9 @@ void Entity::takeTimeCurrent()
 				setPosition(getPosition() + sf::Vector2f(Velocity.x * TIME_PER_FRAME.asSeconds(), Velocity.y * TIME_PER_FRAME.asSeconds()));
 			}
 
-			if (rotationDependent)	setRotation(Parent->getRotation() + RotationDivation);
+			if (rotationDependent)	setRotation(baseRotation + Parent->getRotation() + RotationDivation);
 
-			hitbox.setRotation(getRotation());			
+			hitbox.setRotation(getRotation());
 
 			CleanDeadAssets();
 
@@ -183,6 +183,11 @@ sf::Vector2f Entity::getVelocity()
 	return Velocity;
 }
 
+void Entity::setBaseRotation(float rotation)
+{
+	baseRotation = rotation;
+}
+
 void Entity::takeTimeFlicker() 
 {
 	if (!isFlickering) return;
@@ -199,9 +204,20 @@ float Entity::angleToB(Entity* B)
 	return angle;
 }
 
-float Entity::angleToB(sf::Vector2f B)
+float Entity::angleToB(sf::Vector2f posB)
 {
-	float angle = atan2(B.y - getPosition().y, B.x - getPosition().x) * 180 / pi;
+	float angle = atan2(posB.y - getPosition().y, posB.x - getPosition().x) * 180 / pi;
 	return angle;
 }
 
+sf::Vector2f Entity::velocityToB(double baseVelocity, Entity* B)
+{
+	float angle = angleToB(B);
+	return sf::Vector2f(baseVelocity * cos(angle * pi / 180), baseVelocity * sin(angle * pi / 180));
+}
+
+sf::Vector2f Entity::velocityToB(double baseVelocity, sf::Vector2f posB)
+{
+	float angle = angleToB(posB);
+	return sf::Vector2f(baseVelocity * cos(angle * pi / 180), baseVelocity * sin(angle * pi / 180));
+}

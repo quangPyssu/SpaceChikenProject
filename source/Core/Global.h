@@ -29,6 +29,8 @@ namespace Constants
     extern std::string GameMusicTrack[5][2];
     extern std::string MenuMusicTrack;
 
+    extern int GameMusicOffset[5][2];
+
     extern std::pair <double, double> OutScopeX, OutScopeY;
 
     extern const float targetAspectRatio;
@@ -57,6 +59,8 @@ namespace Constants
     extern int breakTimeMax;
 
     enum TextAlign {Left,Middle,Right};    
+
+   
 };
 
 namespace Colors
@@ -90,10 +94,16 @@ namespace getScale
     sf::Vector2f getScaleStretch(sf::Vector2f Object, sf::Vector2f Target); //Stretch
 }
 
+namespace utility
+{
+    sf::Vector2f operator *(const sf::Vector2f& A, const sf::Vector2f& B);
+    int randInt(int i);
+}
+
 namespace ResourceManager
 {
     static std::unordered_map<std::string, sf::Font> fonts;
-    static std::unordered_map<std::string, sf::Texture> textures;
+    static std::unordered_map<std::string, std::shared_ptr<sf::Texture>> textures;
     static std::unordered_map<std::string, sf::SoundBuffer> soundBuffers;
 
     sf::Font& getFont(const std::string& ID);

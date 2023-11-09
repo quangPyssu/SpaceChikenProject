@@ -21,7 +21,7 @@ public:
 	vector <Enemy*> enemy;
 
 	void addBulletPattern(BulletType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, bool Physics,
-		int total, float width, int widthCnt, int timerStart, int timerEnd);
+		int total, float width, int widthCnt, int timerStart, int timerEnd,double thisScale);
 
 private:
 
@@ -36,5 +36,9 @@ private:
 	BulletManager* EnimesBullets_Vulnerable;
 
 	vector <BulletPattern*> BulletPatternList;
+
+	vector <pair <BulletPattern*,int>> BulletPattern_Aim_For_Player;
+
+	void fireBulletPattern();
 };
 

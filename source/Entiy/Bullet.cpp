@@ -45,6 +45,7 @@ Bullet::Bullet(BulletType type,Vector2f StartPosition) : type(type)
 
 		Velocity = { 0, 100 };
 		Acceleration = { 0,0 };
+
 		break;
 	}
 

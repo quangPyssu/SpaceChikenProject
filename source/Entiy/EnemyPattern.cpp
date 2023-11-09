@@ -42,6 +42,17 @@ EnemyPattern::EnemyPattern(EnemyType enemyType, PatternType patternType, Rotatio
 		}
 		break;
 
+		case Boss_Chicken_1:
+		{
+			for (int i = 0; i < total; i++)
+			{
+				enemyManager.addEnemy(Boss_Chicken_1);
+				Enemy* tmp = enemyManager.enemy.back();
+				entityList.push_back(tmp);
+			}
+		}
+		break;
+
 		default:
 		break;
 	}
@@ -71,6 +82,8 @@ EnemyPattern::EnemyPattern(EnemyType enemyType, PatternType patternType, Rotatio
 
 		case None:
 		{
+			if (rotationType == defaultRotation) this->rotationType = WithOwnVelocityTiltUp;
+
 			setUpPattern(None);
 			setTimer(0, -1);
 		}

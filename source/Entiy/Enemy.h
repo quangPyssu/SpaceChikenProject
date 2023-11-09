@@ -10,6 +10,8 @@ class Enemy : public Entity
 
 	void takeTimeCurrent() override;
 	bool isFiring = false;
+	int attackType = 0;
+	int attackTypeMax = 0;
 
 	void resetGun();
 

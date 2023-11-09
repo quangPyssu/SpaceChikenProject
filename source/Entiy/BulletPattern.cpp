@@ -2,7 +2,7 @@
 
 BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, RotationType rotationType, 
 	BulletManager& bulletManager, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, bool PhysicsEnable,
-	int total, float width, int widthCnt, WarningZone& warningZong, int timerStart, int timerEnd)
+	int total, float width, int widthCnt, WarningZone& warningZong, int timerStart, int timerEnd, double thisScale)
 {
 	this->bulletManager = &bulletManager;
 	this->warningZone = &warningZong;
@@ -11,10 +11,10 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 
 	if (PhysicsEnable) ApplyPhysics();
 
-	Position = Vector2f(Position.x * SCALE, Position.y * SCALE);
-	Velocity = Vector2f(Velocity.x * SCALE, Velocity.y * SCALE);
-	Acceleration = Vector2f(Acceleration.x * SCALE, Acceleration.y * SCALE);
-	width = width * SCALE;
+	Position = Vector2f(Position.x * thisScale, Position.y * thisScale);
+	Velocity = Vector2f(Velocity.x * thisScale, Velocity.y * thisScale);
+	Acceleration = Vector2f(Acceleration.x * thisScale, Acceleration.y * thisScale);
+	width = width * thisScale;
 
 	setVelocity(Velocity);
 	setAcceleration(Acceleration);
@@ -25,7 +25,7 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 	this->width = width;
 	this->widthCnt = widthCnt;
 
-	setVelocity({ (float)SCALE * Velocity.x,(float)SCALE * Velocity.y });
+	setVelocity({ (float)thisScale * Velocity.x,(float)thisScale * Velocity.y });
 	Destructible = true;
 
 	for (int i=0;i<total;i++)
@@ -43,6 +43,7 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 			{
 				Entity* tmp = entityList[i];
 				tmp->RotationDivation = 90;
+				tmp->setBaseRotation(90);
 			}
 
 		}
@@ -73,6 +74,7 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 			shape->setOutlineThickness(2);
 			shape->setFillColor(trans);
 			shape->setOutlineColor(Colors::yellow);
+			angleVelocity = 0.2;
 
 			warningZone->addWarningZone(*shape, timerStart);
 		}
@@ -84,9 +86,11 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 			setUpPattern(Square);
 
 			RectangleShape* shape = new RectangleShape();
-			shape->setSize(Vector2f(width, (width * (total / widthCnt) / width)));
+			shape->setSize(Vector2f(width, width));
 			shape->setPosition(Position);
-			shape->setFillColor(Colors::yellow);
+			shape->setOutlineColor(Colors::yellow);
+			shape->setOutlineThickness(2);
+			shape->setFillColor(trans);			
 
 			warningZone->addWarningZone(*shape, timerStart);
 		}

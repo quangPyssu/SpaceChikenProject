@@ -18,6 +18,14 @@ EnemyManager::~EnemyManager()
 		detachChild(*enemy[i]);
 	}
 	enemy.clear();
+
+	for (int i = 0; i < BulletPatternList.size(); i++) if (BulletPatternList[i] != nullptr)
+	{
+		detachChild(*BulletPatternList[i]);
+	}
+
+	BulletPatternList.clear();
+	BulletPattern_Aim_For_Player.clear();
 }
 
 void EnemyManager::addEnemy(EnemyType type)
@@ -71,13 +79,63 @@ void EnemyManager::takeTimeCurrent()
 
 				case Boss_Chicken_1:
 				{
-					
+					switch (enemy[i]->attackType)
+					{
+						case 0: // 3 Circle
+						{
+							for (int j = 0; j < 3; j++)
+							{
+								addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Circle, RotationType::Spin, enemy[i]->getPosition(),
+									{0,0}, {0,0}, false, 10, 70, 0, j * 100, -1, 1);
+								BulletPattern_Aim_For_Player.push_back({BulletPatternList.back(), 10});
+							}
+						}
+						break;
+
+						case 1: // 2 Square
+						{	
+							for (int j = 0; j < 2; j++)
+							{
+								addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Square, RotationType::defaultRotation, enemy[i]->getPosition(),
+									Vector2f(0,0), {0,0}, false, 9, 80, 3, j * 100, -1, 1);
+								BulletPattern_Aim_For_Player.push_back({ BulletPatternList.back(), 10 });
+							}
+						}
+						break;
+
+						case 2: //4 Direction Circle
+						{
+							for (int j=0;j<2;j++)
+								for (int k=0;k<2;k++)
+									addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Circle, RotationType::Spin, enemy[i]->getPosition(),
+											enemy[i]->velocityToB(150, player)*Vector2f(j?1:-1, k ? 1 : -1), {0,0}, true, 6, 80, 4, 0, 2000, 1);
+
+							//spawn 4 go in 4 direction
+						}	
+
+						case 3: // barrage
+						{
+							for (int j = 0; j < 10; j++)
+							{
+								addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Circle, RotationType::WithVelocity, enemy[i]->getPosition(),
+									{ 0,0 }, { 0,0 }, false, 1, 0, 1, j * 15, -1, 1);
+								BulletPattern_Aim_For_Player.push_back({ BulletPatternList.back(), 10 });
+							}
+						}
+
+
+						break;						
+					}
+
+					EnimesBullets->addBullet(BulletType::Enemy_Bullet_Normal, enemy[i]->getPosition());
 				}
 			}
 
 			enemy[i]->resetGun();
 		}
 	}	
+
+	fireBulletPattern();
 
 
 	// Clean up the dead bullet pattern
@@ -92,9 +150,8 @@ void EnemyManager::takeTimeCurrent()
 	}
 }
 
-
 void EnemyManager::addBulletPattern(BulletType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,bool Physics,
-	int total, float width, int widthCnt, int timerStart, int timerEnd)
+	int total, float width, int widthCnt, int timerStart, int timerEnd, double thisScale)
 {
 	BulletManager* tmp = nullptr;
 
@@ -106,7 +163,26 @@ void EnemyManager::addBulletPattern(BulletType type, PatternType patternType, Ro
 		default: {tmp = EnimesBullets;} break;
 	}
 
-	BulletPatternList.push_back(new BulletPattern(type, patternType, rotationType, *tmp, Position, Velocity, Acceleration, Physics, total, width, widthCnt, *warningZone, timerStart, timerEnd));
+	BulletPatternList.push_back(new BulletPattern(type, patternType, rotationType, *tmp, Position, Velocity, Acceleration, Physics, total, width, widthCnt, *warningZone, timerStart, timerEnd,thisScale));
 	
 	PushToObject(BulletPatternList.back(), this);
+}
+
+
+void EnemyManager::fireBulletPattern()
+{
+	for (int i = 0; i < BulletPattern_Aim_For_Player.size(); i++)
+	{
+		if (!BulletPattern_Aim_For_Player[i].ff->getTimerStart())
+		{
+			auto tmp=BulletPattern_Aim_For_Player[i].ff;
+			int diva = BulletPattern_Aim_For_Player[i].ss;
+
+			tmp->setVelocity(tmp->velocityToB(150, player)+Vector2f(diva-randInt(diva*2),
+				diva - randInt(diva * 2)));
+
+			BulletPattern_Aim_For_Player.erase(BulletPattern_Aim_For_Player.begin() + i);
+			i--;
+		}
+	}
 }

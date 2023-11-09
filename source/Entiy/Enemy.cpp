@@ -27,11 +27,6 @@ Enemy::Enemy(EnemyType type, Vector2f StartPosition)
 		animations.back()->makePingPong();
 		animations.back()->PushToObject(animations.back(), this);
 
-		/*sprites.push_back(new SpriteOnly("ChickenFace1.png", Vector2f(0, 0)));
-		sprites.back()->PushToObject(sprites.back(), this);
-		sprites.back()->setOrigin({ 0.5, 1 });
-		sprites.back()->setScale(0.9);*/
-
 		HitPoints = 60;
 
 		ApplyPhysics();
@@ -40,6 +35,8 @@ Enemy::Enemy(EnemyType type, Vector2f StartPosition)
 
 		reloadFrameID = rand() % 300;
 		reloadFrameIDMax = 350;
+
+		attackTypeMax = 1;
 	}
 		break;
 	case Boss_Chicken_1:
@@ -47,12 +44,18 @@ Enemy::Enemy(EnemyType type, Vector2f StartPosition)
 		hitbox.setFillColor(Colors::trans);
 		hitbox.setOutlineColor(Color::Blue);
 		hitbox.setOutlineThickness(1);
-		hitbox.setSize({ 145,145 });
+		hitbox.setSize({ 112,112 });
 		hitbox.setOrigin(hitbox.getSize().x / 2, hitbox.getSize().y / 2);
 
-		animations.push_back(new Animation(2, 50, 1, 1, { 0,0 }, { 0.5,0.5 }, Vector2f(0, 0), "ChickenBody.png"));
+		animations.push_back(new Animation(2, 50, 1, 0.75, { 0,0 }, { 0.5,0.5 }, Vector2f(0, 0), "ChickenBody.png"));
 		animations.back()->makePingPong();
 		animations.back()->PushToObject(animations.back(), this);
+
+		sprites.push_back(new SpriteOnly("ChickenFace1.png", Vector2f(0, 0)));
+		sprites.back()->setScale(1.5);
+		sprites.back()->setOrigin({ 0.5,1.2 });
+		sprites.back()->setPosition({ 0,0 });
+		sprites.back()->PushToObject(sprites.back(), this);
 
 		HitPoints = 2500;
 
@@ -62,6 +65,8 @@ Enemy::Enemy(EnemyType type, Vector2f StartPosition)
 
 		reloadFrameID = rand() % 300;
 		reloadFrameIDMax = 350;
+
+		attackTypeMax = 4;
 	}
 	break;
 	}
@@ -104,6 +109,7 @@ void Enemy::takeTimeCurrent()
 	{
 		reloadFrameID = 0;
 		isFiring = true;
+		attackType = rand() % attackTypeMax;
 	}
 	else
 	{

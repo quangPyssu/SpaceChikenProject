@@ -55,7 +55,8 @@ GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 	levelReader.ReadLevel(CurrentLevel);
 
 	{
-		//enemyManager->addEnemy(EnemyType::Enemy_Chicken_1);
+		//enemyManager->addEnemy(EnemyType::Boss_Chicken_1);
+		//addEnemyPattern(EnemyType::Boss_Chicken_1, PatternType::None, RotationType::defaultRotation, { 400,100 }, { 10,0 }, { -1,-1 }, 1, 0, 1);
 		//addEnemyPattern(Chicken_Circle, { 400,100 }, { 10,0 }, {-1,-1}, 10, 10, 7);
 		//addEnemyPattern(Chicken_Square, { 400,100 }, { -10,0 }, { -1,-1 }, 21, 400, 7);
 		//enemyManager->addBulletPattern(Enemy_Normal_Square, { 400,100 }, { 10,0 }, { -1,-1 }, 30, 200, 10);
@@ -67,10 +68,15 @@ GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 
 	parentState.music->stop();
 
-	music = new Music();
-	music->openFromFile(Constants::GameMusicTrack[CurrentLevel][0]);
-	music->setLoop(true);
-	music->play();
+	//music = new Music();
+	//music->openFromFile(Constants::GameMusicTrack[CurrentLevel][0]);
+	//music->setLoop(true);
+	//music->play();
+	//music->setLoopPoints(sf::Music::TimeSpan(sf::seconds(20), music->getDuration()));
+
+	playMusic(Constants::GameMusicTrack[CurrentLevel][0], Constants::GameMusicOffset[CurrentLevel][0]);
+
+	//make music play from start the first time then loop back to specified offset
 }
 
 GameState::~GameState()
@@ -80,7 +86,7 @@ GameState::~GameState()
 	ResourceManager::unloadTexture("FireJet.png");
 	ResourceManager::unloadTexture("Bullet.png");
 	ResourceManager::unloadTexture("Enemy_Bullet.png");
-	ResourceManager::unloadTexture("ThanGa.png");
+	ResourceManager::unloadTexture("ChickenBody.png");
 
 	window->setMouseCursorVisible(true);
 
@@ -148,6 +154,13 @@ void GameState::takeTimeCurrent()
 			Constants::CurrentWave++;
 			levelReader.gotoNextWave();
 			breakTime = 300;
+
+			if (levelReader.isFinalWave()) // Level Complete
+			{
+				cout << "Level Complete" << endl;
+
+				playMusic(Constants::GameMusicTrack[CurrentLevel][1], Constants::GameMusicOffset[CurrentLevel][1]);
+			}
 		}
 	}
 
@@ -244,7 +257,7 @@ void GameState::readWaveQueue()
 			int timerStart = levelReader.BulletWaveTimerMax.front()[i];
 			int timerEnd = levelReader.BulletWaveData.front()[i][7];
 
-			enemyManager->addBulletPattern(type, patternType, rotationType, Position, Velocity, Acceleration, Physics, total, width, widthCnt, timerStart, timerEnd);
+			enemyManager->addBulletPattern(type, patternType, rotationType, Position, Velocity, Acceleration, Physics, total, width, widthCnt, timerStart, timerEnd,SCALE);
 
 			if (levelReader.BulletWaveLoop.front()[i].ff)
 			{

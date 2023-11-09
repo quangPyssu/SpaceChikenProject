@@ -10,6 +10,7 @@ using namespace sf;
 using namespace std;
 using namespace Colors;
 using namespace Constants;
+using namespace utility;
 
 
 class SceneNode : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
@@ -35,6 +36,8 @@ public:
     virtual void takeTimeCurrent() {};
 
     void PushToObject(SceneNode* tmp, SceneNode* Father);
+
+    int getTimerStart() { return timerStart; }
 
 public:
     vector<Ptr> Children;

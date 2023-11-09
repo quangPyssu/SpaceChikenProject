@@ -23,6 +23,7 @@ namespace States {
 class State : public SceneNode { // SceneNode to Store current state of the screen
 public:
 	State();
+	~State();
 	State(RenderWindow& window);
 
     typedef std::unique_ptr<State> Ptr;
@@ -34,6 +35,11 @@ public:
 
 	sf::Music* music=nullptr;
 
+	void playMusic(string ID,int offset);
+
 protected:
 	RenderWindow* window=nullptr;
+
+	vector <string> usedTextures;
+	vector <string> usedSounds;
 };

@@ -39,9 +39,14 @@ public:
     //int HitPoints = 1;
     bool rotationDependent = false;
     float RotationDivation = 0;
+    float baseRotation = 0;
+
+    void setBaseRotation(float rotation);
 
     float angleToB(Entity* B);
-    float angleToB(Vector2f B);
+    float angleToB(Vector2f posB);
+    Vector2f velocityToB(double baseVelocity,Entity* B);
+    Vector2f velocityToB(double baseVelocity,Vector2f posB);
 
 protected:
     Vector2f Velocity = { 0,0 };

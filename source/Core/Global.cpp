@@ -26,12 +26,14 @@ namespace Constants {
     sf::Vector2f Constants::WINDOW_SIZE = sf::Vector2f(800.0f, 600.0f);
 
     std::string GameMusicTrack[5][2] = { 
-        {"Assets/Sounds/Music/lullaby_deserted_hell.ogg", "Assets/Sounds/Music/BossTrack1.ogg",},
+        {"Assets/Sounds/Music/lullaby_deserted_hell.ogg", "Assets/Sounds/Music/BeOfGoodCheer.ogg",},
         {"Assets/Sounds/Music/Track3.ogg","Assets/Sounds/Music/Track4.ogg",},
 		{"Assets/Sounds/Music/Track5.ogg", "Assets/Sounds/Music/Track6.ogg",},
 		{"Assets/Sounds/Music/Track7.ogg", "Assets/Sounds/Music/Track8.ogg",},
 		{"Assets/Sounds/Music/Track9.ogg", "Assets/Sounds/Music/Track10.ogg",} 
         };
+
+    int GameMusicOffset[5][2] = { {0,12},{0,0},{0,0},{0,0},{0,0} };
 
     std::string MenuMusicTrack = "Assets/Sounds/Music/space_maiden_appear.ogg";
 
@@ -51,7 +53,22 @@ namespace Constants {
 
     sf::Vector2f lastMousePos = sf::Vector2f(0, 0);
     sf::Vector2f dtMousePos = sf::Vector2f(0, 0);
+
+   
 };
+
+namespace utility
+{
+    sf::Vector2f operator* (const sf::Vector2f& A, const sf::Vector2f& B)
+    {
+        return sf::Vector2f(A.x * B.x, A.y * B.y);
+    }
+
+    int randInt(int i)
+    {
+        return rand() % i;
+    }
+}
 
 namespace Colors {
     sf::Color trans = sf::Color::Transparent;
@@ -98,6 +115,8 @@ sf::Vector2f getScaleStretch(sf::Vector2f Oject, sf::Vector2f Target)
         sf::Vector2f res = sf::Vector2f(Target.x / Oject.x, Target.y / Oject.y);
 		return res;
 	}
+
+
 }
 
 namespace ResourceManager
@@ -132,14 +151,14 @@ namespace ResourceManager
     {
         auto it = textures.find(ID);
 
-        if (it != textures.end()) return it->second; else
+        if (it != textures.end()) return *it->second; else
         {
-            sf::Texture texture;
-            if (texture.loadFromFile("Assets/Textures/" + ID ))
-            {
+            std::shared_ptr<sf::Texture> texture = std::make_shared<sf::Texture>();
+            if (texture->loadFromFile("Assets/Textures/" + ID)) {
                 textures.emplace(ID, texture);
-                return textures[ID];
-            } else throw std::runtime_error("Failed to load texture: " + ID);
+                return *(texture);
+            }
+            else throw std::runtime_error("Failed to load texture: " + ID);
         }
     }    
 
@@ -175,7 +194,7 @@ namespace ResourceManager
 
         if (it != textures.end())
         {
-            //std::cout << " Unloading texture: " << ID << "\n";
+            std::cout << " Unloading texture: " << ID << "\n";
             textures.erase(it);
         }
     }

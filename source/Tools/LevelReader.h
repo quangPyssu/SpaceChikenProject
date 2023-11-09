@@ -15,6 +15,8 @@ public:
 	bool isLevelFinished();
 	bool isWaveFinished();
 
+	bool isFinalWave();
+
 	void pushEmptyWave();
 
 	bool clearEnemyPattern(int id);

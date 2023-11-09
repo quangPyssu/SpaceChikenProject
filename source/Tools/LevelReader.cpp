@@ -160,6 +160,11 @@ bool LevelReader::isWaveFinished()
 	return (EnemyWaveData.front().empty());
 }
 
+bool LevelReader::isFinalWave()
+{
+	return (EnemyWaveData.size() == 1);
+}
+
 bool LevelReader::clearEnemyPattern(int id)
 {
 	if (EnemyWaveData.empty() || id >= EnemyWaveData.front().size()) return false;

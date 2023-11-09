@@ -9,7 +9,7 @@ enum PatternType
 
 enum RotationType
 {
-	defaultRotation,Spin,WithVelocity,tiltUp,WithOwnVelocity,SpinOwn
+	defaultRotation,Spin,WithVelocity,tiltUp,WithOwnVelocity,SpinOwn,WithOwnVelocityTiltUp
 };
 
 class Pattern : public Entity
@@ -20,10 +20,12 @@ class Pattern : public Entity
 	void takeTimeCurrent() override;
 
 	void setTimer(int timerStart, int timerEnd);
-
-	protected:
-
+	
 	void setUpPattern(PatternType type);	
+
+	void setVelocity(Vector2f Velocity);
+
+protected:
 
 	PatternType type=None;
 	RotationType rotationType=Spin;
