@@ -1,53 +1,48 @@
 #include "GameState.h"
 
-GameState::GameState(State& parentState,RenderWindow& window) : State(window)
+GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 {
 	this->parentState = &parentState;
 
-	ResourceManager::unloadTexture("TerraTop.png");
-	ResourceManager::unloadTexture("NeutronStar.png");
 	textureBack = ResourceManager::getTexture("Blue_Blank_Background.png");
 
 	BGHeight = textureBack.getSize().y;
 
 	backgroundSprite.setTexture(textureBack);
 	backgroundSprite.setScale(getScale::getScaleMax(sf::Vector2f(backgroundSprite.getTextureRect().width, backgroundSprite.getTextureRect().height), Constants::WINDOW_SIZE));
-	backgroundSprite.setPosition(0.0f, WINDOW_SIZE.y - BGHeight * SCALE );
+	backgroundSprite.setPosition(0.0f, WINDOW_SIZE.y - BGHeight * SCALE);
 
-	BulletFilter[Enemy_Bullet_Normal] = 0;
-	BulletFilter[Astroid] = 1;
-	BulletFilter[Player_Bullet_Normal] = 2;
-	BulletFilter[Player_Laser_Destroyer] = 3;
-	BulletFilter[Player_Bullet_Destroyer] = 3;
+	{
+		player = new Player();
 
-	player = new Player(); 
+		EnimesBullets = new BulletManager(*player);
+		EnimesBullets_Vulnerable = new BulletManager(*player);
+		PlayerBullets_Standard = new BulletManager(*player);
+		PlayerBullets_Detroyer = new BulletManager(*player);
 
-	EnimesBullets = new BulletManager(*player);
-	EnimesBullets_Vulnerable = new BulletManager(*player);
-	PlayerBullets_Standard = new BulletManager(*player);
-	PlayerBullets_Detroyer = new BulletManager(*player);
+		PlayerBullets_Detroyer->addTarget(*EnimesBullets);
+		PlayerBullets_Detroyer->addTarget(*EnimesBullets_Vulnerable);
+		PlayerBullets_Standard->addTarget(*EnimesBullets_Vulnerable);
 
-	PlayerBullets_Detroyer->addTarget(*EnimesBullets);
-	PlayerBullets_Detroyer->addTarget(*EnimesBullets_Vulnerable);
-	PlayerBullets_Standard->addTarget(*EnimesBullets_Vulnerable);	
+		warningZone = new WarningZone();
 
-	warningZone = new WarningZone();
+		enemyManager = new EnemyManager(*player, *PlayerBullets_Standard, *PlayerBullets_Detroyer, *EnimesBullets, *EnimesBullets_Vulnerable, *warningZone);
 
-	enemyManager = new EnemyManager(*player, *PlayerBullets_Standard, *PlayerBullets_Detroyer, *EnimesBullets,*EnimesBullets_Vulnerable,*warningZone);
+		PushToObject(enemyManager, this);
+		PushToObject(EnimesBullets, this);
+		PushToObject(EnimesBullets_Vulnerable, this);
+		PushToObject(player, this);
+		PushToObject(PlayerBullets_Standard, this);
+		PushToObject(PlayerBullets_Detroyer, this);
 
-	PushToObject(enemyManager, this);
-	PushToObject(EnimesBullets, this);
-	PushToObject(EnimesBullets_Vulnerable, this);
-	PushToObject(player,this);	
-	PushToObject(PlayerBullets_Standard, this);
-	PushToObject(PlayerBullets_Detroyer, this);	
+		PBplayerHealth = new ProgressBar({ 10,WINDOW_SIZE.y - 20 }, Vector2f(WINDOW_SIZE.x - 20, 20), Colors::green, Colors::grey, "HP", player->HitPoints, PlayerMaxHP);
+		PushToObject(PBplayerHealth, this);
+		PushToObject(warningZone, this);
 
-	//BulletManagerList.push_back(EnimesBullets); BulletManagerList.push_back(EnimesBullets_Vulnerable);
-	//BulletManagerList.push_back(PlayerBullets_Standard); BulletManagerList.push_back(PlayerBullets_Detroyer);
-
-	PBplayerHealth = new ProgressBar({ 10,WINDOW_SIZE.y-20 },Vector2f(WINDOW_SIZE.x-20,20), Colors::green,Colors::grey,"HP",player->HitPoints,PlayerMaxHP);
-	PushToObject(PBplayerHealth, this);	
-	PushToObject(warningZone, this);
+		SubTitle* LevelName = new SubTitle({ 0,WINDOW_SIZE.y / 3 }, Vector2f(WINDOW_SIZE.x, 200), tran_Grey, { 0.2,0.4 }, 20, white, "Level 1", "neuro",600);
+		SubTitleList.push_back(LevelName);
+		PushToObject(SubTitleList.back(), this);
+	}
 
 	window.setMouseCursorVisible(false);
 
@@ -66,13 +61,7 @@ GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 		//enemyManager->addBulletPattern(Enemy_Normal_Shower, { 0,0 }, { 20,20 }, { 0,0 }, 25, 300, 1);
 	}
 
-	parentState.music->stop();
-
-	//music = new Music();
-	//music->openFromFile(Constants::GameMusicTrack[CurrentLevel][0]);
-	//music->setLoop(true);
-	//music->play();
-	//music->setLoopPoints(sf::Music::TimeSpan(sf::seconds(20), music->getDuration()));
+	//parentState.music->stop();
 
 	playMusic(Constants::GameMusicTrack[CurrentLevel][0], Constants::GameMusicOffset[CurrentLevel][0]);
 
@@ -81,21 +70,9 @@ GameState::GameState(State& parentState,RenderWindow& window) : State(window)
 
 GameState::~GameState()
 {
-	ResourceManager::unloadTexture("Blue_Blank_Background.png");
-	ResourceManager::unloadTexture("Battlecruiser_Base.png");
-	ResourceManager::unloadTexture("FireJet.png");
-	ResourceManager::unloadTexture("Bullet.png");
-	ResourceManager::unloadTexture("Enemy_Bullet.png");
-	ResourceManager::unloadTexture("ChickenBody.png");
-
 	window->setMouseCursorVisible(true);
 
 	BulletManagerList.clear();
-
-	music->stop();
-	delete music;
-
-	parentState->music->play();
 }
 
 void GameState::addEnemyPattern(EnemyType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
@@ -169,7 +146,7 @@ void GameState::takeTimeCurrent()
 
 	BGLoop();
 
-	// Clean up the dead Enemy patterns	
+	// Clean up the dead Enemy patterns	& subTitles
 
 	for (int i = 0; i < EnemyPatternList.size(); i++)
 	{
@@ -177,6 +154,16 @@ void GameState::takeTimeCurrent()
 		{
 			detachChild(*EnemyPatternList[i]);
 			EnemyPatternList.erase(EnemyPatternList.begin() + i);
+			i--;
+		}
+	}
+
+	for (int i = 0; i < SubTitleList.size(); i++)
+	{
+		if (SubTitleList[i]->isDead())
+		{
+			detachChild(*SubTitleList[i]);
+			SubTitleList.erase(SubTitleList.begin() + i);
 			i--;
 		}
 	}

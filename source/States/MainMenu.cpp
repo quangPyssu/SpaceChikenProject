@@ -30,7 +30,6 @@ MainMenu::MainMenu()
 
 MainMenu::~MainMenu()
 {
-	delete music;
 }
 
 void MainMenu::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
@@ -43,7 +42,8 @@ void MainMenu::updateCurrent(Event& event, Vector2f& MousePos)
 	if (btn_Quit->isLeftClicked(event,MousePos)) CurrentState = States::KillMe; else
 		if (btn_NewGame->isLeftClicked(event, MousePos))
 		{
-			CurrentState = States::NewGame;
+			//CurrentState = States::NewGame;
+			CurrentState = States::Load;
 		}
 }
 

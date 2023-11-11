@@ -1,38 +1,52 @@
-#include "ProgressBar.h"
+#include "SubTitle.h"
 
-ProgressBar::ProgressBar(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor, sf::Color bgColor, std::string name,int& Base,int& BaseMax)
+SubTitle::SubTitle(sf::Vector2f position, sf::Vector2f size, sf::Color bgColor, 
+	sf::Vector2f labelPos, int labelSize, sf::Color labelColor, std::string label,std::string font = "ArialTh", int timerEnd=-1)
 {
 	background.setPosition(position);
 	background.setSize(size);
 	background.setFillColor(bgColor);
 
-	bar.setPosition(position);
-	bar.setSize(size);
-	bar.setFillColor(fillColor);
-
 	totalHeight = size.y;
 	totalWidth = size.x;
 
-	this->Base = &Base;
-	this->BaseMax = &BaseMax;
+	if (font == "") font = "ArialTh";
 
-	label.setFont(ResourceManager::getFont("ArialTh"));
-	//label.setFont(ResourceManager::getFont("neuro"));
+	this->label.setFont(ResourceManager::getFont(font));
 
-	label.setString(name);
-	label.setCharacterSize(size.y / 1.2);
-	label.setFillColor(Colors::black);
-	label.setPosition(position.x + size.x / 2 - label.getGlobalBounds().width / 2, position.y + size.y / 2 - label.getGlobalBounds().height / 2);
+	this->label.setString(label);
+	this->label.setCharacterSize(labelSize*SCALE);
+	this->label.setFillColor(labelColor);
+	this->label.setPosition(position+(size*labelPos));
+
+	this->baseBGAlpha = bgColor.a;
+	this->baseLabelAlpha = labelColor.a;
+
+	this->timerEnd = timerEnd;
+	this->timerEndBase = timerEnd;
 }
 
-void ProgressBar::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
+void SubTitle::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(background, states);
-	target.draw(bar, states);
 	target.draw(label, states);
 }	
 
-void ProgressBar::takeTimeCurrent()
+void SubTitle::takeTimeCurrent()
 {
-	bar.setSize(sf::Vector2f(totalWidth * (float(*Base) / float(*BaseMax)), totalHeight));
+	if (timerEnd != -1)
+	{
+		if (timerEnd > 0) timerEnd--;
+
+		setTranparency((float) timerEnd/timerEndBase);
+	}
 }
+
+void SubTitle::setTranparency(float alpha)
+{	
+	background.setFillColor(sf::Color(background.getFillColor().r, background.getFillColor().g, background.getFillColor().b
+		, alpha*baseBGAlpha));
+	label.setFillColor(sf::Color(label.getFillColor().r, label.getFillColor().g, label.getFillColor().b
+		, alpha*baseLabelAlpha));
+}
+

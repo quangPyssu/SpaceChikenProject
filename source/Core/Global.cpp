@@ -37,6 +37,9 @@ namespace Constants {
 
     std::string MenuMusicTrack = "Assets/Sounds/Music/space_maiden_appear.ogg";
 
+    int masterVolume = 100;
+    int musicVolume = 30;
+    int soundVolume = 70;
     const int font_size_small = 20;
     const int font_size_medium = 30;
     const int font_size_large = 40;
@@ -92,6 +95,7 @@ namespace Colors {
     sf::Color Search_Color = pink;
     sf::Color Default_Color = black;
     sf::Color tran_Yellow = sf::Color(255, 255, 153, 128);
+    sf::Color tran_Grey = sf::Color(128, 128, 128, 128);
 };
 
 namespace getScale
@@ -121,6 +125,13 @@ sf::Vector2f getScaleStretch(sf::Vector2f Oject, sf::Vector2f Target)
 
 namespace ResourceManager
 {
+    std::vector<std::string> loadedTextures;
+    std::vector<std::string> loadedSounds;
+
+    std::unordered_map<std::string, sf::Font> fonts;
+    std::unordered_map<std::string, std::shared_ptr<sf::Texture>> textures;
+    std::unordered_map<std::string, std::shared_ptr<sf::SoundBuffer>> soundBuffers;
+
     sf::Font& getFont(const std::string& ID)
     {
       auto it = fonts.find(ID);
@@ -155,6 +166,8 @@ namespace ResourceManager
         {
             std::shared_ptr<sf::Texture> texture = std::make_shared<sf::Texture>();
             if (texture->loadFromFile("Assets/Textures/" + ID)) {
+                std::cout << " Loading texture: " << ID << std::endl;
+                loadedTextures.push_back(ID);
                 textures.emplace(ID, texture);
                 return *(texture);
             }
@@ -166,13 +179,14 @@ namespace ResourceManager
     {
 		auto it = soundBuffers.find(ID);
 
-        if (it != soundBuffers.end()) return it->second; else
+        if (it != soundBuffers.end()) return *it->second; else
         {
-			sf::SoundBuffer buffer;
-            if (buffer.loadFromFile("Assets/Sounds/" + ID))
+			std::shared_ptr <sf::SoundBuffer> buffer = std::make_shared<sf::SoundBuffer>();
+            if (buffer->loadFromFile("Assets/Sounds/" + ID))
             {
+                loadedSounds.push_back(ID);
 				soundBuffers.emplace(ID, buffer);
-				return soundBuffers[ID];
+				return *(buffer);
 			} else throw std::runtime_error("Failed to load sound effect: " + ID);
 		}
 	}
@@ -194,7 +208,7 @@ namespace ResourceManager
 
         if (it != textures.end())
         {
-            std::cout << " Unloading texture: " << ID << "\n";
+            //std::cout << " Unloading texture: " << ID << "\n";
             textures.erase(it);
         }
     }

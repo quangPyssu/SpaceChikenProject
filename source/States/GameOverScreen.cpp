@@ -43,6 +43,7 @@ void GameOverScreen::updateCurrent(Event& event, Vector2f& MousePos)
 		{
 			CurrentState = States::KillMe;
 			parentState->CurrentState = States::KillMe;
-			parentState->parentState->CurrentState = States::None;
+			parentState->parentState->CurrentState = States::KillMe;
+			parentState->parentState->parentState->CurrentState = States::None;
 		}
 }

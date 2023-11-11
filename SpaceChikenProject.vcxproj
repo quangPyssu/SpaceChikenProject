@@ -157,6 +157,7 @@
     <ClCompile Include="source\StateSteak.cpp" />
     <ClCompile Include="source\States\GameOverScreen.cpp" />
     <ClCompile Include="source\States\GameState.cpp" />
+    <ClCompile Include="source\States\LoadScreen.cpp" />
     <ClCompile Include="source\States\MainMenu.cpp" />
     <ClCompile Include="source\States\PauseMenu.cpp" />
     <ClCompile Include="source\States\State.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="source\Tools\LevelReader.cpp" />
     <ClCompile Include="source\Tools\Pattern.cpp" />
     <ClCompile Include="source\Tools\ProgressBar.cpp" />
+    <ClCompile Include="source\Tools\SubTitle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -184,6 +186,7 @@
     <ClInclude Include="source\StateSteak.h" />
     <ClInclude Include="source\States\GameOverScreen.h" />
     <ClInclude Include="source\States\GameState.h" />
+    <ClInclude Include="source\States\LoadScreen.h" />
     <ClInclude Include="source\States\MainMenu.h" />
     <ClInclude Include="source\States\PauseMenu.h" />
     <ClInclude Include="source\States\State.h" />
@@ -192,6 +195,7 @@
     <ClInclude Include="source\Tools\LevelReader.h" />
     <ClInclude Include="source\Tools\Pattern.h" />
     <ClInclude Include="source\Tools\ProgressBar.h" />
+    <ClInclude Include="source\Tools\SubTitle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

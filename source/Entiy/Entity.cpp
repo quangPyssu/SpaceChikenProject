@@ -153,6 +153,7 @@ void Entity::playSound(string soundName)
 {
 	sounds.push_back(new Sound);
 	sounds.back()->setBuffer(ResourceManager::getSoundBuffer(soundName));
+	sounds.back()->setVolume(soundVolume * masterVolume / 100);
 	sounds.back()->play();
 }
 
@@ -220,4 +221,9 @@ sf::Vector2f Entity::velocityToB(double baseVelocity, sf::Vector2f posB)
 {
 	float angle = angleToB(posB);
 	return sf::Vector2f(baseVelocity * cos(angle * pi / 180), baseVelocity * sin(angle * pi / 180));
+}
+
+sf::Vector2f Entity::AngleShift(sf::Vector2f vec, double angle)
+{
+	return sf::Vector2f(vec.x * cos(angle * pi / 180) - vec.y * sin(angle * pi / 180), vec.x * sin(angle * pi / 180) + vec.y * cos(angle * pi / 180));
 }

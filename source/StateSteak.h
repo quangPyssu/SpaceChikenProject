@@ -7,6 +7,7 @@
 #include "States/GameState.h"
 #include "States/GameOverScreen.h"
 #include "States/PauseMenu.h"
+#include "States/LoadScreen.h"
 
 class StateSteak : private sf::NonCopyable { // StateSteak to Store all states of the screen
 public: 

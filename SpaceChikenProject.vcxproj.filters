@@ -108,6 +108,12 @@
     <ClCompile Include="source\Animation\WarningZone.cpp">
       <Filter>Anime</Filter>
     </ClCompile>
+    <ClCompile Include="source\States\LoadScreen.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tools\SubTitle.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SceneNode.h">
@@ -184,6 +190,12 @@
     </ClInclude>
     <ClInclude Include="source\Animation\WarningZone.h">
       <Filter>Anime</Filter>
+    </ClInclude>
+    <ClInclude Include="source\States\LoadScreen.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tools\SubTitle.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

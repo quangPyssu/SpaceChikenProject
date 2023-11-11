@@ -48,6 +48,8 @@ public:
     Vector2f velocityToB(double baseVelocity,Entity* B);
     Vector2f velocityToB(double baseVelocity,Vector2f posB);
 
+    Vector2f AngleShift(Vector2f vec,double angle);
+
 protected:
     Vector2f Velocity = { 0,0 };
     Vector2f Acceleration = { 0,0 };

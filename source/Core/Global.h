@@ -31,6 +31,10 @@ namespace Constants
 
     extern int GameMusicOffset[5][2];
 
+    extern int masterVolume;
+    extern int musicVolume;
+    extern int soundVolume;
+
     extern std::pair <double, double> OutScopeX, OutScopeY;
 
     extern const float targetAspectRatio;
@@ -85,6 +89,7 @@ namespace Colors
     extern sf::Color Insert_Color;
     extern sf::Color Search_Color;
     extern sf::Color tran_Yellow;
+    extern sf::Color tran_Grey;
 };
 
 namespace getScale
@@ -102,9 +107,12 @@ namespace utility
 
 namespace ResourceManager
 {
-    static std::unordered_map<std::string, sf::Font> fonts;
-    static std::unordered_map<std::string, std::shared_ptr<sf::Texture>> textures;
-    static std::unordered_map<std::string, sf::SoundBuffer> soundBuffers;
+    extern std::vector<std::string> loadedTextures;
+    extern std::vector<std::string> loadedSounds;
+
+    extern std::unordered_map<std::string, sf::Font> fonts;
+    extern std::unordered_map<std::string, std::shared_ptr<sf::Texture>> textures;
+    extern std::unordered_map<std::string, std::shared_ptr<sf::SoundBuffer>> soundBuffers;
 
     sf::Font& getFont(const std::string& ID);
     sf::Texture& getTexture(const std::string& ID);

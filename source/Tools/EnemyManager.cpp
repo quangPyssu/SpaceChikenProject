@@ -81,14 +81,14 @@ void EnemyManager::takeTimeCurrent()
 				{
 					switch (enemy[i]->attackType)
 					{
-						case 0: // 3 Circle
+						case 0: // barrage
 						{
-							for (int j = 0; j < 3; j++)
+							for (int j = 0; j < 10; j++)
 							{
-								addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Circle, RotationType::Spin, enemy[i]->getPosition(),
-									{0,0}, {0,0}, false, 10, 70, 0, j * 100, -1, 1);
-								BulletPattern_Aim_For_Player.push_back({BulletPatternList.back(), 10});
-							}
+								addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Circle, RotationType::WithVelocity, enemy[i]->getPosition(),
+									{ 0,0 }, { 0,0 }, false, 1, 0, 1, j * 15, -1, 1);
+								BulletPattern_Aim_For_Player.push_back({ BulletPatternList.back(), 10 });
+							}							
 						}
 						break;
 
@@ -98,28 +98,30 @@ void EnemyManager::takeTimeCurrent()
 							{
 								addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Square, RotationType::defaultRotation, enemy[i]->getPosition(),
 									Vector2f(0,0), {0,0}, false, 9, 80, 3, j * 100, -1, 1);
-								BulletPattern_Aim_For_Player.push_back({ BulletPatternList.back(), 10 });
+								BulletPattern_Aim_For_Player.push_back({ BulletPatternList.back(), 5 });
 							}
 						}
 						break;
 
 						case 2: //4 Direction Circle
 						{
-							for (int j=0;j<2;j++)
-								for (int k=0;k<2;k++)
-									addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Circle, RotationType::Spin, enemy[i]->getPosition(),
-											enemy[i]->velocityToB(150, player)*Vector2f(j?1:-1, k ? 1 : -1), {0,0}, true, 6, 80, 4, 0, 2000, 1);
+							for (int j = 0; j < 4; j++)
+							{
+								addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Circle, RotationType::Spin, enemy[i]->getPosition(),
+									enemy[i]->AngleShift(enemy[i]->velocityToB(150, player),90*j), { 0,0 }, true, 6, 80, 4, 0, 2000, 1);
+							}
 
 							//spawn 4 go in 4 direction
 						}	
+						break;
 
-						case 3: // barrage
+						case 3: // 3 circle
 						{
-							for (int j = 0; j < 10; j++)
+							for (int j = 0; j < 3; j++)
 							{
-								addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Circle, RotationType::WithVelocity, enemy[i]->getPosition(),
-									{ 0,0 }, { 0,0 }, false, 1, 0, 1, j * 15, -1, 1);
-								BulletPattern_Aim_For_Player.push_back({ BulletPatternList.back(), 10 });
+								addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Circle, RotationType::Spin, enemy[i]->getPosition(),
+									{ 0,0 }, { 0,0 }, false, 10, 70, 0, j * 100, -1, 1);
+								BulletPattern_Aim_For_Player.push_back({ BulletPatternList.back(), 5 });
 							}
 						}
 

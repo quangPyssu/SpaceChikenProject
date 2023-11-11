@@ -14,7 +14,7 @@ void LevelReader::ReadLevel(int id)
 		return;
 	}
 	
-	//pushEmptyWave();
+	pushEmptyWave(); pushEmptyWave(); pushEmptyWave();
 	
 	fin >> waveCount;
 

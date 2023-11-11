@@ -3,6 +3,7 @@
 #include "../SceneNode.h"
 #include "../Button.h"
 #include "../Animation/Animation.h"
+#include "../Tools/SubTitle.h"
 
 namespace States {
     enum ID {
@@ -42,4 +43,7 @@ protected:
 
 	vector <string> usedTextures;
 	vector <string> usedSounds;
+
+	int textureStackID;
+	int soundStackID;
 };

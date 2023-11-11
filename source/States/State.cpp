@@ -2,23 +2,40 @@
 
 State::State() {
 	window = nullptr;
+	textureStackID = ResourceManager::loadedTextures.size();
+
 }
 
 State::~State() {
-	for (auto& i : usedTextures)
-	{
-		//std::cout << "delete " << i << std::endl;
-		ResourceManager::unloadTexture(i);
+	while (textureStackID < ResourceManager::loadedTextures.size())
+	{		
+		ResourceManager::unloadTexture(ResourceManager::loadedTextures.back());
+		ResourceManager::loadedTextures.pop_back();
 	}
 
-	for (auto& i : usedSounds)
+	while (soundStackID < ResourceManager::loadedSounds.size())
 	{
-		//std::cout << "delete " << i << std::endl;
-		ResourceManager::unloadSoundBuffer(i);
+		ResourceManager::unloadSoundBuffer(ResourceManager::loadedSounds.back());
+		ResourceManager::loadedSounds.pop_back();
+	}
+
+	if (music != nullptr)
+	{
+		music->stop();
+		delete music;
+	}
+
+	if (parentState != nullptr)
+	{
+		if (parentState->music && parentState->music->getStatus()==sf::Music::Stopped)
+		{
+			parentState->music->play();
+		}
 	}
 }
 
 State::State(RenderWindow& window) : window(&window){
+	textureStackID = ResourceManager::loadedTextures.size();
 }
 
 
@@ -38,7 +55,7 @@ void State::playMusic(string ID, int offset)
 	music = new sf::Music();
 	music->openFromFile(ID);
 	music->setLoop(true);
-	music->setVolume(100);
+	music->setVolume(musicVolume*masterVolume/100);
 	music->play();
 	music->setLoopPoints(sf::Music::TimeSpan(sf::seconds(offset), music->getDuration()));
 }

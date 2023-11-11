@@ -43,7 +43,6 @@ private:
     BulletManager* PlayerBullets_Detroyer;
 
     vector <BulletManager*> BulletManagerList;
-    int BulletFilter[10];
 
     EnemyManager* enemyManager;
 
@@ -63,6 +62,9 @@ private:
 
     // UI
     ProgressBar* PBplayerHealth;
+    //ProgressBar* PBbossHealth;
+
+    vector <SubTitle*> SubTitleList;
 
     WarningZone* warningZone;
 

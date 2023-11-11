@@ -36,12 +36,14 @@ void StateSteak::CreateState(States::ID &stateID)
 		Stack.push_back(Dummy.makeUnique(new PauseMenu(*Stack.back())));
 		break;
 
+	case States::Load:
+		Stack.push_back(Dummy.makeUnique(new LoadScreen(*Stack.back())));
+		break;
+
 	/*case States::HighScore:
 		return new HighScore;
 		break;
-	case States::Load:
-		return new Load;
-		break;
+	
 	
 	default:
 		return nullptr;
