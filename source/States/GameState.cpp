@@ -15,29 +15,19 @@ GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 	{
 		player = new Player();
 
-		EnimesBullets = new BulletManager(*player);
-		EnimesBullets_Vulnerable = new BulletManager(*player);
 		PlayerBullets_Standard = new BulletManager(*player);
 		PlayerBullets_Detroyer = new BulletManager(*player);
+		
 
-		PlayerBullets_Detroyer->addTarget(*EnimesBullets);
-		PlayerBullets_Detroyer->addTarget(*EnimesBullets_Vulnerable);
-		PlayerBullets_Standard->addTarget(*EnimesBullets_Vulnerable);
-
-		warningZone = new WarningZone();
-
-		enemyManager = new EnemyManager(*player, *PlayerBullets_Standard, *PlayerBullets_Detroyer, *EnimesBullets, *EnimesBullets_Vulnerable, *warningZone);
+		enemyManager = new EnemyManager(*player, *PlayerBullets_Standard, *PlayerBullets_Detroyer);
 
 		PushToObject(enemyManager, this);
-		PushToObject(EnimesBullets, this);
-		PushToObject(EnimesBullets_Vulnerable, this);
 		PushToObject(player, this);
 		PushToObject(PlayerBullets_Standard, this);
 		PushToObject(PlayerBullets_Detroyer, this);
 
 		PBplayerHealth = new ProgressBar({ 10,WINDOW_SIZE.y - 20 }, Vector2f(WINDOW_SIZE.x - 20, 20), Colors::green, Colors::grey, "HP", player->HitPoints, PlayerMaxHP);
 		PushToObject(PBplayerHealth, this);
-		PushToObject(warningZone, this);
 
 		SubTitle* LevelName = new SubTitle({ 0,WINDOW_SIZE.y / 3 }, Vector2f(WINDOW_SIZE.x, 200), tran_Grey, { 0.2,0.4 }, 20, white, "Level 1", "neuro",600);
 		SubTitleList.push_back(LevelName);
@@ -49,18 +39,6 @@ GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 	//cout << "CurrentLevel " << CurrentLevel << endl;
 	levelReader.ReadLevel(CurrentLevel);
 
-	{
-		//enemyManager->addEnemy(EnemyType::Boss_Chicken_1);
-		//addEnemyPattern(EnemyType::Boss_Chicken_1, PatternType::None, RotationType::defaultRotation, { 400,100 }, { 10,0 }, { -1,-1 }, 1, 0, 1);
-		//addEnemyPattern(Chicken_Circle, { 400,100 }, { 10,0 }, {-1,-1}, 10, 10, 7);
-		//addEnemyPattern(Chicken_Square, { 400,100 }, { -10,0 }, { -1,-1 }, 21, 400, 7);
-		//enemyManager->addBulletPattern(Enemy_Normal_Square, { 400,100 }, { 10,0 }, { -1,-1 }, 30, 200, 10);
-		//enemyManager->addBulletPattern(Enemy_Normal_Circle, { 400,100 }, {-10,0 }, { -1,-1 }, 30, 200, 1);
-		//enemyManager->addBulletPattern(Astroid_Shower, { 0,0 }, { 5,5 }, { 0,0 }, 5, 300, 1, 0, -1);
-		//enemyManager->addBulletPattern(Enemy_Normal_Firework, { 400,100 }, { 20,20 }, { -5,-5 }, 30, 0, 1);
-		//enemyManager->addBulletPattern(Enemy_Normal_Shower, { 0,0 }, { 20,20 }, { 0,0 }, 25, 300, 1);
-	}
-
 	//parentState.music->stop();
 
 	playMusic(Constants::GameMusicTrack[CurrentLevel][0], Constants::GameMusicOffset[CurrentLevel][0]);
@@ -71,8 +49,6 @@ GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 GameState::~GameState()
 {
 	window->setMouseCursorVisible(true);
-
-	BulletManagerList.clear();
 }
 
 void GameState::addEnemyPattern(EnemyType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
@@ -173,7 +149,6 @@ void GameState::takeTimeCurrent()
 		//cout << "PlayerBullets_Standard->getBulletCount() " << PlayerBullets_Standard->getBulletCount() << endl;
 		//cout << "PlayerBullets_Detroyer->getBulletCount() " << PlayerBullets_Detroyer->getBulletCount() << endl;
 		//cout << "EnimesBullets->getBulletCount() " << EnimesBullets->getBulletCount() << endl;cout << endl;
-		//cout << "BulletPatternList.size() " << BulletPatternList.size() << endl;
 		//cout << "EnemyPatternList.size() " << EnemyPatternList.size() << endl;
 	}
 }
@@ -182,13 +157,13 @@ void GameState::readAttackQueue()
 {
 	if (player->isFiring)	// Player Fire
 	{
-		PlayerBullets_Standard->addBullet(Player_Bullet_Normal, player->getPosition() - Vector2f(0, 30));
+		PlayerBullets_Standard->addBullet(BulletType_Player_Normal, player->getPosition() - Vector2f(0, 30));
 		player->resetGun();
 	}
 
 	if (player->isSpecialing)	// Player Special
 	{
-		PlayerBullets_Detroyer->addBullet(Player_Laser_Destroyer, player->getPosition() + Vector2f(0, 10));
+		PlayerBullets_Detroyer->addBullet(BulletType_Player_Laser_Destroyer, player->getPosition() + Vector2f(0, 10));
 		player->resetSpecial();
 	}
 }

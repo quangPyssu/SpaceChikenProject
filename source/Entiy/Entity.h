@@ -7,7 +7,7 @@
 enum EntityState { Alive = 0, Dying = 1, Dead = 2 };
 
 class Entity : public SceneNode, protected Flicker
-{   
+{
 
 public:
     ~Entity();
@@ -18,13 +18,13 @@ public:
 
     void setVelocity(sf::Vector2f velocity);
 
-    void setAcceleration(sf::Vector2f acceleration);  
+    void setAcceleration(sf::Vector2f acceleration);
 
     void ApplyPhysics();
 
     void setRootPos(Vector2f& rootPos);
 
-    void setPosition(Vector2f position) ;
+    void setPosition(Vector2f position);
 
     void setTimer(int timerStart, int timerEnd);
 
@@ -45,10 +45,10 @@ public:
 
     float angleToB(Entity* B);
     float angleToB(Vector2f posB);
-    Vector2f velocityToB(double baseVelocity,Entity* B);
-    Vector2f velocityToB(double baseVelocity,Vector2f posB);
+    Vector2f velocityToB(double baseVelocity, Entity* B);
+    Vector2f velocityToB(double baseVelocity, Vector2f posB);
 
-    Vector2f AngleShift(Vector2f vec,double angle);
+    Vector2f AngleShift(Vector2f vec, double angle);
 
 protected:
     Vector2f Velocity = { 0,0 };
@@ -70,13 +70,19 @@ protected:
 
 protected:
 
+    enum damageEvent { NoDamage = 0, TakeDamage = 1, HalfHealth = 2, QuarterHealth = 3 };
+
     int HitPoints = 1;
-    int Damage = 0;    
+    int HitPointsMax = 1;
+    int Damage = 0;
 
     bool hasPhysics = false;
     bool isInvincibleWhenFlicker = false;
 
-    void takeDamage(int damage);
+    damageEvent takeDamage(int damage);
+    virtual void atHalfHealth() {};
+    virtual void atQuarterHealth() {};
+
     void playSound(string soundName);
 
     int timerEnd = -1;    

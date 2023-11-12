@@ -37,7 +37,7 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 
 	switch (bulletType)
 	{
-		case Enemy_Bullet_Normal:
+		case BulletType_Enemy_Egg:
 		{
 			for (int i = 0; i < total; i++)
 			{
@@ -49,7 +49,7 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 		}
 			break;
 
-		case Astroid:
+		case BulletType_Astroid:
 		{
 			for (int i = 0; i < total; i++)
 			{
@@ -116,7 +116,7 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 			shape->setFillColor(Colors::yellow);
 
 			warningZone->addWarningZone(*shape, timerStart);
-			if (bulletType == Enemy_Bullet_Normal) setRotation(270);
+			if (bulletType == BulletType_Enemy_Egg) setRotation(270);
 		}
 			break;
 	}

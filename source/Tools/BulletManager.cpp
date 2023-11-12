@@ -14,18 +14,12 @@ BulletManager::~BulletManager()
 
 void BulletManager::addBullet(BulletType type,sf::Vector2f position)
 {
-	Bullet* tmp = new Bullet(type, position);
+	Bullet* tmp = BulletFactory::createBullet(type, position);
 
 	switch (type)
 	{	
-	case Player_Bullet_Normal:
-		break;
-	case Enemy_Bullet_Normal:
-		break;
-	case Player_Bullet_Destroyer:
-		break;
-	case Player_Laser_Destroyer:
-		tmp->setRootPos(player->PlayerCurPos);//remember to split this into two
+	case BulletType_Player_Laser_Destroyer:
+		tmp->setRootPos(player->PlayerCurPos);//remember to split this into two Big And Small
 		break;
 	default:
 		break;
@@ -111,7 +105,5 @@ void BulletManager::takeTimeCurrent()
 			}
 		
 	}
-
-	
 
 };

@@ -85,11 +85,24 @@ void Entity::setVelocity(sf::Vector2f velocity)
 	Velocity = velocity;
 }
 
-void Entity::takeDamage(int damage)
+Entity::damageEvent Entity::takeDamage(int damage)
 {
 	if (CurrentEnityState == EntityState::Alive && !timerStart)
 	{
-		if (isFlickering && isInvincibleWhenFlicker) return;
+		if (isFlickering && isInvincibleWhenFlicker) return damageEvent::NoDamage;
+
+		damageEvent tmp = Entity::damageEvent::TakeDamage;
+
+		if (HitPoints > HitPointsMax / 2 && HitPoints - damage <= HitPointsMax / 2)
+		{
+			tmp = damageEvent::HalfHealth;
+			atHalfHealth();
+		}
+		else if (HitPoints > HitPointsMax / 4 && HitPoints - damage <= HitPointsMax / 4)
+		{
+			tmp = damageEvent::QuarterHealth;
+			atQuarterHealth();
+		}
 
 		HitPoints -= damage;
 
@@ -99,7 +112,11 @@ void Entity::takeDamage(int damage)
 		{
 			killEntity();
 		}
+
+		return tmp;
 	}
+
+	return damageEvent::NoDamage;
 }
 
 void Entity::setAcceleration(sf::Vector2f acceleration)
@@ -153,7 +170,7 @@ void Entity::playSound(string soundName)
 {
 	sounds.push_back(new Sound);
 	sounds.back()->setBuffer(ResourceManager::getSoundBuffer(soundName));
-	sounds.back()->setVolume(soundVolume * masterVolume / 100);
+	sounds.back()->setVolume((float) soundVolume * masterVolume / 100);
 	sounds.back()->play();
 }
 

@@ -4,12 +4,14 @@ SpriteOnly::SpriteOnly(const std::string& i_texture_location)
 {
 	texture = ResourceManager::getTexture(i_texture_location);
 	sprite.setTexture(texture);
+	sprite.setPosition({ -300,-300 });
 	isRootSet = true;
 }
 
 SpriteOnly::SpriteOnly(const std::string& i_texture_location, sf::Vector2f divation) : divation(divation)
 {
 	texture = ResourceManager::getTexture(i_texture_location);
+	sprite.setPosition({-300,-300});
 	sprite.setTexture(texture);
 	isRootSet = false;
 }

@@ -18,8 +18,12 @@ Player::Player()
 	hitbox.setOutlineThickness(1);
 
 	{
-		animations.push_back(new Animation(10, 10, 6, 1, { 0,0 }, { 0,0.5 }, Vector2f( 0, texturePlayer.getSize().y / 4 ), "FireJet.png"));
+		/*animations.push_back(new Animation(10, 10, 6, 1, { 0,0 }, { 0,0.5 }, Vector2f( 0, texturePlayer.getSize().y / 4 ), "FireJet.png"));
 		animations.back()->setRotationDivation(90);
+		animations.back()->PushToObject(animations.back(), this);*/
+
+		animations.push_back(new Animation(20, 8, 1, 1, { 0,0 }, { 0.5,0.55 }, Vector2f(0, 0), "Battlecruiser_Engine.png"));
+		animations.back()->setScale({ 1,1.7 });
 		animations.back()->PushToObject(animations.back(), this);
 	}
 
@@ -29,7 +33,7 @@ Player::Player()
 		sprites.back()->setOrigin({ 0.5, 0.5 });
 	}
 
-	HitPoints = 10;
+	HitPoints = HitPointsMax = 10;
 
 	sf::Mouse::setPosition(Vector2i(WINDOW_SIZE.x/2,WINDOW_SIZE.y*2/3));
 	setPosition(WINDOW_SIZE);
@@ -103,5 +107,20 @@ void Player::addDeathAnimation()
 	animations.push_back(new Animation(6, 18, 1, 0.5, { 0,0 }, { 0.5,0.5 }, Vector2f(0, 0), "Battlecruiser_Destruction.png", 95));
 	PushToObject(animations.back(), this);
 
+	playSound("PlayerExplode.ogg");
+}
+
+void Player::atHalfHealth()
+{
+	animations.push_back(new Animation(10, 8, 1, 1, { 0,0 }, { 0.5,0 }, Vector2f(0, 0), "Explosion.png",150));
+	animations.back()->PushToObject(animations.back(), this);
+
+	playSound("PlayerExplode.ogg");
+}
+
+void Player::atQuarterHealth()
+{
+	animations.push_back(new Animation(10, 8, 1, 1, { 0,0 }, { 0.5,0.5 }, Vector2f(0, 0), "Explosion.png", 150));
+	animations.back()->PushToObject(animations.back(), this);
 	playSound("PlayerExplode.ogg");
 }

@@ -36,13 +36,8 @@ private:
 
     Player* player;
 
-    BulletManager* EnimesBullets;
-    BulletManager* EnimesBullets_Vulnerable;
-
     BulletManager* PlayerBullets_Standard;
     BulletManager* PlayerBullets_Detroyer;
-
-    vector <BulletManager*> BulletManagerList;
 
     EnemyManager* enemyManager;
 
@@ -66,7 +61,7 @@ private:
 
     vector <SubTitle*> SubTitleList;
 
-    WarningZone* warningZone;
+   // WarningZone* warningZone;
 
 
     bool wasPaused = false;

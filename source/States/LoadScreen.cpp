@@ -44,14 +44,14 @@ void LoadScreen::takeTimeCurrent()
 		for (int i = 0; i < levelReader.EnemyWaveData.front().size(); i++)
 		{
 			EnemyType type = static_cast<EnemyType>(levelReader.EnemyWaveData.front()[i][0]);
-			Enemy* a = new Enemy(type,{0,0});
+			Enemy* a = EnemyFactory::createEnemy(type,{0,0});
 			delete a;
 		}
 
 		for (int i = 0; i < levelReader.BulletWaveData.front().size(); i++)
 		{
 			BulletType type = static_cast<BulletType>(levelReader.BulletWaveData.front()[i][0]);
-			Bullet* a = new Bullet(type, { 0,0 });
+			Bullet* a = BulletFactory::createBullet(type, { 0,0 });
 			delete a;
 		}
 

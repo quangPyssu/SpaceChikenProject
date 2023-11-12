@@ -25,6 +25,8 @@ class Player : public Entity
 
 	private:
 
+		void atHalfHealth() override;
+		void atQuarterHealth() override;
 		void addDeathAnimation() override;
 		Texture texturePlayer;
 		short unsigned int reloadFrameID = 0;

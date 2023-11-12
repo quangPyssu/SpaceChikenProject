@@ -10,6 +10,7 @@ void SceneNode::PushToObject(SceneNode* tmp, SceneNode* Father)
 {
     shared_ptr <SceneNode> here(tmp);
     Father->attachChild(here);
+    here->Parent = Father;
 }
 
 SceneNode::Ptr SceneNode::detachChild(const SceneNode& node)

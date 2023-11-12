@@ -1,14 +1,26 @@
 #include "EnemyManager.h"
 
-EnemyManager::EnemyManager(Player& player, BulletManager& PlayerBullets_Standard, BulletManager& PlayerBullets_Detroyer
-	, BulletManager& EnimesBullets, BulletManager& EnimesBullets_Vulnerable, WarningZone& warningZone)
-	: player(&player), PlayerBullets_Standard(&PlayerBullets_Standard), PlayerBullets_Detroyer(&PlayerBullets_Detroyer)
-	, EnimesBullets(&EnimesBullets) , EnimesBullets_Vulnerable(&EnimesBullets_Vulnerable), warningZone(&warningZone)
-{
+std::vector<BulletPattern*> EnemyManager::BulletPatternList;
 
-	EnimesBullets.addTarget(player);
-	EnimesBullets.addTarget(EnimesBullets_Vulnerable);
-	EnimesBullets_Vulnerable.addTarget(player);	
+EnemyManager::EnemyManager(Player& player, BulletManager& PlayerBullets_Standard, BulletManager& PlayerBullets_Detroyer)
+	: player(&player), PlayerBullets_Standard(&PlayerBullets_Standard), PlayerBullets_Detroyer(&PlayerBullets_Detroyer)
+{
+	warningZone = new WarningZone();
+	PushToObject(warningZone, this);
+
+	this->EnimesBullets = new BulletManager(player);
+	this->EnimesBullets_Vulnerable = new BulletManager(player);
+
+	PushToObject(EnimesBullets, this);
+	PushToObject(EnimesBullets_Vulnerable, this);
+
+	EnimesBullets->addTarget(player);
+	EnimesBullets->addTarget(*EnimesBullets_Vulnerable);
+	EnimesBullets_Vulnerable->addTarget(player);	
+
+	PlayerBullets_Detroyer.addTarget(*EnimesBullets);
+	PlayerBullets_Detroyer.addTarget(*EnimesBullets_Vulnerable);
+	PlayerBullets_Standard.addTarget(*EnimesBullets_Vulnerable);
 }
 
 EnemyManager::~EnemyManager()
@@ -26,11 +38,16 @@ EnemyManager::~EnemyManager()
 
 	BulletPatternList.clear();
 	BulletPattern_Aim_For_Player.clear();
+
+	//_CrtDumpMemoryLeaks();
 }
 
 void EnemyManager::addEnemy(EnemyType type)
 {
-	enemy.push_back(new Enemy(type, Vector2f(rand() % 1000, 100)));
+	enemy.push_back(EnemyFactory::createEnemy(type,Vector2f(rand() % 1000, 100)));
+	enemy.back()->setBulletManager(EnimesBullets, EnimesBullets_Vulnerable);
+	enemy.back()->setPlayer(player);
+	enemy.back()->setWarningZone(warningZone);
 
 	PlayerBullets_Standard->addTarget(*enemy.back());
 	PlayerBullets_Detroyer->addTarget(*enemy.back());
@@ -40,7 +57,7 @@ void EnemyManager::addEnemy(EnemyType type)
 
 void EnemyManager::removeEnemy(Entity& target)
 {
-	for (int i = 0; i < enemy.size(); i++)
+	for (unsigned int i = 0; i < enemy.size(); i++)
 	{
 		if (enemy[i] == &target)
 		{
@@ -53,7 +70,7 @@ void EnemyManager::removeEnemy(Entity& target)
 
 void EnemyManager::takeTimeCurrent()
 {
-	for (int i = 0; i < enemy.size(); i++)	// Enemy Fire
+	for (int i = 0; i < enemy.size(); i++)	
 	{
 		if (enemy[i]->CurrentEnityState == EntityState::Dead)
 		{
@@ -67,69 +84,20 @@ void EnemyManager::takeTimeCurrent()
 			enemy.erase(enemy.begin() + i);
 			i--;
 		}
-		else if (enemy[i]->CurrentEnityState == EntityState::Alive && enemy[i]->isFiring)
+		else if (enemy[i]->CurrentEnityState == EntityState::Alive && enemy[i]->isFiring)// Enemy Fire
 		{
 			switch (enemy[i]->type)
 			{
-				case Enemy_Chicken_1:
+				case EnemyType_Boss_Chicken_1:
 				{
-					EnimesBullets->addBullet(BulletType::Enemy_Bullet_Normal, enemy[i]->getPosition());
-				}
-				break;
-
-				case Boss_Chicken_1:
-				{
-					switch (enemy[i]->attackType)
+					while (!enemy[i]->Enemy_BulletPattern_queue.empty())
 					{
-						case 0: // barrage
-						{
-							for (int j = 0; j < 10; j++)
-							{
-								addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Circle, RotationType::WithVelocity, enemy[i]->getPosition(),
-									{ 0,0 }, { 0,0 }, false, 1, 0, 1, j * 15, -1, 1);
-								BulletPattern_Aim_For_Player.push_back({ BulletPatternList.back(), 10 });
-							}							
-						}
-						break;
+						addBulletPattern(enemy[i]->Enemy_BulletPattern_queue.front().ff, BulletType::BulletType_Enemy_Egg);
 
-						case 1: // 2 Square
-						{	
-							for (int j = 0; j < 2; j++)
-							{
-								addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Square, RotationType::defaultRotation, enemy[i]->getPosition(),
-									Vector2f(0,0), {0,0}, false, 9, 80, 3, j * 100, -1, 1);
-								BulletPattern_Aim_For_Player.push_back({ BulletPatternList.back(), 5 });
-							}
-						}
-						break;
-
-						case 2: //4 Direction Circle
-						{
-							for (int j = 0; j < 4; j++)
-							{
-								addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Circle, RotationType::Spin, enemy[i]->getPosition(),
-									enemy[i]->AngleShift(enemy[i]->velocityToB(150, player),90*j), { 0,0 }, true, 6, 80, 4, 0, 2000, 1);
-							}
-
-							//spawn 4 go in 4 direction
-						}	
-						break;
-
-						case 3: // 3 circle
-						{
-							for (int j = 0; j < 3; j++)
-							{
-								addBulletPattern(BulletType::Enemy_Bullet_Normal, PatternType::Circle, RotationType::Spin, enemy[i]->getPosition(),
-									{ 0,0 }, { 0,0 }, false, 10, 70, 0, j * 100, -1, 1);
-								BulletPattern_Aim_For_Player.push_back({ BulletPatternList.back(), 5 });
-							}
-						}
-
-
-						break;						
+						if (enemy[i]->Enemy_BulletPattern_queue.front().ss) BulletPattern_Aim_For_Player.push_back(enemy[i]->Enemy_BulletPattern_queue.front());
+						
+						enemy[i]->Enemy_BulletPattern_queue.pop();
 					}
-
-					EnimesBullets->addBullet(BulletType::Enemy_Bullet_Normal, enemy[i]->getPosition());
 				}
 			}
 
@@ -150,6 +118,9 @@ void EnemyManager::takeTimeCurrent()
 			i--;
 		}
 	}
+
+	//cout << "BulletPatternList.size() " << BulletPatternList.size() << endl;	
+	//cout << this->Children.size() << endl;
 }
 
 void EnemyManager::addBulletPattern(BulletType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,bool Physics,
@@ -159,14 +130,31 @@ void EnemyManager::addBulletPattern(BulletType type, PatternType patternType, Ro
 
 	switch (type)
 	{
-		case Enemy_Bullet_Normal: {	tmp = EnimesBullets; } break;
-		case Astroid: {	tmp = EnimesBullets_Vulnerable; } break;
+		case BulletType_Enemy_Egg: {	tmp = EnimesBullets; } break;
+		case BulletType_Astroid: {	tmp = EnimesBullets_Vulnerable; } break;
 
 		default: {tmp = EnimesBullets;} break;
 	}
 
 	BulletPatternList.push_back(new BulletPattern(type, patternType, rotationType, *tmp, Position, Velocity, Acceleration, Physics, total, width, widthCnt, *warningZone, timerStart, timerEnd,thisScale));
 	
+	PushToObject(BulletPatternList.back(), this);
+}
+
+void EnemyManager::addBulletPattern(BulletPattern* bulletPattern, BulletType type)
+{
+	BulletManager* tmp = nullptr;
+
+	switch (type)
+	{
+		case BulletType_Enemy_Egg: {	tmp = EnimesBullets; } break;
+		case BulletType_Astroid: {	tmp = EnimesBullets_Vulnerable; } break;
+
+		default: {tmp = EnimesBullets;} break;
+	}
+
+	BulletPatternList.push_back(bulletPattern);
+
 	PushToObject(BulletPatternList.back(), this);
 }
 
@@ -177,11 +165,10 @@ void EnemyManager::fireBulletPattern()
 	{
 		if (!BulletPattern_Aim_For_Player[i].ff->getTimerStart())
 		{
-			auto tmp=BulletPattern_Aim_For_Player[i].ff;
+			BulletPattern*& tmp=BulletPattern_Aim_For_Player[i].ff;
 			int diva = BulletPattern_Aim_For_Player[i].ss;
 
-			tmp->setVelocity(tmp->velocityToB(150, player)+Vector2f(diva-randInt(diva*2),
-				diva - randInt(diva * 2)));
+			tmp->setVelocity(tmp->velocityToB(150, player)+Vector2f(diva-randInt(diva*2),diva - randInt(diva * 2)));
 
 			BulletPattern_Aim_For_Player.erase(BulletPattern_Aim_For_Player.begin() + i);
 			i--;

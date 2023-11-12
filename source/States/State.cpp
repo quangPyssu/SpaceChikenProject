@@ -3,7 +3,7 @@
 State::State() {
 	window = nullptr;
 	textureStackID = ResourceManager::loadedTextures.size();
-
+	soundStackID = ResourceManager::loadedSounds.size();
 }
 
 State::~State() {
@@ -36,6 +36,7 @@ State::~State() {
 
 State::State(RenderWindow& window) : window(&window){
 	textureStackID = ResourceManager::loadedTextures.size();
+	soundStackID = ResourceManager::loadedSounds.size();
 }
 
 
@@ -55,7 +56,7 @@ void State::playMusic(string ID, int offset)
 	music = new sf::Music();
 	music->openFromFile(ID);
 	music->setLoop(true);
-	music->setVolume(musicVolume*masterVolume/100);
+	music->setVolume((float) musicVolume*masterVolume/100);
 	music->play();
 	music->setLoopPoints(sf::Music::TimeSpan(sf::seconds(offset), music->getDuration()));
 }

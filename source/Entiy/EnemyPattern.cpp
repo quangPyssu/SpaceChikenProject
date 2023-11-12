@@ -29,32 +29,12 @@ EnemyPattern::EnemyPattern(EnemyType enemyType, PatternType patternType, Rotatio
 	HitPoints = 99999;
 	rotationType = Spin;
 
-	switch (enemyType)
+	for (int i = 0; i < total; i++)
 	{
-		case Enemy_Chicken_1:
-		{
-			for (int i = 0; i < total; i++)
-			{
-				enemyManager.addEnemy(Enemy_Chicken_1);
-				Enemy* tmp = enemyManager.enemy.back();
-				entityList.push_back(tmp);
-			}
-		}
-		break;
-
-		case Boss_Chicken_1:
-		{
-			for (int i = 0; i < total; i++)
-			{
-				enemyManager.addEnemy(Boss_Chicken_1);
-				Enemy* tmp = enemyManager.enemy.back();
-				entityList.push_back(tmp);
-			}
-		}
-		break;
-
-		default:
-		break;
+		enemyManager.addEnemy(enemyType);
+		Enemy* tmp = enemyManager.enemy.back();
+		entityList.push_back(tmp);
+			
 	}
 
 	switch (patternType)

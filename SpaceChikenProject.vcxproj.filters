@@ -28,6 +28,12 @@
     <Filter Include="Anime">
       <UniqueIdentifier>{14529ad6-c582-494e-a60f-550019e7eeb2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entity\Enemies">
+      <UniqueIdentifier>{a156b632-b856-4479-8d09-c700b998312e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Bullets">
+      <UniqueIdentifier>{bf6398b3-197d-4bfa-b2c9-8024f0f71d52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -113,6 +119,24 @@
     </ClCompile>
     <ClCompile Include="source\Tools\SubTitle.cpp">
       <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Enemies\Boss_Chicken_1.cpp">
+      <Filter>Entity\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Enemies\Enemy_Chicken_1.cpp">
+      <Filter>Entity\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Bullets\Player_Bullet_Normal.cpp">
+      <Filter>Entity\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Bullets\Astroid.cpp">
+      <Filter>Entity\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Bullets\Enemy_Bullet_Egg.cpp">
+      <Filter>Entity\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Bullets\Player_Laser_Destroyer.cpp">
+      <Filter>Entity\Bullets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
