@@ -34,6 +34,12 @@
     <Filter Include="Entity\Bullets">
       <UniqueIdentifier>{bf6398b3-197d-4bfa-b2c9-8024f0f71d52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools\GameManagement">
+      <UniqueIdentifier>{df11cdb9-7809-4997-901f-3aa851fc87ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Interface">
+      <UniqueIdentifier>{6bbc9a16-84c6-4ba2-a396-79505fa0ecc1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -47,9 +53,6 @@
     </ClCompile>
     <ClCompile Include="App.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Button.cpp">
-      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="source\StateSteak.cpp">
       <Filter>Source Files</Filter>
@@ -69,9 +72,6 @@
     <ClCompile Include="source\Entiy\Bullet.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
-    <ClCompile Include="source\Tools\BulletManager.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
     <ClCompile Include="source\Entiy\Enemy.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
@@ -84,23 +84,11 @@
     <ClCompile Include="source\States\PauseMenu.cpp">
       <Filter>States</Filter>
     </ClCompile>
-    <ClCompile Include="source\Tools\ProgressBar.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Tools\EnemyManager.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
     <ClCompile Include="source\Entiy\BulletPattern.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
-    <ClCompile Include="source\Tools\Pattern.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
     <ClCompile Include="source\Entiy\EnemyPattern.cpp">
       <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Tools\LevelReader.cpp">
-      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="source\Animation\Animation.cpp">
       <Filter>Anime</Filter>
@@ -116,9 +104,6 @@
     </ClCompile>
     <ClCompile Include="source\States\LoadScreen.cpp">
       <Filter>States</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Tools\SubTitle.cpp">
-      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="source\Entiy\Enemies\Boss_Chicken_1.cpp">
       <Filter>Entity\Enemies</Filter>
@@ -138,6 +123,33 @@
     <ClCompile Include="source\Entiy\Bullets\Player_Laser_Destroyer.cpp">
       <Filter>Entity\Bullets</Filter>
     </ClCompile>
+    <ClCompile Include="source\Tools\BulletManager.cpp">
+      <Filter>Tools\GameManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tools\EnemyManager.cpp">
+      <Filter>Tools\GameManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tools\Pattern.cpp">
+      <Filter>Tools\GameManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Button.cpp">
+      <Filter>Tools\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tools\ProgressBar.cpp">
+      <Filter>Tools\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tools\SubTitle.cpp">
+      <Filter>Tools\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tools\LevelReader.cpp">
+      <Filter>Tools\GameManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tools\Slider.cpp">
+      <Filter>Tools\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="source\States\SettingMenu.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SceneNode.h">
@@ -148,9 +160,6 @@
     </ClInclude>
     <ClInclude Include="App.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Button.h">
-      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="source\StateSteak.h">
       <Filter>Header Files</Filter>
@@ -173,9 +182,6 @@
     <ClInclude Include="source\Entiy\Bullet.h">
       <Filter>Entity</Filter>
     </ClInclude>
-    <ClInclude Include="source\Tools\BulletManager.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
     <ClInclude Include="source\Entiy\Enemy.h">
       <Filter>Entity</Filter>
     </ClInclude>
@@ -185,23 +191,11 @@
     <ClInclude Include="source\States\PauseMenu.h">
       <Filter>States</Filter>
     </ClInclude>
-    <ClInclude Include="source\Tools\ProgressBar.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Tools\EnemyManager.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
     <ClInclude Include="source\Entiy\BulletPattern.h">
       <Filter>Entity</Filter>
     </ClInclude>
-    <ClInclude Include="source\Tools\Pattern.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
     <ClInclude Include="source\Entiy\EnemyPattern.h">
       <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Tools\LevelReader.h">
-      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="source\Animation\Animation.h">
       <Filter>Anime</Filter>
@@ -218,8 +212,32 @@
     <ClInclude Include="source\States\LoadScreen.h">
       <Filter>States</Filter>
     </ClInclude>
+    <ClInclude Include="source\Tools\BulletManager.h">
+      <Filter>Tools\GameManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tools\EnemyManager.h">
+      <Filter>Tools\GameManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tools\Pattern.h">
+      <Filter>Tools\GameManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Button.h">
+      <Filter>Tools\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tools\ProgressBar.h">
+      <Filter>Tools\Interface</Filter>
+    </ClInclude>
     <ClInclude Include="source\Tools\SubTitle.h">
-      <Filter>Tools</Filter>
+      <Filter>Tools\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tools\LevelReader.h">
+      <Filter>Tools\GameManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tools\Slider.h">
+      <Filter>Tools\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="source\States\SettingMenu.h">
+      <Filter>States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

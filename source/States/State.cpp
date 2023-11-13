@@ -19,9 +19,9 @@ State::~State() {
 		ResourceManager::loadedSounds.pop_back();
 	}
 
-	if (music != nullptr)
+	if (music!=nullptr)
 	{
-		music->stop();
+		music->stop();		
 		delete music;
 	}
 
@@ -31,7 +31,10 @@ State::~State() {
 		{
 			parentState->music->play();
 		}
-	}
+		
+	}	
+
+	SubTitleList.clear();
 }
 
 State::State(RenderWindow& window) : window(&window){
@@ -59,4 +62,12 @@ void State::playMusic(string ID, int offset)
 	music->setVolume((float) musicVolume*masterVolume/100);
 	music->play();
 	music->setLoopPoints(sf::Music::TimeSpan(sf::seconds(offset), music->getDuration()));
+}
+
+void State::setMusicVolume()
+{
+	if (music != nullptr)
+	{
+		music->setVolume((float) musicVolume*masterVolume/100);
+	}
 }

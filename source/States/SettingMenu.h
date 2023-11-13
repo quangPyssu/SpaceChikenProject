@@ -2,24 +2,25 @@
 
 #include "State.h"
 #include "../Button.h"
-#include "../Animation/SpriteOnly.h"
+#include "../Tools/Slider.h"
 
-class GameOverScreen : public State
+class SettingMenu : public State
 {
 public:
-	GameOverScreen(State& parentState);
-	~GameOverScreen();
+	SettingMenu(State& parentState);
+	~SettingMenu();
 
 	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void updateCurrent(Event& event, Vector2f& MousePos) override;
 
 private:
-
-	Texture textureBack;
-
-	Sprite backgroundSprite;
-
-	Button* btnPlay;
 	Button* btnExit;
+
+	Sprite background;
+	
+
+	Slider* sliderMaster;
+	Slider* sliderMusic;
+	Slider* sliderSound;
 };
 

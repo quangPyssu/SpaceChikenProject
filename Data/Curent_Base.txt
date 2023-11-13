@@ -1,0 +1,4 @@
+//  	0 1 < -- Level, Wave
+//
+//	1 1 0  < -- bool for Weapon Unlocked// basic is alway on so no reading
+// 	1 0 0  < -- bool for Special Unlocked

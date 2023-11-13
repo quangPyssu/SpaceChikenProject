@@ -176,12 +176,14 @@
     <ClCompile Include="source\States\LoadScreen.cpp" />
     <ClCompile Include="source\States\MainMenu.cpp" />
     <ClCompile Include="source\States\PauseMenu.cpp" />
+    <ClCompile Include="source\States\SettingMenu.cpp" />
     <ClCompile Include="source\States\State.cpp" />
     <ClCompile Include="source\Tools\BulletManager.cpp" />
     <ClCompile Include="source\Tools\EnemyManager.cpp" />
     <ClCompile Include="source\Tools\LevelReader.cpp" />
     <ClCompile Include="source\Tools\Pattern.cpp" />
     <ClCompile Include="source\Tools\ProgressBar.cpp" />
+    <ClCompile Include="source\Tools\Slider.cpp" />
     <ClCompile Include="source\Tools\SubTitle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -205,12 +207,14 @@
     <ClInclude Include="source\States\LoadScreen.h" />
     <ClInclude Include="source\States\MainMenu.h" />
     <ClInclude Include="source\States\PauseMenu.h" />
+    <ClInclude Include="source\States\SettingMenu.h" />
     <ClInclude Include="source\States\State.h" />
     <ClInclude Include="source\Tools\BulletManager.h" />
     <ClInclude Include="source\Tools\EnemyManager.h" />
     <ClInclude Include="source\Tools\LevelReader.h" />
     <ClInclude Include="source\Tools\Pattern.h" />
     <ClInclude Include="source\Tools\ProgressBar.h" />
+    <ClInclude Include="source\Tools\Slider.h" />
     <ClInclude Include="source\Tools\SubTitle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

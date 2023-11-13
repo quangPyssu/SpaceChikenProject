@@ -59,12 +59,18 @@ namespace Constants
     extern int CurrentLevel;
     extern int CurrentWave;
 
+    extern const int weaponMax;
+    extern const int specialMax;
+    extern int CurrentWeapon;
+    extern int CurrentSpecial;
+
+    extern std::pair <bool,int> WeaponUnlocked[5];  // unlocked, max cooldown
+    extern std::pair <bool,int> SpecialUnlocked[5]; // unlocked, max cooldown
+
     extern int breakTime;
     extern int breakTimeMax;
 
-    enum TextAlign {Left,Middle,Right};    
-
-   
+    enum TextAlign {Left,Middle,Right};       
 };
 
 namespace Colors
@@ -102,6 +108,8 @@ namespace getScale
 namespace utility
 {
     sf::Vector2f operator *(const sf::Vector2f& A, const sf::Vector2f& B);
+    sf::Vector2f min(const sf::Vector2f& A, const sf::Vector2f& B);
+    sf::Vector2f max(const sf::Vector2f& A, const sf::Vector2f& B);
     int randInt(int i);
 }
 

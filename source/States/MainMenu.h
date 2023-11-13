@@ -22,13 +22,10 @@ private:
     Animation* animePlanetTop;
     Animation* animeNeutronStar;
 
-
-
-    Button* btn_Quit;
-    Button* btn_NewGame;
-    Button* btn_Load;
-    Button* btn_HighScore;
-    Button* btn_Play;
-    Button* btn_Setting;
+    Button* btn_Continue=nullptr;
+    Button* btn_Quit=nullptr;
+    Button* btn_NewGame=nullptr;
+    Button* btn_Load=nullptr;
+    Button* btn_Setting=nullptr;
 };
 

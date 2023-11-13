@@ -4,10 +4,18 @@ namespace Constants {
     int modulo = 10;
 
     const int T = 3;
+    const int weaponMax = 3;
+    const int specialMax = 3;
+
+    int CurrentWeapon = 0;
+    int CurrentSpecial = 0;
 
     int PlayerMaxHP = 10;
     int CurrentLevel = 0;
     int CurrentWave = 0;
+
+    std::pair <bool, int> WeaponUnlocked[5] = { {true,50},{false,200},{false,0},{false,0},{false,0} };
+    std::pair <bool, int> SpecialUnlocked[5] = { {true,600},{false,1800},{false,0},{false,0},{false,0} };
 
     int breakTime = 300;
     int breakTimeMax = 300;
@@ -35,7 +43,7 @@ namespace Constants {
 
     int GameMusicOffset[5][2] = { {0,12},{0,0},{0,0},{0,0},{0,0} };
 
-    std::string MenuMusicTrack = "Assets/Sounds/Music/space_maiden_appear.ogg";
+    std::string MenuMusicTrack = "Assets/Sounds/Music/space_maiden_appear.ogg";   
 
     int masterVolume = 100;
     int musicVolume = 30;
@@ -55,9 +63,7 @@ namespace Constants {
     const sf::Vector2f ButtonTypeTail[3] = { sf::Vector2f(95,95), sf::Vector2f(263,190), sf::Vector2f(287,298) };
 
     sf::Vector2f lastMousePos = sf::Vector2f(0, 0);
-    sf::Vector2f dtMousePos = sf::Vector2f(0, 0);
-
-   
+    sf::Vector2f dtMousePos = sf::Vector2f(0, 0);   
 };
 
 namespace utility
@@ -65,6 +71,16 @@ namespace utility
     sf::Vector2f operator* (const sf::Vector2f& A, const sf::Vector2f& B)
     {
         return sf::Vector2f(A.x * B.x, A.y * B.y);
+    }
+
+    sf::Vector2f min(const sf::Vector2f& A, const sf::Vector2f& B)
+    {
+		return sf::Vector2f(std::min(A.x, B.x), std::min(A.y, B.y));
+	}
+
+    sf::Vector2f max(const sf::Vector2f& A, const sf::Vector2f& B)
+    {
+        return sf::Vector2f(std::max(A.x, B.x), std::max(A.y, B.y));
     }
 
     int randInt(int i)

@@ -3,7 +3,6 @@
 GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 {
 	this->parentState = &parentState;
-
 	textureBack = ResourceManager::getTexture("Blue_Blank_Background.png");
 
 	BGHeight = textureBack.getSize().y;
@@ -17,7 +16,6 @@ GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 
 		PlayerBullets_Standard = new BulletManager(*player);
 		PlayerBullets_Detroyer = new BulletManager(*player);
-		
 
 		enemyManager = new EnemyManager(*player, *PlayerBullets_Standard, *PlayerBullets_Detroyer);
 
@@ -29,21 +27,16 @@ GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 		PBplayerHealth = new ProgressBar({ 10,WINDOW_SIZE.y - 20 }, Vector2f(WINDOW_SIZE.x - 20, 20), Colors::green, Colors::grey, "HP", player->HitPoints, PlayerMaxHP);
 		PushToObject(PBplayerHealth, this);
 
-		SubTitle* LevelName = new SubTitle({ 0,WINDOW_SIZE.y / 3 }, Vector2f(WINDOW_SIZE.x, 200), tran_Grey, { 0.2,0.4 }, 20, white, "Level 1", "neuro",600);
+		levelReader.ReadLevel(CurrentLevel);
+
+		SubTitle* LevelName = new SubTitle({ 0,WINDOW_SIZE.y / 3 }, Vector2f(WINDOW_SIZE.x, 200), tran_Grey, { 0.2,0.4 }, 20, white, levelReader.levelName, "neuro", 600);
 		SubTitleList.push_back(LevelName);
 		PushToObject(SubTitleList.back(), this);
 	}
 
 	window.setMouseCursorVisible(false);
 
-	//cout << "CurrentLevel " << CurrentLevel << endl;
-	levelReader.ReadLevel(CurrentLevel);
-
-	//parentState.music->stop();
-
 	playMusic(Constants::GameMusicTrack[CurrentLevel][0], Constants::GameMusicOffset[CurrentLevel][0]);
-
-	//make music play from start the first time then loop back to specified offset
 }
 
 GameState::~GameState()
@@ -76,8 +69,7 @@ void GameState::takeTimeCurrent()
 {
 	if (wasPaused)
 	{
-		window->setMouseCursorVisible(false);
-		wasPaused = false;
+		window->setMouseCursorVisible(false);wasPaused = false;
 
 		sf::Vector2i pixelPosition = window->mapCoordsToPixel(player->getPosition());
 		sf::Mouse::setPosition(pixelPosition);
@@ -142,14 +134,6 @@ void GameState::takeTimeCurrent()
 			SubTitleList.erase(SubTitleList.begin() + i);
 			i--;
 		}
-	}
-
-	{
-		//cout << enemyManager->enemy.size() << endl;
-		//cout << "PlayerBullets_Standard->getBulletCount() " << PlayerBullets_Standard->getBulletCount() << endl;
-		//cout << "PlayerBullets_Detroyer->getBulletCount() " << PlayerBullets_Detroyer->getBulletCount() << endl;
-		//cout << "EnimesBullets->getBulletCount() " << EnimesBullets->getBulletCount() << endl;cout << endl;
-		//cout << "EnemyPatternList.size() " << EnemyPatternList.size() << endl;
 	}
 }
 

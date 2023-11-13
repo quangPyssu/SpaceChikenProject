@@ -143,16 +143,6 @@ void EnemyManager::addBulletPattern(BulletType type, PatternType patternType, Ro
 
 void EnemyManager::addBulletPattern(BulletPattern* bulletPattern, BulletType type)
 {
-	BulletManager* tmp = nullptr;
-
-	switch (type)
-	{
-		case BulletType_Enemy_Egg: {	tmp = EnimesBullets; } break;
-		case BulletType_Astroid: {	tmp = EnimesBullets_Vulnerable; } break;
-
-		default: {tmp = EnimesBullets;} break;
-	}
-
 	BulletPatternList.push_back(bulletPattern);
 
 	PushToObject(BulletPatternList.back(), this);

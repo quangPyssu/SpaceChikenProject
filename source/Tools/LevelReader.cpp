@@ -2,7 +2,7 @@
 
 void LevelReader::ReadLevel(int id)
 {
-	std::string path = "Level/Level_" + std::to_string(id) + ".inp";
+	std::string path = "Data/Level/Level_" + std::to_string(id) + ".inp";
 
 	std::cout << path << std::endl;
 
@@ -84,6 +84,12 @@ void LevelReader::ReadLevel(int id)
 		BulletWavePhysic.push(patternPhysic); patternPhysic.clear();
 		BulletWaveTimerMax.push(patternTimerMax); patternTimerMax.clear();
 	}	
+
+	std::getline(fin, levelName);
+	std::getline(fin, levelName);
+
+	std::string c = std::to_string(id+1);
+	levelName = "Level " + c + ": " + levelName;
 	
 	fin.close();
 }
@@ -100,6 +106,8 @@ void LevelReader::ReadLevel(int id)
 //	200 200 -5 0 0 0 0 < --  Position, Velocity, Acceleration(Vector2f)
 // 	100 500 < -- LoopCnt, LoopTimer(int)
 //  0   < -- have physic
+// 
+// the name af <<-- Level name
 
 void LevelReader::gotoWave(int idWave)
 {

@@ -23,6 +23,7 @@ public:
 	bool clearBulletPattern(int id);
 
 	int waveCount = 0;
+	std::string levelName="";
 
 	std::queue <std::vector <std::vector <int>>> EnemyWaveData;	// enemyType, patternType, rotationType, total, width, widthCnt, start timer, kill timer(int)
 	std::queue <std::vector <std::vector <sf::Vector2f>>> EnemyWaveAttribute; // Position, Velocity, Acceleration

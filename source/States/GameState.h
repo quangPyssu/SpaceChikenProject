@@ -59,8 +59,6 @@ private:
     ProgressBar* PBplayerHealth;
     //ProgressBar* PBbossHealth;
 
-    vector <SubTitle*> SubTitleList;
-
    // WarningZone* warningZone;
 
 

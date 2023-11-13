@@ -13,7 +13,7 @@ namespace States {
 		Load,
 		NewGame,
 		LevelComplete,
-		Settings,
+		Setting,
 		Pause,
 		GameOver,
 		Difficulty,
@@ -37,6 +37,7 @@ public:
 	sf::Music* music=nullptr;
 
 	void playMusic(string ID,int offset);
+	void setMusicVolume();
 
 protected:
 	RenderWindow* window=nullptr;
@@ -46,4 +47,6 @@ protected:
 
 	int textureStackID;
 	int soundStackID;
+
+	vector <SubTitle*> SubTitleList;
 };

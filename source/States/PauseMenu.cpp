@@ -5,10 +5,10 @@ PauseMenu::PauseMenu(State& parentState)
 {
 	this->parentState = &parentState;
 
-	btnPlay = new Button(sf::Vector2f(200, 600), sf::Vector2f(300, 100), "Resume");
+	btnPlay = new Button(sf::Vector2f(200, 100), sf::Vector2f(300, 100), "Resume");
 	btnPlay->PushToObject(btnPlay, this);
 
-	btnExit = new Button(sf::Vector2f(200, 100), sf::Vector2f(200, 100), "Quit");
+	btnExit = new Button(sf::Vector2f(200, 225), sf::Vector2f(200, 100), "Quit");
 	btnExit->PushToObject(btnExit, this);
 
 	invisibleWall = new RectangleShape(WINDOW_SIZE);
@@ -18,7 +18,7 @@ PauseMenu::PauseMenu(State& parentState)
 
 PauseMenu::~PauseMenu()
 {
-	ResourceManager::unloadTexture("Blue_Background.png");
+	delete invisibleWall;
 }
 
 void PauseMenu::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const

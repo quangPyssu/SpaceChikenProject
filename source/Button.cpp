@@ -1,6 +1,6 @@
 #include "Button.h"
 
-Button::Button(const sf::Vector2f& position, const sf::Vector2f& size, const std::string& text) // defualt constructor
+Button::Button(const sf::Vector2f position, const sf::Vector2f& size, const std::string& text) // defualt constructor
 {
 	shape.setPosition(position);
 	shape.setSize(size);
@@ -15,7 +15,7 @@ Button::Button(const sf::Vector2f& position, const sf::Vector2f& size, const std
 	
 }
 
-Button::Button(const sf::Vector2f& position, int ButtonType, const std::string& text)
+Button::Button(const sf::Vector2f position, int ButtonType, const std::string& text)
 {
 	/*int x = (ButtonType-1) % 3;
 	int y = (ButtonType-1) / 3;

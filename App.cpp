@@ -9,24 +9,18 @@ App::App()
 	window = new sf::RenderWindow(sf::VideoMode(800 * Constants::SCALE, 600 * Constants::SCALE), "Chieken", sf::Style::Fullscreen,settings);
 
 	window->setFramerateLimit(60);
-	window->setVerticalSyncEnabled(true);
-
-	// Use the minimum scaling factor to maintain the aspect ratio
+	//window->setVerticalSyncEnabled(true);
 
 	view = window->getDefaultView();
 
 	float barWidth = (window->getSize().x - 800 * Constants::SCALE) / 2.0f;
 	float barHeight = (window->getSize().y - 600 * Constants::SCALE) / 2.0f;
 
-	// Create a view that preserves the aspect ratio and positions the content
-
 	view.setViewport(sf::FloatRect(barWidth / window->getSize().x, barHeight / window->getSize().y,
 		800 * Constants::SCALE / window->getSize().x, 600 * Constants::SCALE / window->getSize().y));
 	
 	window->setFramerateLimit(60);
 	window->setView(view);
-
-	//window->setMouseCursorVisible(false);
 
 	Constants::WINDOW_SIZE = sf::Vector2f(window->getSize().x,window->getSize().y);
 
@@ -35,7 +29,21 @@ App::App()
 
 	state_stk = new StateSteak(*window);
 
+	std::ifstream fin("Data/Current.inp");
+
+	fin >> Constants::CurrentLevel >> Constants::CurrentWave;
+
+	for (int i = 1; i < Constants::weaponMax; i++) fin >> Constants::WeaponUnlocked[i].first;
+	for (int i = 0; i < Constants::specialMax; i++) fin >> Constants::SpecialUnlocked[i].first;
+
+	fin.close();
+
 	//delete later	
+
+//  0 1 < -- Level, Wave
+//
+//	1 0  < -- bool for Weapon Unlocked  // basic is alway on so no reading
+// 	1 0 0  < -- bool for Special Unlocked
 }
 
 App::~App()
