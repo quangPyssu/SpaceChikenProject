@@ -19,7 +19,13 @@ void BulletManager::addBullet(BulletType type,sf::Vector2f position)
 	switch (type)
 	{	
 	case BulletType_Player_Laser_Destroyer:
-		tmp->setRootPos(player->PlayerCurPos);//remember to split this into two Big And Small
+		tmp->setRootPos(player->PlayerCurPos);
+		break;
+	case BulletType_Player_Laser_Normal:
+		tmp->setRootPos(player->PlayerCurPos);
+		break;
+	case BulletType_Player_Ram_Destroyer:
+		tmp->setRootPos(player->PlayerCurPos);
 		break;
 	default:
 		break;

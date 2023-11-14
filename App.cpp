@@ -8,8 +8,7 @@ App::App()
 
 	window = new sf::RenderWindow(sf::VideoMode(800 * Constants::SCALE, 600 * Constants::SCALE), "Chieken", sf::Style::Fullscreen,settings);
 
-	window->setFramerateLimit(60);
-	//window->setVerticalSyncEnabled(true);
+	window->setVerticalSyncEnabled(true);
 
 	view = window->getDefaultView();
 
@@ -33,8 +32,10 @@ App::App()
 
 	fin >> Constants::CurrentLevel >> Constants::CurrentWave;
 
-	for (int i = 1; i < Constants::weaponMax; i++) fin >> Constants::WeaponUnlocked[i].first;
+	for (int i = 0; i < Constants::weaponMax; i++) fin >> Constants::WeaponUnlocked[i].first;
 	for (int i = 0; i < Constants::specialMax; i++) fin >> Constants::SpecialUnlocked[i].first;
+
+	WeaponUnlocked[0].first = true;
 
 	fin.close();
 

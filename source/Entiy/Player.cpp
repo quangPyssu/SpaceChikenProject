@@ -17,11 +17,9 @@ Player::Player()
 	hitbox.setOutlineColor(sf::Color::Red);
 	hitbox.setOutlineThickness(1);
 
-	{
-		/*animations.push_back(new Animation(10, 10, 6, 1, { 0,0 }, { 0,0.5 }, Vector2f( 0, texturePlayer.getSize().y / 4 ), "FireJet.png"));
-		animations.back()->setRotationDivation(90);
-		animations.back()->PushToObject(animations.back(), this);*/
+	Constants::PlayerHitboxSize = hitbox.getSize();
 
+	{
 		animations.push_back(new Animation(20, 8, 1, 1, { 0,0 }, { 0.5,0.55 }, Vector2f(0, 0), "Battlecruiser_Engine.png"));
 		animations.back()->setScale({ 1,1.7 });
 		animations.back()->PushToObject(animations.back(), this);
@@ -51,6 +49,26 @@ void Player::updateCurrent(Event& event, Vector2f& MousePos)
 	setPosition(MousePos);
 	hitbox.setPosition(MousePos);	
 	PlayerCurPos = MousePos;
+
+	// mouse scroll to change weapon
+
+	if (event.type == Event::MouseWheelScrolled)
+	{
+		if (event.mouseWheelScroll.delta > 0)
+		{
+			CurrentWeapon++;
+			CurrentWeapon %= 2;
+
+		}
+		else if (event.mouseWheelScroll.delta < 0)
+		{
+			CurrentWeapon--;
+			CurrentWeapon += 2;
+			CurrentWeapon %= 2;
+		}
+		reloadFrameIDMax = WeaponUnlocked[EquipedWeapon[CurrentWeapon]].ss;
+		resetGun();
+	}
 }
 
 void Player::takeTimeCurrent()
@@ -78,11 +96,10 @@ void Player::takeTimeCurrent()
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{
-		if (hasSpeacial && specialFrameID == specialFrameIDMax)
+		if (specialFrameID == specialFrameIDMax)
 		{
 			specialFrameID = 0;
 			isSpecialing = true;
-			hasSpeacial--;
 		}
 		else isSpecialing = false;
 

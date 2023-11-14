@@ -98,15 +98,10 @@ void GameState::takeTimeCurrent()
 		{
 			Constants::CurrentWave++;
 			levelReader.gotoNextWave();
-			breakTime = 300;
+			breakTime = breakTimeMax;
 
-			if (levelReader.isFinalWave()) // Level Complete
-			{
-				cout << "Level Complete" << endl;
-
-				playMusic(Constants::GameMusicTrack[CurrentLevel][1], Constants::GameMusicOffset[CurrentLevel][1]);
-			}
-		}
+			if (levelReader.isFinalWave()) playMusic(Constants::GameMusicTrack[CurrentLevel][1], Constants::GameMusicOffset[CurrentLevel][1]);
+		}		
 	}
 
 	readWaveQueue();
@@ -121,8 +116,7 @@ void GameState::takeTimeCurrent()
 		if (EnemyPatternList[i]->CurrentEnityState == EntityState::Dead)
 		{
 			detachChild(*EnemyPatternList[i]);
-			EnemyPatternList.erase(EnemyPatternList.begin() + i);
-			i--;
+			EnemyPatternList.erase(EnemyPatternList.begin() + i);i--;
 		}
 	}
 
@@ -131,8 +125,7 @@ void GameState::takeTimeCurrent()
 		if (SubTitleList[i]->isDead())
 		{
 			detachChild(*SubTitleList[i]);
-			SubTitleList.erase(SubTitleList.begin() + i);
-			i--;
+			SubTitleList.erase(SubTitleList.begin() + i);i--;
 		}
 	}
 }
@@ -141,14 +134,56 @@ void GameState::readAttackQueue()
 {
 	if (player->isFiring)	// Player Fire
 	{
-		PlayerBullets_Standard->addBullet(BulletType_Player_Normal, player->getPosition() - Vector2f(0, 30));
+		switch (EquipedWeapon[player->getCurrentWeapon()])
+		{
+		case 0:
+		{	PlayerBullets_Standard->addBullet(BulletType_Player_Normal, player->getPosition() - Vector2f(0, 30));}
+		break;
+
+		case 1:
+		{	PlayerBullets_Standard->addBullet(BulletType_Player_Laser_Normal, player->getPosition() + Vector2f(0, 10));}
+		break;
+		
+		}
+		
 		player->resetGun();
 	}
 
 	if (player->isSpecialing)	// Player Special
 	{
-		PlayerBullets_Detroyer->addBullet(BulletType_Player_Laser_Destroyer, player->getPosition() + Vector2f(0, 10));
-		player->resetSpecial();
+		switch (CurrentSpecial)
+		{
+		case 0: // shoot fan shape bullets
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				PlayerBullets_Standard->addBullet(BulletType_Player_Normal, player->getPosition() - Vector2f(0, 30));
+				PlayerBullets_Standard->BulletList.back()->setRotation((i - 2) * 10);
+				PlayerBullets_Standard->BulletList.back()->setVelocity(player->AngleShift({0,-400}, (i - 2) * 10));
+			}
+			player->resetSpecial();
+			player->makeSuperFlicker(50);
+		}
+		break;
+
+		case 1: // shoot big laser
+		{
+			PlayerBullets_Detroyer->addBullet(BulletType_Player_Laser_Destroyer, player->getPosition() + Vector2f(0, 10));
+			player->resetSpecial();
+			player->makeSuperFlicker(100);
+		}
+		break;
+
+		case 2: // activate shield and ram
+		{
+			PlayerBullets_Detroyer->addBullet(BulletType_Player_Ram_Destroyer, player->getPosition() + Vector2f(0, 0));
+			player->resetSpecial();
+			player->makeSuperFlicker(700);
+		}
+		break;
+		}
+
+		
 	}
 }
 

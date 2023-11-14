@@ -27,6 +27,7 @@ public:
 	virtual void takeTimeFlicker();
 
 	void makeFlicker();
+	void makeSuperFlicker(int flickerTime);
 
 	void reset();
 

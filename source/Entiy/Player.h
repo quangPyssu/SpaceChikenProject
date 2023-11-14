@@ -22,20 +22,23 @@ class Player : public Entity
 	bool isSpecialing = false;
 
 	Vector2f PlayerCurPos;
+	int getCurrentWeapon() { return CurrentWeapon; }
 
 	private:
+		int CurrentWeapon = 0;
 
 		void atHalfHealth() override;
 		void atQuarterHealth() override;
 		void addDeathAnimation() override;
 		Texture texturePlayer;
 		short unsigned int reloadFrameID = 0;
-		short unsigned int reloadFrameIDMax = 50;
+		short unsigned int reloadFrameIDMax = WeaponUnlocked[CurrentWeapon].ss;
 
-		short unsigned int specialFrameID = 0;
-		short unsigned int specialFrameIDMax = 200;
+		short unsigned int specialFrameID = SpecialUnlocked[CurrentSpecial].ss-1;
+		short unsigned int specialFrameIDMax = SpecialUnlocked[CurrentSpecial].ss;
 
-		short hasSpeacial = 100;
+
+		//short hasSpeacial = 100;
 
 		friend class GameState;
 };

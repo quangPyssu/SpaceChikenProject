@@ -163,6 +163,8 @@
     <ClCompile Include="source\Entiy\Bullets\Enemy_Bullet_Egg.cpp" />
     <ClCompile Include="source\Entiy\Bullets\Player_Bullet_Normal.cpp" />
     <ClCompile Include="source\Entiy\Bullets\Player_Laser_Destroyer.cpp" />
+    <ClCompile Include="source\Entiy\Bullets\Player_Laser_Normal.cpp" />
+    <ClCompile Include="source\Entiy\Bullets\Player_Ram_Destroyer.cpp" />
     <ClCompile Include="source\Entiy\Enemies\Boss_Chicken_1.cpp" />
     <ClCompile Include="source\Entiy\Enemies\Enemy_Chicken_1.cpp" />
     <ClCompile Include="source\Entiy\Enemy.cpp" />

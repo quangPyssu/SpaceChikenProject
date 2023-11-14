@@ -150,6 +150,12 @@
     <ClCompile Include="source\States\SettingMenu.cpp">
       <Filter>States</Filter>
     </ClCompile>
+    <ClCompile Include="source\Entiy\Bullets\Player_Laser_Normal.cpp">
+      <Filter>Entity\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Bullets\Player_Ram_Destroyer.cpp">
+      <Filter>Entity\Bullets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SceneNode.h">

@@ -39,12 +39,18 @@ public:
 
     int getTimerStart() { return timerStart; }
 
+    void makeInvisible() { isInvisible = true; }
+    void makeVisible() { isInvisible = false; }
+
+    void makeUnInteractable() { isInteractable = false; }
+    void makeInteractable() { isInteractable = true; }
+
 public:
     vector<Ptr> Children;
     SceneNode* Parent=nullptr;
 
     bool isDisable = false;
-    bool isInteractable = false;
+    
 
     virtual void Disable();
     virtual void Able();
@@ -54,5 +60,7 @@ public:
 
 protected:
     int timerStart = 0;
+    bool isInvisible = false;
+    bool isInteractable = true;
 };
 

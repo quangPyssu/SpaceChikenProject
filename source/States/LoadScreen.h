@@ -25,10 +25,14 @@ class LoadScreen : public State
 
 	private:
 		Button* btnWeapon;
+		Button* btnWeapon2;
 		Button* btnSpecial;
 
 		vector <Button*> btnWeaponList;
 		vector <Button*> btnSpecialList;
+
+		vector <SpriteOnly*> spriteWeaponList;
+		vector <SpriteOnly*> spriteSpecialList;
 
 		Button* btnContinue;
 		Button* btnQuit;

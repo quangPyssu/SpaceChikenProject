@@ -28,7 +28,7 @@ void SceneNode::draw(RenderTarget& target, RenderStates states) const
     if (isDisable) return;
     states.transform *= getTransform();
 
-    drawCurrent(target, states);
+    if (!isInvisible) drawCurrent(target, states);
 
     for (const auto& child : Children)
         if (child) child->draw(target, states);
@@ -37,7 +37,9 @@ void SceneNode::draw(RenderTarget& target, RenderStates states) const
 void SceneNode::update(Event& event, Vector2f& MousePos)
 {
     if (isDisable) return;
-    updateCurrent(event, MousePos);
+    
+    if (isInteractable) updateCurrent(event, MousePos);
+
     for (const auto& child : Children) child->update(event, MousePos);
 }
 

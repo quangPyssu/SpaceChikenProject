@@ -59,13 +59,18 @@ namespace Constants
     extern int CurrentLevel;
     extern int CurrentWave;
 
+    extern sf::Vector2f PlayerHitboxSize;
+
     extern const int weaponMax;
     extern const int specialMax;
-    extern int CurrentWeapon;
+    extern int CurrentWeapon1;
+    extern int CurrentWeapon2;
     extern int CurrentSpecial;
 
-    extern std::pair <bool,int> WeaponUnlocked[5];  // unlocked, max cooldown
-    extern std::pair <bool,int> SpecialUnlocked[5]; // unlocked, max cooldown
+    extern int EquipedWeapon[2];
+
+    extern std::pair <bool,short unsigned int> WeaponUnlocked[5];  // unlocked, max cooldown
+    extern std::pair <bool,short unsigned int> SpecialUnlocked[5]; // unlocked, max cooldown
 
     extern int breakTime;
     extern int breakTimeMax;

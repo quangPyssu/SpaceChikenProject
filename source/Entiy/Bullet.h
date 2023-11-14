@@ -1,7 +1,10 @@
 #pragma once
 #include "Entity.h"
 
-enum BulletType { BulletType_Enemy_Egg, BulletType_Astroid, BulletType_Player_Normal, BulletType_Player_Laser_Destroyer};
+enum BulletType { BulletType_Enemy_Egg, BulletType_Astroid, BulletType_Player_Normal, 
+	BulletType_Player_Laser_Normal, BulletType_Player_Laser_Destroyer,
+	BulletType_Player_Ram_Destroyer
+};
 
 class Bullet : public Entity
 {
@@ -24,8 +27,18 @@ class BulletFactory
 
 class Player_Bullet_Normal : public Bullet
 {
-	public:
+public:
 	Player_Bullet_Normal(sf::Vector2f StartPosition);
+
+	//void takeTimeCurrent() override;
+
+	void addDeathAnimation() override;
+};
+
+class Player_Laser_Normal : public Bullet
+{
+	public:
+	Player_Laser_Normal(sf::Vector2f StartPosition);
 
 	//void takeTimeCurrent() override;
 
@@ -36,6 +49,16 @@ class Player_Laser_Destroyer : public Bullet
 {
 	public:
 	Player_Laser_Destroyer(sf::Vector2f StartPosition);
+
+	//void takeTimeCurrent() override;
+
+	void addDeathAnimation() override;
+};
+
+class Player_Ram_Destroyer : public Bullet
+{
+	public:
+	Player_Ram_Destroyer(sf::Vector2f StartPosition);
 
 	//void takeTimeCurrent() override;
 

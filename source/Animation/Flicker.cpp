@@ -8,6 +8,12 @@ void Flicker::makeFlicker()
 	isFlickering = true;
 }
 
+void Flicker::makeSuperFlicker(int flickerTime)
+{
+	currentTime = flickerTime;
+	isFlickering = true;
+}
+
 void Flicker::takeTimeFlicker()
 {
 	if (!isFlickering) return;

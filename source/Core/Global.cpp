@@ -7,15 +7,20 @@ namespace Constants {
     const int weaponMax = 3;
     const int specialMax = 3;
 
-    int CurrentWeapon = 0;
+    int CurrentWeapon1 = 0;
+    int CurrentWeapon2 = 0;
     int CurrentSpecial = 0;
 
+    sf::Vector2f PlayerHitboxSize = sf::Vector2f(50, 50);
     int PlayerMaxHP = 10;
     int CurrentLevel = 0;
     int CurrentWave = 0;
 
-    std::pair <bool, int> WeaponUnlocked[5] = { {true,50},{false,200},{false,0},{false,0},{false,0} };
-    std::pair <bool, int> SpecialUnlocked[5] = { {true,600},{false,1800},{false,0},{false,0},{false,0} };
+    std::pair <bool,short unsigned int> WeaponUnlocked[5] = { {true,50},{false,200},{false,20},{false,0},{false,0} };
+    std::pair <bool,short unsigned int> SpecialUnlocked[5] = { {false,500},{false,3000},{false,4000},{false,0},{false,0} };
+
+    int EquipedWeapon[2] = { 0,0 };
+
 
     int breakTime = 300;
     int breakTimeMax = 300;

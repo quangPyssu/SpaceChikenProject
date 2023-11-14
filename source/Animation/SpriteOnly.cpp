@@ -48,3 +48,8 @@ void SpriteOnly::setTransparency(float transparency)
 {
 	sprite.setColor(sf::Color(255, 255, 255, transparency));
 }
+
+void SpriteOnly::setTextureRect(sf::IntRect rect)
+{
+	sprite.setTextureRect(rect);
+}

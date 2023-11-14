@@ -21,11 +21,59 @@ LoadScreen::LoadScreen(State& parentState)
 	progressBar = new ProgressBar(Vector2f( 10,WINDOW_SIZE.y - 20 ), Vector2f(WINDOW_SIZE.x - 20, 20), Colors::green, Colors::grey, "Load Progress", loadProgress,loadProgressMax);
 	PushToObject(progressBar, this);
 
-	btnWeapon = new Button(Vector2f(WINDOW_SIZE.x / 4, 100), Vector2f(100, 100), "Weapon");
-	btnWeapon->PushToObject(btnWeapon, this);
+	{
+		btnWeapon = new Button(Vector2f(WINDOW_SIZE.x / 4, 100), Vector2f(100, 100), "W");
+		btnWeapon->PushToObject(btnWeapon, this);
+		btnWeapon->makeInvisible();
 
-	btnSpecial = new Button(Vector2f(WINDOW_SIZE.x / 4, 250), Vector2f(100, 100), "Special");
-	btnSpecial->PushToObject(btnSpecial, this);
+		btnWeapon2 = new Button(Vector2f(WINDOW_SIZE.x / 4-120, 100), Vector2f(100, 100), "E");
+		btnWeapon2->PushToObject(btnWeapon2, this);
+		btnWeapon2->makeInvisible();
+
+		for (int i = 0; i < weaponMax; i++)
+		{
+			btnWeaponList.push_back(new Button(Vector2f(WINDOW_SIZE.x / 4, 250 + 125 * i), Vector2f(100, 100), "A"));
+			btnWeaponList.back()->makeInvisible();
+			PushToObject(btnWeaponList.back(), this);
+
+
+			string temp = "WeaponIcon" + to_string(i) + ".jpg";
+			spriteWeaponList.push_back(new SpriteOnly(temp));
+			spriteWeaponList.back()->setPosition(btnWeaponList.back()->getPosition());
+			spriteWeaponList.back()->setScale(getScale::getScaleMin(spriteWeaponList.back()->getSize(), btnWeaponList.back()->getSize()).x);
+
+			if (!WeaponUnlocked[i].first)
+			{
+				btnWeaponList.back()->makeUnInteractable();
+				spriteWeaponList.back()->setTransparency(100);
+			}
+
+		}
+	}	
+
+	{
+		btnSpecial = new Button(Vector2f(WINDOW_SIZE.x / 4 + 150, 100), Vector2f(100, 100), "S");
+		btnSpecial->PushToObject(btnSpecial, this);
+		btnSpecial->makeInvisible();
+
+		for (int i = 0; i < specialMax; i++)
+		{
+			btnSpecialList.push_back(new Button(Vector2f(WINDOW_SIZE.x / 4 + 150, 250 + 125 * i), Vector2f(100, 100), "A"));
+			btnSpecialList.back()->makeInvisible();
+			PushToObject(btnSpecialList.back(), this);
+
+			string temp = "SpecialIcon" + to_string(i) + ".jpg";
+			spriteSpecialList.push_back(new SpriteOnly(temp));
+			spriteSpecialList.back()->setPosition(btnSpecialList.back()->getPosition());
+			spriteSpecialList.back()->setScale(getScale::getScaleMin(spriteSpecialList.back()->getSize(), btnSpecialList.back()->getSize()).x);
+
+			if (!SpecialUnlocked[i].first)
+			{
+				btnSpecialList.back()->makeUnInteractable();
+				spriteSpecialList.back()->setTransparency(100);
+			}
+		}
+	}
 
 	btnContinue = new Button(Vector2f(WINDOW_SIZE.x/5*4, 100), Vector2f(200,70), "Continue");
 	btnContinue->PushToObject(btnContinue, this);
@@ -55,24 +103,42 @@ LoadScreen::LoadScreen(State& parentState)
 	}
 	isLoadComplete = 0;
 
-	// here to load attack of Player
-	loadPlayer();
+	// here to load attack of Player	
 }
 
 LoadScreen::~LoadScreen()
 {
+	for (int i = 0; i < spriteWeaponList.size(); i++)
+		delete spriteWeaponList[i];
 }
 
 void LoadScreen::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(backgroundSprite);
 	target.draw(*progressBar);
+
+	for (int i = 0; i < spriteWeaponList.size(); i++) target.draw(*spriteWeaponList[i]);
+
+	spriteWeaponList[EquipedWeapon[0]]->setPosition(btnWeapon->getPosition());
+	target.draw(*spriteWeaponList[EquipedWeapon[0]]);
+	spriteWeaponList[EquipedWeapon[0]]->setPosition(btnWeaponList[EquipedWeapon[0]]->getPosition());
+
+	spriteWeaponList[EquipedWeapon[1]]->setPosition(btnWeapon2->getPosition());
+	target.draw(*spriteWeaponList[EquipedWeapon[1]]);
+	spriteWeaponList[EquipedWeapon[1]]->setPosition(btnWeaponList[EquipedWeapon[1]]->getPosition());
+
+	for (int i = 0; i < spriteSpecialList.size(); i++) target.draw(*spriteSpecialList[i]);
+
+	spriteSpecialList[CurrentSpecial]->setPosition(btnSpecial->getPosition());
+	target.draw(*spriteSpecialList[CurrentSpecial]);
+	spriteSpecialList[CurrentSpecial]->setPosition(btnSpecialList[CurrentSpecial]->getPosition());
 }
 
 void LoadScreen::updateCurrent(Event& event, Vector2f& MousePos)
 {
 	if (btnContinue->isLeftClicked(event, MousePos) && isLoadComplete)
 	{
+		loadPlayer();
 		CurrentState = States::NewGame;
 	}
 
@@ -80,6 +146,21 @@ void LoadScreen::updateCurrent(Event& event, Vector2f& MousePos)
 	{
 		CurrentState = States::KillMe;
 		parentState->CurrentState = States::None;
+	}
+
+	for (int i = 0; i < btnWeaponList.size(); i++)
+	{
+		if (btnWeaponList[i]->isLeftClicked(event, MousePos)) EquipedWeapon[0] = i;
+
+		if (btnWeaponList[i]->isRightClicked(event, MousePos))	EquipedWeapon[1] = i;
+	}	
+
+	for (int i = 0; i < btnSpecialList.size(); i++)
+	{
+		if (btnSpecialList[i]->isLeftClicked(event, MousePos))
+		{
+			CurrentSpecial = i;
+		}
 	}
 }
 
@@ -117,6 +198,8 @@ void LoadScreen::takeTimeCurrent()
 	{
 		isLoadComplete = 1;
 	}
+
+	
 }
 
 void LoadScreen::loadPlayer()
@@ -136,4 +219,46 @@ void LoadScreen::loadPlayer()
 
 	SoundBuffer sound = ResourceManager::getSoundBuffer("PlayerExplode.ogg");
 
+	for (int i=0;i<weaponMax;i++) switch (EquipedWeapon[i])
+	{
+		case 0:
+		{
+			Texture texture = ResourceManager::getTexture("Bullet.png");
+			SoundBuffer sound = ResourceManager::getSoundBuffer("(laser).ogg");
+		}
+			break;
+		
+		case 1:
+		{
+			Texture texture = ResourceManager::getTexture("QuicklyBeam.png");
+			SoundBuffer sound = ResourceManager::getSoundBuffer("laserSmall.ogg");
+		}		
+			break;
+	}
+
+	switch (CurrentSpecial)
+	{
+		case 0:
+		{
+			Texture texture = ResourceManager::getTexture("Bullet.png");
+			SoundBuffer sound = ResourceManager::getSoundBuffer("(laser).ogg");
+		}
+			break;
+
+		case 1:
+		{
+			Texture texture = ResourceManager::getTexture("BigBeam.png");
+			Texture texture2 = ResourceManager::getTexture("BigBeamBody.png");
+
+			SoundBuffer sound = ResourceManager::getSoundBuffer("MasterSpark.ogg");
+		}
+			break;
+
+		case 2:
+		{
+			Texture texture = ResourceManager::getTexture("Dreadnought_Shield.png");
+			SoundBuffer sound = ResourceManager::getSoundBuffer("MarioStar.ogg");
+		}
+			break;
+	}
 }
