@@ -52,6 +52,8 @@ public:
 	void setDivation(Vector2f divation) ;
 	void setFlickerColor(sf::Color color) ;
 
+	Vector2f getSize();
+
 	void setRotationDivation(float rotationDivation);
 
 	void setResetFrame(int resetFrame);

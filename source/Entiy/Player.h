@@ -32,7 +32,7 @@ class Player : public Entity
 		void addDeathAnimation() override;
 		Texture texturePlayer;
 		short unsigned int reloadFrameID = 0;
-		short unsigned int reloadFrameIDMax = WeaponUnlocked[CurrentWeapon].ss;
+		short unsigned int reloadFrameIDMax = WeaponUnlocked[EquipedWeapon[CurrentWeapon]].ss;
 
 		short unsigned int specialFrameID = SpecialUnlocked[CurrentSpecial].ss-1;
 		short unsigned int specialFrameIDMax = SpecialUnlocked[CurrentSpecial].ss;

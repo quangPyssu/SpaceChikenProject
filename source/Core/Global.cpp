@@ -40,18 +40,18 @@ namespace Constants {
 
     std::string GameMusicTrack[5][2] = { 
         {"Assets/Sounds/Music/lullaby_deserted_hell.ogg", "Assets/Sounds/Music/BeOfGoodCheer.ogg",},
-        {"Assets/Sounds/Music/Track3.ogg","Assets/Sounds/Music/Track4.ogg",},
-		{"Assets/Sounds/Music/Track5.ogg", "Assets/Sounds/Music/Track6.ogg",},
+        {"Assets/Sounds/Music/JinzoLament.ogg","Assets/Sounds/Music/magicJinzoStraw.ogg",},
+		{"Assets/Sounds/Music/Track5.ogg", "Assets/Sounds/Music/Necrofantasia.ogg",},
 		{"Assets/Sounds/Music/Track7.ogg", "Assets/Sounds/Music/Track8.ogg",},
-		{"Assets/Sounds/Music/Track9.ogg", "Assets/Sounds/Music/Track10.ogg",} 
+		{"Assets/Sounds/Music/TheSeaOneHomePlanet.ogg", "Assets/Sounds/Music/PureFurries.ogg",} 
         };
 
-    int GameMusicOffset[5][2] = { {0,12},{0,0},{0,0},{0,0},{0,0} };
+    int GameMusicOffset[5][2] = { {0,12},{0,0},{0,48},{0,0},{54,0} };
 
     std::string MenuMusicTrack = "Assets/Sounds/Music/space_maiden_appear.ogg";   
 
-    int masterVolume = 100;
-    int musicVolume = 30;
+    int masterVolume = 80;
+    int musicVolume = 50;
     int soundVolume = 70;
     const int font_size_small = 20;
     const int font_size_medium = 30;
@@ -76,6 +76,11 @@ namespace utility
     sf::Vector2f operator* (const sf::Vector2f& A, const sf::Vector2f& B)
     {
         return sf::Vector2f(A.x * B.x, A.y * B.y);
+    }
+
+    sf::Vector2f operator*(const sf::Vector2f& A, const float& B)
+    {
+        return sf::Vector2f(A.x * B, A.y * B);
     }
 
     sf::Vector2f min(const sf::Vector2f& A, const sf::Vector2f& B)

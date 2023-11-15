@@ -5,6 +5,7 @@ SpriteOnly::SpriteOnly(const std::string& i_texture_location)
 	texture = ResourceManager::getTexture(i_texture_location);
 	sprite.setTexture(texture);
 	sprite.setPosition({ -300,-300 });
+	setScale(1);
 	isRootSet = true;
 }
 
@@ -31,7 +32,7 @@ void SpriteOnly::takeTimeCurrent()
 
 void SpriteOnly::setScale(float x)
 {
-	sprite.setScale(x, x);
+	sprite.setScale(x*SCALE, x*SCALE);
 }
 
 void SpriteOnly::setOrigin(Vector2f Origin)

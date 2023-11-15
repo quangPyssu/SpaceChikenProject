@@ -22,17 +22,17 @@ LoadScreen::LoadScreen(State& parentState)
 	PushToObject(progressBar, this);
 
 	{
-		btnWeapon = new Button(Vector2f(WINDOW_SIZE.x / 4, 100), Vector2f(100, 100), "W");
+		btnWeapon = new Button(Vector2f(WINDOW_SIZE.x / 5, 100), Vector2f(100, 100), "W");
 		btnWeapon->PushToObject(btnWeapon, this);
 		btnWeapon->makeInvisible();
 
-		btnWeapon2 = new Button(Vector2f(WINDOW_SIZE.x / 4-120, 100), Vector2f(100, 100), "E");
+		btnWeapon2 = new Button(Vector2f(WINDOW_SIZE.x / 5-120, 100), Vector2f(100, 100), "E");
 		btnWeapon2->PushToObject(btnWeapon2, this);
 		btnWeapon2->makeInvisible();
 
 		for (int i = 0; i < weaponMax; i++)
 		{
-			btnWeaponList.push_back(new Button(Vector2f(WINDOW_SIZE.x / 4, 250 + 125 * i), Vector2f(100, 100), "A"));
+			btnWeaponList.push_back(new Button(Vector2f(WINDOW_SIZE.x / 5, 250 + 125 * i), Vector2f(100, 100), "A"));
 			btnWeaponList.back()->makeInvisible();
 			PushToObject(btnWeaponList.back(), this);
 
@@ -40,7 +40,7 @@ LoadScreen::LoadScreen(State& parentState)
 			string temp = "WeaponIcon" + to_string(i) + ".jpg";
 			spriteWeaponList.push_back(new SpriteOnly(temp));
 			spriteWeaponList.back()->setPosition(btnWeaponList.back()->getPosition());
-			spriteWeaponList.back()->setScale(getScale::getScaleMin(spriteWeaponList.back()->getSize(), btnWeaponList.back()->getSize()).x);
+			spriteWeaponList.back()->setScale(getScale::getScaleMax(spriteWeaponList.back()->getSize(), btnWeaponList.back()->getSize()).x/SCALE);
 
 			if (!WeaponUnlocked[i].first)
 			{
@@ -52,20 +52,20 @@ LoadScreen::LoadScreen(State& parentState)
 	}	
 
 	{
-		btnSpecial = new Button(Vector2f(WINDOW_SIZE.x / 4 + 150, 100), Vector2f(100, 100), "S");
+		btnSpecial = new Button(Vector2f(WINDOW_SIZE.x / 5 + 150, 100), Vector2f(100, 100), "S");
 		btnSpecial->PushToObject(btnSpecial, this);
 		btnSpecial->makeInvisible();
 
 		for (int i = 0; i < specialMax; i++)
 		{
-			btnSpecialList.push_back(new Button(Vector2f(WINDOW_SIZE.x / 4 + 150, 250 + 125 * i), Vector2f(100, 100), "A"));
+			btnSpecialList.push_back(new Button(Vector2f(WINDOW_SIZE.x / 5 + 150, 250 + 125 * i), Vector2f(100, 100), "A"));
 			btnSpecialList.back()->makeInvisible();
 			PushToObject(btnSpecialList.back(), this);
 
 			string temp = "SpecialIcon" + to_string(i) + ".jpg";
 			spriteSpecialList.push_back(new SpriteOnly(temp));
 			spriteSpecialList.back()->setPosition(btnSpecialList.back()->getPosition());
-			spriteSpecialList.back()->setScale(getScale::getScaleMin(spriteSpecialList.back()->getSize(), btnSpecialList.back()->getSize()).x);
+			spriteSpecialList.back()->setScale(getScale::getScaleMin(spriteSpecialList.back()->getSize(), btnSpecialList.back()->getSize()).x / SCALE);
 
 			if (!SpecialUnlocked[i].first)
 			{
@@ -78,7 +78,7 @@ LoadScreen::LoadScreen(State& parentState)
 	btnContinue = new Button(Vector2f(WINDOW_SIZE.x/5*4, 100), Vector2f(200,70), "Continue");
 	btnContinue->PushToObject(btnContinue, this);
 
-	btnQuit = new Button(Vector2f(WINDOW_SIZE.x / 5*4, 200), Vector2f(200, 70), "Quit");
+	btnQuit = new Button(Vector2f(WINDOW_SIZE.x /5*4, 200), Vector2f(200, 70), "Quit");
 	btnQuit->PushToObject(btnQuit, this);
 	
 	{

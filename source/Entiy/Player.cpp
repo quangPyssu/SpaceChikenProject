@@ -11,8 +11,7 @@ Player::Player()
 
 	texturePlayer = ResourceManager::getTexture("Battlecruiser_Base.png");	
 
-	hitbox.setSize(sf::Vector2f(texturePlayer.getSize().x/3, texturePlayer.getSize().y/2));
-	hitbox.setOrigin(hitbox.getSize().x / 2, hitbox.getSize().y / 2);
+	setHitBox(sf::Vector2f(texturePlayer.getSize().x/5*SCALE, texturePlayer.getSize().y/3*SCALE));
 	hitbox.setFillColor(sf::Color::Transparent);
 	hitbox.setOutlineColor(sf::Color::Red);
 	hitbox.setOutlineThickness(1);
@@ -20,8 +19,8 @@ Player::Player()
 	Constants::PlayerHitboxSize = hitbox.getSize();
 
 	{
-		animations.push_back(new Animation(20, 8, 1, 1, { 0,0 }, { 0.5,0.55 }, Vector2f(0, 0), "Battlecruiser_Engine.png"));
-		animations.back()->setScale({ 1,1.7 });
+		animations.push_back(new Animation(20, 8, 1, 1, { 0,0 }, { 0.5,0.6 }, Vector2f(0, 0), "Battlecruiser_Engine.png"));
+		animations.back()->setScale({ 0.8,1.4 });
 		animations.back()->PushToObject(animations.back(), this);
 	}
 

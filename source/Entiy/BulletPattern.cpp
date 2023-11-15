@@ -24,8 +24,6 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 	this->total = total;
 	this->width = width;
 	this->widthCnt = widthCnt;
-
-	setVelocity({ (float)thisScale * Velocity.x,(float)thisScale * Velocity.y });
 	Destructible = true;
 
 	for (int i=0;i<total;i++)

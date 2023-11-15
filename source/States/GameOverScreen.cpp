@@ -9,10 +9,10 @@ GameOverScreen::GameOverScreen(State& parentState)
 	backgroundSprite.setTexture(textureBack);
 	backgroundSprite.setScale(getScale::getScaleMax(Vector2f(textureBack.getSize()),WINDOW_SIZE));
 
-	btnPlay = new Button(sf::Vector2f(WINDOW_SIZE.x/5, 600), sf::Vector2f(600, 100), "Restart Level");
+	btnPlay = new Button(sf::Vector2f(WINDOW_SIZE.x/5, WINDOW_SIZE.y /3 + 250), sf::Vector2f(600, 100), "Restart Level");
 	btnPlay->PushToObject(btnPlay, this);
 
-	btnExit = new Button(sf::Vector2f(WINDOW_SIZE.x/5+650, 600), sf::Vector2f(200, 100), "Quit");
+	btnExit = new Button(sf::Vector2f(WINDOW_SIZE.x/5+650, WINDOW_SIZE.y / 3+250), sf::Vector2f(200, 100), "Quit");
 	btnExit->PushToObject(btnExit, this);
 
 	SubTitle* TitleGameOver = new SubTitle({ 0,WINDOW_SIZE.y / 3 }, Vector2f(WINDOW_SIZE.x, 200), trans, { 0.3,0.5 }, 40, white, "GAME OVER", "neuro",-1);

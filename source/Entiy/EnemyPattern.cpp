@@ -16,15 +16,10 @@ EnemyPattern::EnemyPattern(EnemyType enemyType, PatternType patternType, Rotatio
 	setAcceleration(Acceleration);
 	setPosition(Position);
 
-	setVelocity(Velocity);
-	setAcceleration(Acceleration);
-	setPosition(Position);
-
 	this->total = total;
 	this->width = width;
 	this->widthCnt = widthCnt;
 
-	setVelocity({ (float)SCALE * Velocity.x,(float)SCALE * Velocity.y });
 	Destructible = true;
 	HitPoints = 99999;
 	rotationType = Spin;

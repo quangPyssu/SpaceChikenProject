@@ -17,7 +17,7 @@ Animation::Animation(unsigned short animationSpeed, unsigned short widthCnt, uns
 	
 	sprite.setTexture(texture);
 
-	sprite.setScale(Scale*SCALE, Scale*SCALE);
+	setScale(Vector2f( Scale,Scale ));
 	sprite.setPosition(Position);
 
 	sprite.setOrigin(Vector2f(Origin.x*Width,Origin.y*Height));
@@ -99,7 +99,7 @@ void Animation::setRotationDivation(float rotationDivation)
 
 void Animation::setScale(Vector2f scale)
 {
-	sprite.setScale(scale);
+	sprite.setScale(scale*Vector2f(SCALE,SCALE));
 }
 
 void Animation::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
@@ -142,4 +142,9 @@ void Animation::setTransparency(float transparency)
 void Animation::setCurrentFrame(int currentFrame)
 {
 	this->currentFrame = currentFrame;
+}
+
+Vector2f Animation::getSize()
+{
+	return Vector2f(Width, Height)*sprite.getScale();
 }

@@ -113,6 +113,7 @@ namespace getScale
 namespace utility
 {
     sf::Vector2f operator *(const sf::Vector2f& A, const sf::Vector2f& B);
+    sf::Vector2f operator *(const sf::Vector2f& A, const float & B);
     sf::Vector2f min(const sf::Vector2f& A, const sf::Vector2f& B);
     sf::Vector2f max(const sf::Vector2f& A, const sf::Vector2f& B);
     int randInt(int i);

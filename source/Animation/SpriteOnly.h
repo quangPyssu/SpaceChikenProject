@@ -20,7 +20,7 @@ class SpriteOnly :  public SceneNode
 
 	void setTransparency(float transparency);
 
-	Vector2f getSize() const { return Vector2f(texture.getSize().x, texture.getSize().y); }
+	Vector2f getSize() const { return Vector2f(texture.getSize().x, texture.getSize().y)*sprite.getScale(); }
 
 	private:
 		sf::Texture texture;

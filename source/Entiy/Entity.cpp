@@ -196,6 +196,12 @@ void Entity::setDivation(sf::Vector2f divation)
 	Divation = divation;
 }
 
+void Entity::setHitBox(sf::Vector2f size)
+{
+	hitbox.setSize(size);
+	hitbox.setOrigin(size.x / 2, size.y / 2);
+}
+
 sf::Vector2f Entity::getVelocity()
 {
 	return Velocity;

@@ -28,6 +28,8 @@ public:
 
     void setTimer(int timerStart, int timerEnd);
 
+    void setHitBox(Vector2f size);
+
     EntityState CurrentEnityState = EntityState::Alive;
 
     void killEntity();

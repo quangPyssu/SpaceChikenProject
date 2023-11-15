@@ -4,9 +4,7 @@ Enemy_Chicken_1::Enemy_Chicken_1(Vector2f StartPosition) : Enemy(StartPosition)
 {	
 	hitbox.setFillColor(Colors::trans);
 	hitbox.setOutlineColor(Color::Blue);
-	hitbox.setOutlineThickness(1);
-	hitbox.setSize({ 50,50 });
-	hitbox.setOrigin(hitbox.getSize().x / 2, hitbox.getSize().y / 2);
+	hitbox.setOutlineThickness(1);	
 
 	animations.push_back(new Animation(2, 50, 1, 0.35, { 0,0 }, { 0.5,0.5 }, Vector2f(0, 0), "ChickenBody.png"));
 	animations.back()->makePingPong();
@@ -16,6 +14,8 @@ Enemy_Chicken_1::Enemy_Chicken_1(Vector2f StartPosition) : Enemy(StartPosition)
 	animations.back()->setCurrentFrame(rand() % 25);
 	animations.back()->makePingPong();
 	animations.back()->PushToObject(animations.back(), this);
+
+	setHitBox(animations[0]->getSize()*0.7);	
 
 	HitPoints = HitPointsMax = 60;
 
