@@ -107,8 +107,6 @@ void EnemyManager::takeTimeCurrent()
 
 	fireBulletPattern();
 
-
-	// Clean up the dead bullet pattern
 	for (int i = 0; i < BulletPatternList.size(); i++)
 	{
 		if (BulletPatternList[i]->CurrentEnityState == EntityState::Dead)
@@ -132,6 +130,7 @@ void EnemyManager::addBulletPattern(BulletType type, PatternType patternType, Ro
 	{
 		case BulletType_Enemy_Egg: {	tmp = EnimesBullets; } break;
 		case BulletType_Astroid: {	tmp = EnimesBullets_Vulnerable; } break;
+		case BulletType_Enemy_Laser: {tmp = EnimesBullets;} break;
 
 		default: {tmp = EnimesBullets;} break;
 	}

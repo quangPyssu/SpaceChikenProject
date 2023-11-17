@@ -51,7 +51,7 @@ void Pattern::setUpPattern(PatternType type)
 		}
 		break;
 
-		case Shower:
+		case Shower: // rain down
 		{
 			if (width <= 0) width = 300 * SCALE;
 
@@ -74,12 +74,11 @@ void Pattern::setUpPattern(PatternType type)
 			this->Velocity = { 0,0 };
 			this->Acceleration = { 0,0 };
 
-			if (rotationType == WithOwnVelocity) rotationType = WithOwnVelocity;
+			if (rotationType == WithOwnVelocity) rotationType = WithOwnVelocity;			
 		}
-
 		break;
 
-		case Firework:
+		case Firework: // each fly out from origin
 		{
 			for (int i = 0; i < total; i++)
 			{
@@ -88,13 +87,33 @@ void Pattern::setUpPattern(PatternType type)
 				tmp->rotationDependent = true;
 				tmp->RotationDivation += (float) i * 360 / total; 		
 				tmp->setRotation(tmp->RotationDivation);
-
-				// each fly out from origin
-				tmp->setVelocity(Vector2f( (float)SCALE * cos(tmp->RotationDivation * pi / 180) * this->Velocity.x
-					,(float)SCALE * sin(tmp->RotationDivation * pi / 180) * this->Velocity.y ));
-				tmp->setAcceleration(Vector2f((float)SCALE * cos(tmp->RotationDivation * pi / 180) * this->Acceleration.x
-					,(float)SCALE * sin(tmp->RotationDivation * pi / 180) * this->Acceleration.y ));
+				
+				tmp->setVelocity(Vector2f( (float)cos(tmp->RotationDivation * pi / 180) * this->Velocity.x
+					,(float) sin(tmp->RotationDivation * pi / 180) * this->Velocity.y ));
+				tmp->setAcceleration(Vector2f((float)cos(tmp->RotationDivation * pi / 180) * this->Acceleration.x
+					,(float) sin(tmp->RotationDivation * pi / 180) * this->Acceleration.y ));
 			}
+
+			this->Velocity = { 0,0 };
+			this->Acceleration = { 0,0 };
+		}
+		break;
+
+		case Vortex:  // grow or skrink in size ( each spin around origin)
+		{ // this->velocity determine grow or skrink
+			for (int i = 0; i < total; i++)
+			{
+				Entity* tmp = entityList[i];
+				tmp->setRootPos(CurrentPos);
+				tmp->rotationDependent = true;
+				tmp->RotationDivation += (float)i * 360 / total;
+				tmp->setRotation(tmp->RotationDivation);
+
+				tmp->setVelocity(Vector2f((float)this->Velocity.x, (float)this->Velocity.y));
+				tmp->setAcceleration(Vector2f((float)this->Acceleration.x/10, (float)this->Acceleration.y/10));
+			}
+
+			if (rotationType == WithOwnVelocity) rotationType = Spin;
 
 			this->Velocity = { 0,0 };
 			this->Acceleration = { 0,0 };
@@ -270,6 +289,18 @@ void Pattern::takeTimeCurrent()
 				entityList[i]->setDivation(Vector2f((entityListIndex[i] % widthCnt) * tmpWidth, (entityListIndex[i] / widthCnt) * tmpWidth));
 			}
 				break;
+
+			case Vortex:
+			{
+				width-= entityList[i]->getVelocity().x/10;
+				float distance = width / 2;
+				float tmp = entityList[i]->getRotation() + angleVelocity;
+				tmp = min((float)360, max(tmp, (float)0));
+				entityList[i]->setRotation(tmp);
+
+				entityList[i]->setDivation(Vector2f(sin(tmp * pi / 180) * distance, cos(tmp * pi / 180) * distance));
+			}
+			break;
 		}
 }
 
@@ -277,7 +308,7 @@ void Pattern::setTimer(int timerStart, int timerEnd)
 {
 	Entity::setTimer(timerStart, timerEnd);
 
-	for (int i = 0; i < entityList.size(); i++) entityList[i]->setTimer(timerStart, timerEnd);
+	for (int i = 0; i < entityList.size(); i++) entityList[i]->setTimer(timerStart+1, timerEnd);
 }
 
 void Pattern::setVelocity(Vector2f Velocity)

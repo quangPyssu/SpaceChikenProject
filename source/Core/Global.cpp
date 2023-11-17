@@ -12,11 +12,11 @@ namespace Constants {
     int CurrentSpecial = 0;
 
     sf::Vector2f PlayerHitboxSize = sf::Vector2f(50, 50);
-    int PlayerMaxHP = 10;
+    int PlayerMaxHP = 500;
     int CurrentLevel = 0;
     int CurrentWave = 0;
 
-    std::pair <bool,short unsigned int> WeaponUnlocked[5] = { {true,50},{false,200},{false,20},{false,0},{false,0} };
+    std::pair <bool,short unsigned int> WeaponUnlocked[5] = { {true,50},{false,200},{false,15},{false,0},{false,0} };
     std::pair <bool,short unsigned int> SpecialUnlocked[5] = { {false,500},{false,3000},{false,4000},{false,0},{false,0} };
 
     int EquipedWeapon[2] = { 0,0 };

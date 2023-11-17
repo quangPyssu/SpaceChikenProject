@@ -11,7 +11,7 @@ Player_Ram_Destroyer::Player_Ram_Destroyer(Vector2f StartPosition) : Bullet(Star
 
 	setHitBox(animations.back()->getSize()*0.8);
 
-	playSound("MarioStar.ogg");
+	playSpawnSound("MarioStar.ogg");
 	setTimer(0, 650);
 
 	isBulletDestructible = false;
@@ -21,9 +21,4 @@ Player_Ram_Destroyer::Player_Ram_Destroyer(Vector2f StartPosition) : Bullet(Star
 	Acceleration = { 0,0 };
 
 	type = BulletType_Player_Ram_Destroyer;
-}
-
-void Player_Ram_Destroyer::addDeathAnimation()
-{
-	Entity::addDeathAnimation();
 }

@@ -6,21 +6,21 @@ Astroid::Astroid(Vector2f StartPosition) : Bullet(StartPosition)
 	hitbox.setOutlineColor(Colors::purple);
 	hitbox.setOutlineThickness(1);
 	
-	std::string path = "Astroid_0.png";
-	sprites.push_back(new SpriteOnly(path, Vector2f(0, 0)));
-	sprites.back()->PushToObject(sprites.back(), this);
-	sprites.back()->setOrigin({ 0.5, 0.5 });
-	int astroidId = rand() % 50;
-	sprites.back()->setScale((float) (astroidId+20)/100);
-		
-	setHitBox(sprites.back()->getSize()*0.65);	
+
+	std::string path = "Astroid.png";
+
+	float scale = (float)(rand() % 60 + 60) / 100;
+	animations.push_back(new Animation(10, 24, 2, scale, WINDOW_SIZE, { 0.5,0.5 }, Vector2f(0, 0), path));
+	animations.back()->PushToObject(animations.back(), this);
+
+	setHitBox(animations.back()->getSize()*0.65);
 
 	Destructible = true;
 	isBulletDestructible = true;
-	HitPoints = HitPointsMax = 75;
-	Damage = 5;
+	HitPoints = HitPointsMax = 75*scale;
+	Damage = 250;
 
-	Velocity = { 100, 100 };
+	Velocity = { 0, 100 };
 	Acceleration = { 0,0 };
 
 	type = BulletType_Astroid;

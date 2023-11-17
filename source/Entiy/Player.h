@@ -31,11 +31,11 @@ class Player : public Entity
 		void atQuarterHealth() override;
 		void addDeathAnimation() override;
 		Texture texturePlayer;
-		short unsigned int reloadFrameID = 0;
-		short unsigned int reloadFrameIDMax = WeaponUnlocked[EquipedWeapon[CurrentWeapon]].ss;
+		int reloadFrameID = 0;
+		int reloadFrameIDMax = WeaponUnlocked[EquipedWeapon[CurrentWeapon]].ss;
 
-		short unsigned int specialFrameID = SpecialUnlocked[CurrentSpecial].ss-1;
-		short unsigned int specialFrameIDMax = SpecialUnlocked[CurrentSpecial].ss;
+		int specialFrameID = SpecialUnlocked[CurrentSpecial].ss-1;
+		int specialFrameIDMax = SpecialUnlocked[CurrentSpecial].ss;
 
 
 		//short hasSpeacial = 100;

@@ -9,7 +9,7 @@ SettingMenu::SettingMenu(State& parentState)
 	btnExit->PushToObject(btnExit, this);
 
 	background.setTexture(ResourceManager::getTexture("Blue_Background.png"));
-	background.setScale(getScale::getScaleMin((Vector2f) background.getTexture()->getSize(), WINDOW_SIZE));
+	background.setScale(getScale::getScaleMax((Vector2f) background.getTexture()->getSize(), WINDOW_SIZE));
 
 	sliderMaster = new Slider(sf::Vector2f(WINDOW_SIZE.x / 4 , 100), sf::Vector2f(200, 50), Color::Green, grey, "Master Volume:", Constants::masterVolume, 100);
 	sliderMaster->PushToObject(sliderMaster, this);

@@ -48,6 +48,9 @@ Enemy* EnemyFactory::createEnemy(EnemyType type, Vector2f StartPosition)
 	case EnemyType_Boss_Chicken_1:
 		return new Boss_Chicken_1(StartPosition);
 		break;
+	case EnemyType_UFO:
+		return new UFO(StartPosition);
+		break;
 	default:
 		break;
 	}

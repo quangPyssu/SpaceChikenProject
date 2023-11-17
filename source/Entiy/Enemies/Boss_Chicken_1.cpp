@@ -111,6 +111,8 @@ void Boss_Chicken_1::atHalfHealth()
 	}
 	
 	isFiring = true;
+
+	gotoPosition( Vector2f(WINDOW_SIZE.x / 2,WINDOW_SIZE.y / 4));
 }
 
 void Boss_Chicken_1::atQuarterHealth()
@@ -136,4 +138,6 @@ void Boss_Chicken_1::atQuarterHealth()
 	}
 
 	isFiring = true;
+
+	gotoPosition(Vector2f(WINDOW_SIZE.x / 2, WINDOW_SIZE.y / 4));
 }

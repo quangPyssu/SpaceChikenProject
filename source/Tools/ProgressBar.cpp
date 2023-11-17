@@ -20,9 +20,9 @@ ProgressBar::ProgressBar(sf::Vector2f position, sf::Vector2f size, sf::Color fil
 	//label.setFont(ResourceManager::getFont("neuro"));
 
 	label.setString(name);
-	label.setCharacterSize(size.y / 1.2);
+	label.setCharacterSize(size.y / 1);
 	label.setFillColor(Colors::black);
-	label.setPosition(position.x + size.x / 2 - label.getGlobalBounds().width / 2, position.y + size.y / 2 - label.getGlobalBounds().height / 2);
+	label.setPosition(position.x + size.x / 2 - label.getGlobalBounds().width / 2, position.y + size.y / 2 - label.getGlobalBounds().height / 2-5);
 }
 
 void ProgressBar::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const

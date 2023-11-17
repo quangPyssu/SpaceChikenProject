@@ -16,6 +16,7 @@ public:
 private:
 
 	Button* btnPlay;
+	Button* btnSetting;
 	Button* btnExit;
 
 	RectangleShape* invisibleWall;

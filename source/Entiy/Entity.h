@@ -30,6 +30,8 @@ public:
 
     void setHitBox(Vector2f size);
 
+    void gotoPosition(Vector2f Position,float speed=100);
+
     EntityState CurrentEnityState = EntityState::Alive;
 
     void killEntity();
@@ -56,6 +58,11 @@ protected:
     Vector2f Velocity = { 0,0 };
     Vector2f Acceleration = { 0,0 };
 
+    Vector2f VelocitySave = { 0,0 };
+    Vector2f AccelerationSave = { 0,0 };
+    Vector2f CurrentDestination = { 0,0 };
+    bool isGoingToPos = false;
+
     Vector2f* RootPos = nullptr;
     Vector2f Divation = { 0,0 };
 
@@ -78,6 +85,8 @@ protected:
     int HitPointsMax = 1;
     int Damage = 0;
 
+
+    bool isFirstTime = true;
     bool hasPhysics = false;
     bool isInvincibleWhenFlicker = false;
 
@@ -86,6 +95,7 @@ protected:
     virtual void atQuarterHealth() {};
 
     void playSound(string soundName);
+    void playSpawnSound(string soundName);
 
     int timerEnd = -1;    
     

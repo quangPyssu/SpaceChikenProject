@@ -51,6 +51,7 @@ public:
 	void setScale(Vector2f scale) ;
 	void setDivation(Vector2f divation) ;
 	void setFlickerColor(sf::Color color) ;
+	void setTotalTime(int totalTime) { this->totalTime = totalTime; }
 
 	Vector2f getSize();
 

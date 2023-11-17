@@ -12,13 +12,10 @@ Enemy_Bullet_Egg::Enemy_Bullet_Egg(Vector2f StartPosition) : Bullet(StartPositio
 	setHitBox(sprites.back()->getSize()*0.7);
 
 	isBulletDestructible = true;
-	Damage = 1;
+	Damage = 50;
 
-	Velocity = { 0, 100 };
+	Velocity = Vector2f(0, 60*SCALE );
 	Acceleration = { 0,0 };
-}
 
-void Enemy_Bullet_Egg::addDeathAnimation()
-{
-	Entity::addDeathAnimation();
+	type = BulletType_Enemy_Egg;
 }

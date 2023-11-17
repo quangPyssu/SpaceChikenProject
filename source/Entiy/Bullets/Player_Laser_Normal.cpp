@@ -3,12 +3,13 @@
 Player_Laser_Normal::Player_Laser_Normal(Vector2f StartPosition) : Bullet(StartPosition)
 {
 	hitbox.setFillColor(Colors::trans);	
-	//hitbox.setOutlineColor(red);
-	//hitbox.setOutlineThickness(1);
+	hitbox.setOutlineColor(red);
+	hitbox.setOutlineThickness(1);
 
 	animations.push_back(new Animation(10, 4, 1, 1, { 0,0 }, { 0,0.5 }, Vector2f(0, -30), "QuicklyBeam.png"));
 	animations.back()->setScale({ 5.5,0.75 });
 	animations.back()->setRotationDivation(-90);
+	animations.back()->makePingPong();
 	animations.back()->PushToObject(animations.back(), this);
 
 	Vector2f size = { animations.back()->getSize().y,animations.back()->getSize().x };
@@ -25,9 +26,4 @@ Player_Laser_Normal::Player_Laser_Normal(Vector2f StartPosition) : Bullet(StartP
 	Acceleration = { 0,0 };
 
 	type = BulletType_Player_Laser_Normal;
-}
-
-void Player_Laser_Normal::addDeathAnimation()
-{
-	Entity::addDeathAnimation();
 }

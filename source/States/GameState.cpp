@@ -24,8 +24,12 @@ GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 		PushToObject(PlayerBullets_Standard, this);
 		PushToObject(PlayerBullets_Detroyer, this);
 
-		PBplayerHealth = new ProgressBar({ 10,WINDOW_SIZE.y - 20 }, Vector2f(WINDOW_SIZE.x - 20, 20), Colors::green, Colors::grey, "HP", player->HitPoints, PlayerMaxHP);
+		PBplayerHealth = new ProgressBar({ 10,WINDOW_SIZE.y - 20 }, Vector2f(WINDOW_SIZE.x - 20, 20), Colors::green, Colors::grey, "HP", player->HitPoints, player->HitPointsMax);
 		PushToObject(PBplayerHealth, this);
+
+		//PBplayerSpecial = new ProgressBar({ 10,WINDOW_SIZE.y - 50 }, Vector2f(WINDOW_SIZE.x/3, 10), Colors::yellow, Colors::grey, "SP", player->specialFrameID, player->specialFrameIDMax);
+		PBplayerSpecial = new ProgressBar({ 10,WINDOW_SIZE.y - 35 }, Vector2f(WINDOW_SIZE.x / 3, 15), Colors::yellow, Colors::grey, "SP", player->specialFrameID, player->specialFrameIDMax);
+		PushToObject(PBplayerSpecial, this);
 
 		levelReader.ReadLevel(CurrentLevel);
 
@@ -142,10 +146,12 @@ void GameState::readAttackQueue()
 
 		case 1:
 		{	PlayerBullets_Standard->addBullet(BulletType_Player_Laser_Normal, player->getPosition() + Vector2f(0, 10));}
+		break;		
+
+		case 2: 
+		{	PlayerBullets_Standard->addBullet(BulletType_Player_Minigun, player->getPosition() - Vector2f(0, 30));	}
 		break;
-		
-		}
-		
+		}	
 		player->resetGun();
 	}
 

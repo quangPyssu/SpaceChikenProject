@@ -13,18 +13,13 @@ Player_Bullet_Normal::Player_Bullet_Normal(Vector2f StartPosition) : Bullet(Star
 	Vector2f size = { animations.back()->getSize().y,animations.back()->getSize().x };
 	setHitBox(size*0.8);
 
-	playSound("(laser).ogg");
+	playSpawnSound("(laser).ogg");
 
 	isBulletDestructible = true;
 	Damage = 20;
 
-	Velocity = { 0, -400 };
-	Acceleration = { 0,-25 };
+	Velocity = Vector2f( 0, -300 * SCALE);
+	Acceleration = Vector2f( 0,SCALE*(- 15));
 
 	type = BulletType_Player_Normal;
-}
-
-void Player_Bullet_Normal::addDeathAnimation()
-{
-	Entity::addDeathAnimation();
 }

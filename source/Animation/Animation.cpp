@@ -18,7 +18,8 @@ Animation::Animation(unsigned short animationSpeed, unsigned short widthCnt, uns
 	sprite.setTexture(texture);
 
 	setScale(Vector2f( Scale,Scale ));
-	sprite.setPosition(Position);
+	if (Position != Vector2f(0, 0)) setPosition(Position);
+	else setPosition(Vector2f(-300,-300));
 
 	sprite.setOrigin(Vector2f(Origin.x*Width,Origin.y*Height));
 
@@ -84,6 +85,7 @@ bool Animation::isAnimationFinished()
 
 void Animation::setPosition(Vector2f pos)
 {
+	Transformable::setPosition(pos);
 	sprite.setPosition(pos);
 }
 

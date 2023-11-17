@@ -156,6 +156,18 @@
     <ClCompile Include="source\Entiy\Bullets\Player_Ram_Destroyer.cpp">
       <Filter>Entity\Bullets</Filter>
     </ClCompile>
+    <ClCompile Include="source\Entiy\Bullets\Player_Bullet_Minigun.cpp">
+      <Filter>Entity\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Bullets\Enemy_Laser_Flash.cpp">
+      <Filter>Entity\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Enemies\UFO.cpp">
+      <Filter>Entity\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Bullets\Enemy_Bullet_Purple.cpp">
+      <Filter>Entity\Bullets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SceneNode.h">

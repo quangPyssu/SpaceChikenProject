@@ -1,9 +1,10 @@
 #pragma once
 #include "Entity.h"
 
-enum BulletType { BulletType_Enemy_Egg, BulletType_Astroid, BulletType_Player_Normal, 
-	BulletType_Player_Laser_Normal, BulletType_Player_Laser_Destroyer,
-	BulletType_Player_Ram_Destroyer
+enum BulletType { BulletType_Enemy_Egg, BulletType_Astroid, BulletType_Enemy_Laser, BulletType_Enemy_Purple,
+	
+	BulletType_Player_Normal, BulletType_Player_Minigun,
+	BulletType_Player_Laser_Normal, BulletType_Player_Laser_Destroyer,BulletType_Player_Ram_Destroyer
 };
 
 class Bullet : public Entity
@@ -31,8 +32,14 @@ public:
 	Player_Bullet_Normal(sf::Vector2f StartPosition);
 
 	//void takeTimeCurrent() override;
+};
 
-	void addDeathAnimation() override;
+class Player_Bullet_Minigun : public Bullet
+{
+	public:
+	Player_Bullet_Minigun(sf::Vector2f StartPosition);
+
+	//void takeTimeCurrent() override;
 };
 
 class Player_Laser_Normal : public Bullet
@@ -41,8 +48,6 @@ class Player_Laser_Normal : public Bullet
 	Player_Laser_Normal(sf::Vector2f StartPosition);
 
 	//void takeTimeCurrent() override;
-
-	void addDeathAnimation() override;
 };
 
 class Player_Laser_Destroyer : public Bullet
@@ -51,8 +56,6 @@ class Player_Laser_Destroyer : public Bullet
 	Player_Laser_Destroyer(sf::Vector2f StartPosition);
 
 	//void takeTimeCurrent() override;
-
-	void addDeathAnimation() override;
 };
 
 class Player_Ram_Destroyer : public Bullet
@@ -61,8 +64,6 @@ class Player_Ram_Destroyer : public Bullet
 	Player_Ram_Destroyer(sf::Vector2f StartPosition);
 
 	//void takeTimeCurrent() override;
-
-	void addDeathAnimation() override;
 };
 
 class Enemy_Bullet_Egg : public Bullet
@@ -71,8 +72,22 @@ class Enemy_Bullet_Egg : public Bullet
 	Enemy_Bullet_Egg(sf::Vector2f StartPosition);
 
 	//void takeTimeCurrent() override;
+};
 
-	void addDeathAnimation() override;
+class Enemy_Laser_Flash : public Bullet
+{
+	public:
+		Enemy_Laser_Flash(sf::Vector2f StartPosition);
+
+	//void takeTimeCurrent() override;
+};
+
+class Enemy_Bullet_Purple : public Bullet
+{
+	public:
+	Enemy_Bullet_Purple(sf::Vector2f StartPosition);
+
+	//void takeTimeCurrent() override;
 };
 
 class Astroid : public Bullet

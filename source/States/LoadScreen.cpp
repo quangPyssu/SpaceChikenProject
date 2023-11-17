@@ -85,16 +85,21 @@ LoadScreen::LoadScreen(State& parentState)
 		ResourceManager::getTexture("Explosion.png");
 		textureList_Enemy.push_back({ "ChickenBody.png","ChickenFace.png","egg.png" });
 		textureList_Enemy.push_back({ "ChickenBody.png","BossChickenBody.png","BossChickenBody2.png","BossChickenBody3.png","egg.png" });
+		textureList_Enemy.push_back({ "UFO.png","UFO_Bullet.png" });
 
 		soundList_Enemy.push_back({ "chicken1a(die).ogg","chicken2b(die).ogg","chicken3a(die).ogg" });
 		soundList_Enemy.push_back({ "(chickbossCry).ogg","(chickbossDie).ogg" });
+		soundList_Enemy.push_back({  });
 
 
 		textureList_Bullet.push_back({ "egg.png" });
-		textureList_Bullet.push_back({ "Astroid_0.png", "Astroid_1.png" ,"Astroid_2.png","BlueBurn.png" });
+		textureList_Bullet.push_back({ "Astroid.png" });
+		textureList_Bullet.push_back({ "QuicklyBeam.png" });
+		textureList_Bullet.push_back({ "UFO_Bullet.png" });
 
 		soundList_Bullet.push_back({  });
 		soundList_Bullet.push_back({ "rock_0.ogg","rock_1.ogg" });
+		soundList_Bullet.push_back({ "laserSmall.ogg" });
 
 
 		textureList_Player.push_back({ "Bullet.png","QuicklyBeam.png" });
@@ -234,6 +239,13 @@ void LoadScreen::loadPlayer()
 			SoundBuffer sound = ResourceManager::getSoundBuffer("laserSmall.ogg");
 		}		
 			break;
+
+		case 2:
+		{
+			Texture texture = ResourceManager::getTexture("microgun-bullet.png");
+			SoundBuffer sound = ResourceManager::getSoundBuffer("(defaultweapon).ogg");
+		}	
+		break;
 	}
 
 	switch (CurrentSpecial)

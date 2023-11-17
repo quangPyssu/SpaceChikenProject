@@ -25,7 +25,7 @@ Player_Laser_Destroyer::Player_Laser_Destroyer(Vector2f StartPosition) : Bullet(
 	hitbox.setSize(size*Vector2f(1,1));
 	hitbox.setOrigin(hitbox.getSize().x / 2, hitbox.getSize().y);
 		
-	playSound("MasterSpark.ogg"); 
+	playSpawnSound("MasterSpark.ogg"); 
 	setTimer(10, 380);
 
 	isBulletDestructible = false;
@@ -35,9 +35,4 @@ Player_Laser_Destroyer::Player_Laser_Destroyer(Vector2f StartPosition) : Bullet(
 	Acceleration = { 0,0 };
 
 	type = BulletType_Player_Laser_Destroyer;
-}
-
-void Player_Laser_Destroyer::addDeathAnimation()
-{
-	Entity::addDeathAnimation();
 }

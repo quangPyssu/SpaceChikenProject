@@ -2,7 +2,7 @@
 #include "Entity.h"
 #include "BulletPattern.h"
 
-enum EnemyType { EnemyType_Chicken_1, EnemyType_Boss_Chicken_1 };
+enum EnemyType { EnemyType_Chicken_1, EnemyType_Boss_Chicken_1,EnemyType_UFO };
 
 class Enemy : public Entity
 {
@@ -67,6 +67,20 @@ private:
 
 	void addDeathAnimation() override;
 	void attack() override;
+};
+
+class UFO : public Enemy
+{	
+	public:
+	UFO(Vector2f StartPosition);
+	//void takeTimeCurrent() override;
+
+private:
+	void atHalfHealth() override;
+	void atQuarterHealth() override;
+	void addDeathAnimation() override;
+	void attack() override;
+
 };
 
 

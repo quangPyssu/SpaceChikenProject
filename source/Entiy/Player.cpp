@@ -30,7 +30,7 @@ Player::Player()
 		sprites.back()->setOrigin({ 0.5, 0.5 });
 	}
 
-	HitPoints = HitPointsMax = 10;
+	HitPoints = HitPointsMax = PlayerMaxHP;
 
 	sf::Mouse::setPosition(Vector2i(WINDOW_SIZE.x/2,WINDOW_SIZE.y*2/3));
 	setPosition(WINDOW_SIZE);

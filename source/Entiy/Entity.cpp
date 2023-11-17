@@ -24,19 +24,35 @@ void Entity::takeTimeCurrent()
 		}
 	}
 
+	if (isFirstTime)
+	{
+		isFirstTime = false;
+		//play spawn sound
+		for (int i = 0; i < sounds.size(); i++)	if (sounds[i]->getStatus()!=sf::Sound::Playing) 
+			sounds[i]->play();
+	}
+
 	switch (CurrentEnityState)
 	{
 		case EntityState::Alive:
+
+			Velocity += sf::Vector2f(Acceleration.x * TIME_PER_FRAME.asSeconds(), Acceleration.y * TIME_PER_FRAME.asSeconds());
 
 			if (RootPos)
 			{
 				setPosition(*RootPos + Divation);
 			}
-			else
+			else setPosition(getPosition() + sf::Vector2f(Velocity.x * TIME_PER_FRAME.asSeconds(), Velocity.y * TIME_PER_FRAME.asSeconds()));
+
+			if (isGoingToPos)
 			{
-				Velocity += sf::Vector2f(Acceleration.x * TIME_PER_FRAME.asSeconds(), Acceleration.y * TIME_PER_FRAME.asSeconds());
-				setPosition(getPosition() + sf::Vector2f(Velocity.x * TIME_PER_FRAME.asSeconds(), Velocity.y * TIME_PER_FRAME.asSeconds()));
-			}
+				if (abs(getPosition().x - CurrentDestination.x) < (float) 51 && abs(getPosition().y - CurrentDestination.y) < (float)51)
+				{
+					isGoingToPos = false;
+					Velocity = VelocitySave;
+					Acceleration = AccelerationSave;
+				}
+			} 			
 
 			if (rotationDependent)	setRotation(baseRotation + Parent->getRotation() + RotationDivation);
 
@@ -83,6 +99,16 @@ void Entity::CleanDeadAssets()
 void Entity::setVelocity(sf::Vector2f velocity)
 {
 	Velocity = velocity;
+}
+
+void Entity::gotoPosition(sf::Vector2f Position, float speed)
+{
+	isGoingToPos = true;
+	VelocitySave = Velocity;
+	AccelerationSave = Acceleration;
+	Velocity = velocityToB(speed, Position);
+	Acceleration = { 0,0 };
+	CurrentDestination = Position;
 }
 
 Entity::damageEvent Entity::takeDamage(int damage)
@@ -172,6 +198,13 @@ void Entity::playSound(string soundName)
 	sounds.back()->setBuffer(ResourceManager::getSoundBuffer(soundName));
 	sounds.back()->setVolume((float) soundVolume * masterVolume / 100);
 	sounds.back()->play();
+}
+
+void Entity::playSpawnSound(string soundName)
+{
+	sounds.push_back(new Sound);
+	sounds.back()->setBuffer(ResourceManager::getSoundBuffer(soundName));
+	sounds.back()->setVolume((float) soundVolume * masterVolume / 100);
 }
 
 void Entity::setTimer(int timerStart,int timerEnd)

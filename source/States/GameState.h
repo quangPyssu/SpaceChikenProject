@@ -57,6 +57,7 @@ private:
 
     // UI
     ProgressBar* PBplayerHealth;
+    ProgressBar* PBplayerSpecial;
     //ProgressBar* PBbossHealth;
 
    // WarningZone* warningZone;

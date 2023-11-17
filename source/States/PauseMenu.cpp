@@ -8,7 +8,10 @@ PauseMenu::PauseMenu(State& parentState)
 	btnPlay = new Button(sf::Vector2f(200, 100), sf::Vector2f(300, 100), "Resume");
 	btnPlay->PushToObject(btnPlay, this);
 
-	btnExit = new Button(sf::Vector2f(200, 225), sf::Vector2f(200, 100), "Quit");
+	btnSetting = new Button(sf::Vector2f(200, 225), sf::Vector2f(250, 100), "Setting");
+	btnSetting->PushToObject(btnSetting, this);
+
+	btnExit = new Button(sf::Vector2f(200, 350), sf::Vector2f(200, 100), "Quit");
 	btnExit->PushToObject(btnExit, this);
 
 	invisibleWall = new RectangleShape(WINDOW_SIZE);
@@ -42,4 +45,9 @@ void PauseMenu::updateCurrent(Event& event, Vector2f& MousePos)
 			parentState->parentState->CurrentState = States::KillMe;
 			parentState->parentState->parentState->CurrentState = States::None;
 		}
+		else
+			if (btnSetting->isLeftClicked(event, MousePos))
+			{
+				CurrentState = States::Setting;
+			}
 }
