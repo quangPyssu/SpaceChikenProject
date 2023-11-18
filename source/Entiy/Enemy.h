@@ -2,7 +2,7 @@
 #include "Entity.h"
 #include "BulletPattern.h"
 
-enum EnemyType { EnemyType_Chicken_1, EnemyType_Boss_Chicken_1,EnemyType_UFO };
+enum EnemyType { EnemyType_Chicken_1, EnemyType_Boss_Chicken_1,EnemyType_UFO, EnemyType_SpaceShip};
 
 class Enemy : public Entity
 {
@@ -10,6 +10,7 @@ class Enemy : public Entity
 	Enemy(Vector2f StartPosition);
 
 	void takeTimeCurrent() override;
+	virtual void additionalBehavior() {};
 	bool isFiring = false;
 	int attackType = 0;
 	int attackTypeMax = 0;
@@ -81,6 +82,24 @@ private:
 	void addDeathAnimation() override;
 	void attack() override;
 
+};
+
+class SpaceShip : public Enemy
+{
+	public:
+	SpaceShip(Vector2f StartPosition);
+	//void takeTimeCurrent() override;
+
+	private:
+		void atThreeQuarterHealth() override;
+		void atHalfHealth() override;
+		void atQuarterHealth() override;
+		void addDeathAnimation() override;
+		void attack() override;
+
+		void additionalBehavior() override;
+
+		bool isRamming = false;
 };
 
 

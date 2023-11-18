@@ -25,7 +25,6 @@ GameOverScreen::GameOverScreen(State& parentState)
 
 GameOverScreen::~GameOverScreen()
 {
-	ResourceManager::unloadTexture("Blue_Background.png");
 
 }
 

@@ -95,7 +95,7 @@ void Player::takeTimeCurrent()
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{
-		if (specialFrameID == specialFrameIDMax)
+		if (specialFrameID == specialFrameIDMax && SpecialUnlocked[CurrentSpecial].ff)
 		{
 			specialFrameID = 0;
 			isSpecialing = true;

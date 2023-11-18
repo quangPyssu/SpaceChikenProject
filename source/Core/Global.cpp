@@ -41,12 +41,12 @@ namespace Constants {
     std::string GameMusicTrack[5][2] = { 
         {"Assets/Sounds/Music/lullaby_deserted_hell.ogg", "Assets/Sounds/Music/BeOfGoodCheer.ogg",},
         {"Assets/Sounds/Music/JinzoLament.ogg","Assets/Sounds/Music/magicJinzoStraw.ogg",},
-		{"Assets/Sounds/Music/Track5.ogg", "Assets/Sounds/Music/Necrofantasia.ogg",},
-		{"Assets/Sounds/Music/Track7.ogg", "Assets/Sounds/Music/Track8.ogg",},
+		{"Assets/Sounds/Music/RetributionNight.ogg", "Assets/Sounds/Music/LoveMasterSpark.ogg",},
+		{"Assets/Sounds/Music/WhoDoneIt.ogg", "Assets/Sounds/Music/Necrofantasia.ogg",},
 		{"Assets/Sounds/Music/TheSeaOneHomePlanet.ogg", "Assets/Sounds/Music/PureFurries.ogg",} 
         };
 
-    int GameMusicOffset[5][2] = { {0,12},{0,0},{0,48},{0,0},{54,0} };
+    int GameMusicOffset[5][2] = { {0,12},{0,0},{38,0},{0,48},{54,0} };
 
     std::string MenuMusicTrack = "Assets/Sounds/Music/space_maiden_appear.ogg";   
 

@@ -12,29 +12,16 @@ void StateSteak::CreateState(States::ID &stateID)
 {
 	switch (stateID)
 	{
-	case States::None:
-	{
-		return;
-	}
-	break;
+	case States::None:	{		return;	}	break;
 
 	case States::Main:
-	{
-		Stack.push_back(Dummy.makeUnique(new MainMenu()));
-	}
-	break;
+	{		Stack.push_back(Dummy.makeUnique(new MainMenu()));	}	break;
 
 	case States::NewGame:
-	{
-		Stack.push_back(Dummy.makeUnique(new GameState(*Stack.back(), *window)));
-	}
-	break;
+	{		Stack.push_back(Dummy.makeUnique(new GameState(*Stack.back(), *window)));	}	break;
 
 	case States::GameOver:
-	{
-		Stack.push_back(Dummy.makeUnique(new GameOverScreen(*Stack.back())));
-	}
-	break;
+	{		Stack.push_back(Dummy.makeUnique(new GameOverScreen(*Stack.back())));	}	break;
 
 	case States::KillMe:
 	{
@@ -42,27 +29,23 @@ void StateSteak::CreateState(States::ID &stateID)
 		{
 			Stack.pop_back();
 		}
+
+		if (!Stack.empty()) CreateState(Stack.back()->CurrentState);
 		break;
 	}
 	break;
 
 	case States::Pause:
-	{
-		Stack.push_back(Dummy.makeUnique(new PauseMenu(*Stack.back())));
-	}
-	break;
+	{		Stack.push_back(Dummy.makeUnique(new PauseMenu(*Stack.back())));	}	break;
 
-	case States::Load:
-	{
-		Stack.push_back(Dummy.makeUnique(new LoadScreen(*Stack.back())));
-	}
-	break;
+	case States::Load:	
+	{		Stack.push_back(Dummy.makeUnique(new LoadScreen(*Stack.back())));	}	break;
 
 	case States::Setting:
-	{
-		Stack.push_back(Dummy.makeUnique(new SettingMenu(*Stack.back())));
-	}
-	break;
+	{		Stack.push_back(Dummy.makeUnique(new SettingMenu(*Stack.back())));	}	break;
+
+	case States::LevelComplete:
+	{		Stack.push_back(Dummy.makeUnique(new PostGameMenu(*Stack.back())));	}	break;
 
 	/*case States::HighScore:
 		return new HighScore;

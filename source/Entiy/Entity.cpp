@@ -94,6 +94,17 @@ void Entity::CleanDeadAssets()
 			sounds.erase(sounds.begin() + i);
 			i--;
 		}
+
+	if (CurrentEnityState == Dying)
+	{
+		for (int i = 0; i < sounds.size(); i++)
+		if (sounds[i]->getLoop())
+		{
+			delete sounds[i];
+			sounds.erase(sounds.begin() + i);
+			i--;
+		}
+	}
 }
 
 void Entity::setVelocity(sf::Vector2f velocity)
@@ -119,6 +130,13 @@ Entity::damageEvent Entity::takeDamage(int damage)
 
 		damageEvent tmp = Entity::damageEvent::TakeDamage;
 
+		//at three quarter health
+		if (HitPoints > HitPointsMax * 3 / 4 && HitPoints - damage <= HitPointsMax * 3 / 4)
+		{
+			tmp = damageEvent::ThreeQuarterHealth;
+			atThreeQuarterHealth();
+		}
+		else
 		if (HitPoints > HitPointsMax / 2 && HitPoints - damage <= HitPointsMax / 2)
 		{
 			tmp = damageEvent::HalfHealth;

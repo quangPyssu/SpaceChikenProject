@@ -79,7 +79,7 @@ protected:
 
 protected:
 
-    enum damageEvent { NoDamage = 0, TakeDamage = 1, HalfHealth = 2, QuarterHealth = 3 };
+    enum damageEvent { NoDamage = 0, TakeDamage = 1, HalfHealth = 2, QuarterHealth = 3,ThreeQuarterHealth=4 };
 
     int HitPoints = 1;
     int HitPointsMax = 1;
@@ -91,6 +91,7 @@ protected:
     bool isInvincibleWhenFlicker = false;
 
     damageEvent takeDamage(int damage);
+    virtual void atThreeQuarterHealth() {};
     virtual void atHalfHealth() {};
     virtual void atQuarterHealth() {};
 

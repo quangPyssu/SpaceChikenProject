@@ -81,8 +81,7 @@ void GameState::takeTimeCurrent()
 	
 	if (levelReader.isLevelFinished()) // Level Complete
 	{
-		CurrentState = States::GameOver;
-		//CurrentState = States::LevelComplete;
+		CurrentState = States::LevelComplete;
 		window->setMouseCursorVisible(true);
 		return;
 	}

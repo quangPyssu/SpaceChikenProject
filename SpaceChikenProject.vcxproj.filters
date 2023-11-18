@@ -168,6 +168,12 @@
     <ClCompile Include="source\Entiy\Bullets\Enemy_Bullet_Purple.cpp">
       <Filter>Entity\Bullets</Filter>
     </ClCompile>
+    <ClCompile Include="source\States\PostGameMenu.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Enemies\SpaceShip.cpp">
+      <Filter>Entity\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SceneNode.h">
@@ -255,6 +261,9 @@
       <Filter>Tools\Interface</Filter>
     </ClInclude>
     <ClInclude Include="source\States\SettingMenu.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="source\States\PostGameMenu.h">
       <Filter>States</Filter>
     </ClInclude>
   </ItemGroup>

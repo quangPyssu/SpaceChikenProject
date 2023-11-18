@@ -24,6 +24,8 @@ void Enemy::takeTimeCurrent()
 		reloadFrameID++;
 		isFiring = false;
 	}
+
+	additionalBehavior();
 }
 
 void Enemy::setBulletManager(BulletManager*& EnimesBullets, BulletManager*& EnimesBullets_Vulnerable)
@@ -51,6 +53,10 @@ Enemy* EnemyFactory::createEnemy(EnemyType type, Vector2f StartPosition)
 	case EnemyType_UFO:
 		return new UFO(StartPosition);
 		break;
+	case EnemyType_SpaceShip:
+		return new SpaceShip(StartPosition);
+		break;
+
 	default:
 		break;
 	}

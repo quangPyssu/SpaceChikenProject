@@ -27,25 +27,7 @@ App::App()
 	OutScopeX = { -300 * SCALE,WINDOW_SIZE.x * SCALE };
 	OutScopeY = { -300 * SCALE,WINDOW_SIZE.y * SCALE };
 
-	state_stk = new StateSteak(*window);
-
-	std::ifstream fin("Data/Current.inp");
-
-	fin >> Constants::CurrentLevel >> Constants::CurrentWave;
-
-	for (int i = 0; i < Constants::weaponMax; i++) fin >> Constants::WeaponUnlocked[i].first;
-	for (int i = 0; i < Constants::specialMax; i++) fin >> Constants::SpecialUnlocked[i].first;
-
-	WeaponUnlocked[0].first = true;
-
-	fin.close();
-
-	//delete later	
-
-//  0 1 < -- Level, Wave
-//
-//	1 0  < -- bool for Weapon Unlocked  // basic is alway on so no reading
-// 	1 0 0  < -- bool for Special Unlocked
+	state_stk = new StateSteak(*window);	
 }
 
 App::~App()

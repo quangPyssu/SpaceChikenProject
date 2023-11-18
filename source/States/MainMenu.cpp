@@ -28,12 +28,14 @@ MainMenu::MainMenu()
 	btn_Quit = new Button(sf::Vector2f(200, 600), sf::Vector2f(200, 100), "Quit");
 	btn_Quit->PushToObject(btn_Quit, this);
 
-
 	playMusic(Constants::MenuMusicTrack, 0);
+
+	CurrentData::getData();
 }
 
 MainMenu::~MainMenu()
 {
+	CurrentData::writeData();
 }
 
 void MainMenu::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const

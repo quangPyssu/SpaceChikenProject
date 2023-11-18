@@ -71,3 +71,38 @@ void State::setMusicVolume()
 		music->setVolume((float) musicVolume*masterVolume/100);
 	}
 }
+
+std::ifstream CurrentData::fin;
+std::ofstream CurrentData::fout;
+
+void CurrentData::getData()
+{
+	fin.open("Data/Current.inp");
+	fin >> Constants::CurrentLevel;
+
+	for (int i = 0; i < Constants::weaponMax; i++) fin >> Constants::WeaponUnlocked[i].first;
+	for (int i = 0; i < Constants::specialMax; i++) fin >> Constants::SpecialUnlocked[i].first;
+
+	WeaponUnlocked[0].first = true;
+
+	fin.close();
+
+	//delete later	
+
+//  0 1 < -- Level, Wave
+//
+//	1 0  < -- bool for Weapon Unlocked  // basic is alway on so no reading
+// 	1 0 0  < -- bool for Special Unlocked
+}
+
+void CurrentData::writeData()
+{
+	fout.open("Data/Current.inp");
+	fout.clear();
+	fout << Constants::CurrentLevel << endl;
+
+	for (int i = 0; i < Constants::weaponMax; i++) fout << Constants::WeaponUnlocked[i].first << " ";	fout << endl;
+	for (int i = 0; i < Constants::specialMax; i++) fout << Constants::SpecialUnlocked[i].first << " ";	fout << endl;
+
+	fout.close();
+}
