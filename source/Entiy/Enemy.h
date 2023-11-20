@@ -99,7 +99,12 @@ class SpaceShip : public Enemy
 
 		void additionalBehavior() override;
 
-		bool isRamming = false;
+		void addSpaceShipBullet(bool isRotated);
+
+		void ramming();
+
+		int isRamming = 0;
+		int RammingSpeed = 300;
 };
 
 

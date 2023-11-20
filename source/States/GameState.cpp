@@ -5,11 +5,12 @@ GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 	this->parentState = &parentState;
 	textureBack = ResourceManager::getTexture("Blue_Blank_Background.png");
 
-	BGHeight = textureBack.getSize().y;
+	BGHeight = textureBack.getSize().y/0.947;
 
 	backgroundSprite.setTexture(textureBack);
-	backgroundSprite.setScale(getScale::getScaleMax(sf::Vector2f(backgroundSprite.getTextureRect().width, backgroundSprite.getTextureRect().height), Constants::WINDOW_SIZE));
-	backgroundSprite.setPosition(0.0f, WINDOW_SIZE.y - BGHeight * SCALE);
+	backgroundSprite.setScale(getScale::getScaleMax(sf::Vector2f(backgroundSprite.getTextureRect().width*0.9, 
+		backgroundSprite.getTextureRect().height), Constants::WINDOW_SIZE));
+	backgroundSprite.setPosition(SCALE*(- 10), WINDOW_SIZE.y - BGHeight * SCALE);
 
 	{
 		player = new Player();
@@ -39,6 +40,7 @@ GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 	}
 
 	window.setMouseCursorVisible(false);
+	originalView = window.getView();
 
 	playMusic(Constants::GameMusicTrack[CurrentLevel][0], Constants::GameMusicOffset[CurrentLevel][0]);
 }
@@ -112,6 +114,13 @@ void GameState::takeTimeCurrent()
 
 	BGLoop();
 
+	if (ShakeDuration > 0)
+	{
+		ShakeDuration--;
+		window->setView(shakeView(10));
+	}
+	else window->setView(originalView);
+
 	// Clean up the dead Enemy patterns	& subTitles
 
 	for (int i = 0; i < EnemyPatternList.size(); i++)
@@ -176,6 +185,9 @@ void GameState::readAttackQueue()
 			PlayerBullets_Detroyer->addBullet(BulletType_Player_Laser_Destroyer, player->getPosition() + Vector2f(0, 10));
 			player->resetSpecial();
 			player->makeSuperFlicker(100);
+
+			//shake the screen
+			ShakeDuration = 350;
 		}
 		break;
 
@@ -263,5 +275,5 @@ bool GameState::isWaveEmpty()
 void GameState::BGLoop()
 {
 	backgroundSprite.move(0.0f, scrollSpeed * TIME_PER_FRAME.asSeconds());
-	if (backgroundSprite.getPosition().y >= 0) backgroundSprite.setPosition(0.0f, WINDOW_SIZE.y - BGHeight * SCALE);
+	if (backgroundSprite.getPosition().y >= 0) backgroundSprite.setPosition(SCALE * (-10) , WINDOW_SIZE.y - BGHeight * SCALE);
 }

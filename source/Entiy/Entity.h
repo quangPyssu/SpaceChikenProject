@@ -30,6 +30,8 @@ public:
 
     void setHitBox(Vector2f size);
 
+    void setHitPoints(int HitPoints){ this->HitPoints = HitPoints;  };
+
     void gotoPosition(Vector2f Position,float speed=100);
 
     EntityState CurrentEnityState = EntityState::Alive;

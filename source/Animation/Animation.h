@@ -7,7 +7,7 @@ class Animation : public SceneNode
 {
 private:
 	unsigned short animationFrameID;
-	//The higher the value, the slower the animation.
+	//The higher the value, the slower the animation
 	unsigned short animationSpeed;
 	unsigned short currentFrame=1;
 	//To make things easier, each image file will contain 1 animation. So that the frame heights are the same.

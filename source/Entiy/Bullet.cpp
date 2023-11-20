@@ -10,7 +10,11 @@ Bullet::Bullet(Vector2f StartPosition)
 void Bullet::takeTimeCurrent()
 {
 	Entity::takeTimeCurrent();
+}
 
+void Bullet::setDamage(int damage)
+{
+	Damage = damage;
 }
 
 Bullet* BulletFactory::createBullet(BulletType type, Vector2f StartPosition)
@@ -40,6 +44,9 @@ Bullet* BulletFactory::createBullet(BulletType type, Vector2f StartPosition)
 		break;
 	case BulletType::BulletType_Enemy_Purple:
 		return new Enemy_Bullet_Purple(StartPosition);
+		break;
+	case BulletType::BulletType_Enemy_Ram_Destroyer:
+		return new Enemy_Ram_Destroyer(StartPosition);
 		break;
 	case BulletType::BulletType_Astroid:
 		return new Astroid(StartPosition);

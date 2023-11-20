@@ -147,10 +147,13 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 			break;
 	}
 
-	setTimer(timerStart, timerEnd);
-
-	
+	setTimer(timerStart, timerEnd);	
 }
+
+BulletPattern::~BulletPattern()
+{
+}
+
 
 
 

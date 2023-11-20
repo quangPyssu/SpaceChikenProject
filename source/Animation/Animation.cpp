@@ -48,22 +48,22 @@ void Animation::takeTimeCurrent()
 		if (totalTime == 0) return;
 	}
 
-	animationFrameID++;
-	//cout << "Animation::updateCurrent " << animationFrameID << endl << " " << currentFrame << endl;
+		animationFrameID++;
 
-	while (animationFrameID >= animationSpeed)
-	{
-		animationFrameID -= animationSpeed;
-		currentFrame+=pingPongDirection;
-
-		if (isPingPong)
+		while (animationFrameID >= animationSpeed)
 		{
-			if (currentFrame == totalFrames) currentFrame--,pingPongDirection = -1;
-			else if (currentFrame == 0) pingPongDirection = 1;
+			animationFrameID -= animationSpeed;
+			currentFrame += pingPongDirection;
+
+			if (isPingPong)
+			{
+				if (currentFrame == totalFrames) currentFrame--, pingPongDirection = -1;
+				else if (currentFrame == 0) pingPongDirection = 1;
+			}
+			else
+				if (currentFrame == totalFrames) currentFrame = resetFrame;
 		}
-		else
-		if (currentFrame == totalFrames) currentFrame = resetFrame;
-	}
+	
 
 	currentFloor = currentFrame / FramePerFloor;
 

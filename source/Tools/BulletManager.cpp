@@ -12,6 +12,12 @@ BulletManager::~BulletManager()
 	BulletManagerList.clear();
 }
 
+void BulletManager::reverseBulletBackDirection()
+{
+	BulletList.back()->setVelocity(-BulletList.back()->getVelocity());
+	BulletList.back()->setRotation(BulletList.back()->getRotation() + 180);
+}
+
 void BulletManager::addBullet(BulletType type,sf::Vector2f position)
 {
 	Bullet* tmp = BulletFactory::createBullet(type, position);

@@ -18,6 +18,10 @@ class BulletManager : public SceneNode
 	void addTarget(BulletManager& target);
 	void removeTarget(Entity& target);
 
+	void reverseBulletBackDirection();
+	void setBulletBackDamage(float damage) { BulletList.back()->setDamage(damage); }
+	void setBulletBackVelocity(Vector2f velocity) { BulletList.back()->setVelocity(velocity); }
+	void setBulletBackTimerEnd(float timerEnd) { BulletList.back()->setTimer(BulletList.back()->timerStart,timerEnd); }
 	
 private:
 	std::vector<Bullet*> BulletList;

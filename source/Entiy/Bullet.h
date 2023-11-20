@@ -4,7 +4,9 @@
 enum BulletType { BulletType_Enemy_Egg, BulletType_Astroid, BulletType_Enemy_Laser, BulletType_Enemy_Purple,
 	
 	BulletType_Player_Normal, BulletType_Player_Minigun,
-	BulletType_Player_Laser_Normal, BulletType_Player_Laser_Destroyer,BulletType_Player_Ram_Destroyer
+	BulletType_Player_Laser_Normal, BulletType_Player_Laser_Destroyer,BulletType_Player_Ram_Destroyer,
+
+	BulletType_Enemy_Ram_Destroyer
 };
 
 class Bullet : public Entity
@@ -15,6 +17,8 @@ class Bullet : public Entity
 	void takeTimeCurrent() override;
 
 	BulletType type;
+
+	void setDamage(int damage);
 
 	bool isBulletDestructible = true;
 };
@@ -86,6 +90,14 @@ class Enemy_Bullet_Purple : public Bullet
 {
 	public:
 	Enemy_Bullet_Purple(sf::Vector2f StartPosition);
+
+	//void takeTimeCurrent() override;
+};
+
+class Enemy_Ram_Destroyer : public Bullet
+{
+	public:
+	Enemy_Ram_Destroyer(sf::Vector2f StartPosition);
 
 	//void takeTimeCurrent() override;
 };

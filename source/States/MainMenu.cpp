@@ -16,11 +16,11 @@ MainMenu::MainMenu()
 	animeNeutronStar = new Animation(20, 80, 1, 1, WINDOW_SIZE + Vector2f(-NeutronStarSize.x / 60 * SCALE,-WINDOW_SIZE.y+NeutronStarSize.y * 0.5 * SCALE),{0,0}, "NeutronStar.png");
 	animeNeutronStar->PushToObject(animeNeutronStar, this);	
 
-	btn_Continue = new Button(sf::Vector2f(200, 100), sf::Vector2f(300, 100), "Continue");
-	btn_Continue->PushToObject(btn_Continue, this);
-
 	btn_NewGame = new Button(sf::Vector2f(200, 225), sf::Vector2f(400, 100), "New Game");
 	btn_NewGame->PushToObject(btn_NewGame, this);
+
+	btn_Continue = new Button(sf::Vector2f(200, 350), sf::Vector2f(300, 100), "Continue");
+	btn_Continue->PushToObject(btn_Continue, this);
 
 	btn_Setting = new Button(sf::Vector2f(200, 475), sf::Vector2f(300, 100), "Settings");
 	btn_Setting->PushToObject(btn_Setting, this);
@@ -48,17 +48,21 @@ void MainMenu::updateCurrent(Event& event, Vector2f& MousePos)
 	if (btn_Quit->isLeftClicked(event,MousePos)) CurrentState = States::KillMe; else
 		if (btn_NewGame->isLeftClicked(event, MousePos))
 		{
+			CurrentLevel = 0;
+			CurrentData::writeData();
+			CurrentData::getData();
 			CurrentState = States::Load;
 		}
 		else
 			if (btn_Setting->isLeftClicked(event, MousePos)) CurrentState = States::Setting; else
 				if (btn_Continue->isLeftClicked(event, MousePos))
 				{
-					if (Constants::CurrentLevel == 0) CurrentState = States::Load; else
 					CurrentState = States::Load;
 				}
 }
 
 void MainMenu::takeTimeCurrent()
 {
+	if (CurrentLevel==0) btn_Continue->makeUnInteractable(); 
+	else btn_Continue->makeInteractable();
 }

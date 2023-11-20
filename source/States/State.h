@@ -50,8 +50,13 @@ protected:
 
 	int textureStackID;
 	int soundStackID;
+	
 
 	vector <SubTitle*> SubTitleList;
+
+	sf::View shakeView(float intensity);
+	float ShakeDuration = 0;
+	View originalView;
 };
 
 class CurrentData {

@@ -72,6 +72,12 @@ void State::setMusicVolume()
 	}
 }
 
+sf::View State::shakeView( float intensity) {
+	sf::View resultView = originalView;
+	resultView.move(std::rand() % static_cast<int>(intensity) - intensity / 2,	std::rand() % static_cast<int>(intensity) - intensity / 2);
+	return resultView;
+}
+
 std::ifstream CurrentData::fin;
 std::ofstream CurrentData::fout;
 

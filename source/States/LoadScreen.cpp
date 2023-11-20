@@ -86,12 +86,12 @@ LoadScreen::LoadScreen(State& parentState)
 		textureList_Enemy.push_back({ "ChickenBody.png","ChickenFace.png","egg.png" });
 		textureList_Enemy.push_back({ "ChickenBody.png","BossChickenBody.png","BossChickenBody2.png","BossChickenBody3.png","egg.png" });
 		textureList_Enemy.push_back({ "UFO.png","UFO_Bullet.png" });
-		textureList_Enemy.push_back({ "space_ship.png","exhaust.png","missle.png","Bullet.png"});
+		textureList_Enemy.push_back({ "space_ship.png","exhaust.png","missle.png","microgun-bullet.png"});
 
 		soundList_Enemy.push_back({ "chicken1a(die).ogg","chicken2b(die).ogg","chicken3a(die).ogg" });
 		soundList_Enemy.push_back({ "(chickbossCry).ogg","(chickbossDie).ogg" });
 		soundList_Enemy.push_back({ "(buglezap).ogg","(ufoEngine).ogg","engineUfoDamaged.ogg"});
-		soundList_Enemy.push_back({  });
+		soundList_Enemy.push_back({ "(defaultweapon).ogg","(ufoEngine).ogg","engineUfoDamaged.ogg" });
 
 
 		textureList_Bullet.push_back({ "egg.png" });
@@ -102,6 +102,7 @@ LoadScreen::LoadScreen(State& parentState)
 		soundList_Bullet.push_back({  });
 		soundList_Bullet.push_back({ "rock_0.ogg","rock_1.ogg" });
 		soundList_Bullet.push_back({ "laserSmall.ogg" });
+
 
 
 		textureList_Player.push_back({ "Bullet.png","QuicklyBeam.png" });
