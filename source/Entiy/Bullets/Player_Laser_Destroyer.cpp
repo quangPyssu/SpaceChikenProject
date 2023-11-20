@@ -14,12 +14,11 @@ Player_Laser_Destroyer::Player_Laser_Destroyer(Vector2f StartPosition) : Bullet(
 	animations.back()->setResetFrame(5);
 	animations.back()->PushToObject(animations.back(), this);
 
-	animations.push_back(new Animation(14, 7, 1, 0.75, { 0,0 }, { -0.1,0.5 }, Vector2f(0, 0), "BigBeamBody.png"));
+	animations.push_back(new Animation(14, 7, 1, 0.75, { 0,0 }, { -0.09,0.5 }, Vector2f(0, 0), "BigBeamBody.png"));
 	animations.back()->setScale({ 50,0.75 });
 	animations.back()->setRotationDivation(270);
 	animations.back()->setResetFrame(5);
 	animations.back()->PushToObject(animations.back(), this);
-	animations.back()->setTransparency(1);
 
 	Vector2f size = { animations.back()->getSize().y,animations.back()->getSize().x };
 	hitbox.setSize(size*Vector2f(1,1));

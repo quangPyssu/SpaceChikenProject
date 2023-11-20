@@ -162,6 +162,7 @@
     <ClCompile Include="source\Entiy\Bullets\Astroid.cpp" />
     <ClCompile Include="source\Entiy\Bullets\Enemy_Bullet_Egg.cpp" />
     <ClCompile Include="source\Entiy\Bullets\Enemy_Bullet_Purple.cpp" />
+    <ClCompile Include="source\Entiy\Bullets\Enemy_Laser_Destroyer.cpp" />
     <ClCompile Include="source\Entiy\Bullets\Enemy_Laser_Flash.cpp" />
     <ClCompile Include="source\Entiy\Bullets\Enemy_Ram_Destroyer.cpp" />
     <ClCompile Include="source\Entiy\Bullets\Player_Bullet_Minigun.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="source\Entiy\Bullets\Player_Ram_Destroyer.cpp" />
     <ClCompile Include="source\Entiy\Enemies\Boss_Chicken_1.cpp" />
     <ClCompile Include="source\Entiy\Enemies\Enemy_Chicken_1.cpp" />
+    <ClCompile Include="source\Entiy\Enemies\Henterprise.cpp" />
     <ClCompile Include="source\Entiy\Enemies\SpaceShip.cpp" />
     <ClCompile Include="source\Entiy\Enemies\UFO.cpp" />
     <ClCompile Include="source\Entiy\Enemy.cpp" />

@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.h"
 
-enum BulletType { BulletType_Enemy_Egg, BulletType_Astroid, BulletType_Enemy_Laser, BulletType_Enemy_Purple,
+enum BulletType { BulletType_Enemy_Egg, BulletType_Astroid, BulletType_Enemy_Laser, BulletType_Enemy_Purple,BulletType_Enemy_Laser_Destroyer,
 	
 	BulletType_Player_Normal, BulletType_Player_Minigun,
 	BulletType_Player_Laser_Normal, BulletType_Player_Laser_Destroyer,BulletType_Player_Ram_Destroyer,
@@ -82,6 +82,14 @@ class Enemy_Laser_Flash : public Bullet
 {
 	public:
 		Enemy_Laser_Flash(sf::Vector2f StartPosition);
+
+	//void takeTimeCurrent() override;
+};
+
+class Enemy_Laser_Destroyer : public Bullet
+{
+	public:
+		Enemy_Laser_Destroyer(sf::Vector2f StartPosition);
 
 	//void takeTimeCurrent() override;
 };

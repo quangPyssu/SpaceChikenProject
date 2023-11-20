@@ -98,7 +98,9 @@ BulletPattern::BulletPattern(BulletType bulletType, PatternType patternType, Rot
 			setUpPattern(Square);
 
 			RectangleShape* shape = new RectangleShape();
-			shape->setSize(Vector2f(width/2, width/2));	shape->setPosition(Position);
+			if (widthCnt==1) shape->setSize(Vector2f(width,2)); else
+			shape->setSize(Vector2f(width/2, width/2));	
+			shape->setPosition(Position);
 			shape->setOutlineColor(Colors::yellow);	shape->setOutlineThickness(2);
 			shape->setRotation(getRotation());
 			shape->setFillColor(trans);			

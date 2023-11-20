@@ -30,6 +30,7 @@ public:
 
     void setHitBox(Vector2f size);
 
+    int getHitPoint() { return HitPoints; };
     void setHitPoints(int HitPoints){ this->HitPoints = HitPoints;  };
 
     void gotoPosition(Vector2f Position,float speed=100);

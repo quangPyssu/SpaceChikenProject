@@ -2,6 +2,7 @@
 #include "../Entiy/Bullet.h"
 #include "../Entiy/Player.h"
 #include "../Entiy/Enemy.h"
+#include "../Tools/SubTitle.h"
 #include "BulletManager.h"
 #include "../Entiy/BulletPattern.h"
 
@@ -18,13 +19,14 @@ public:
 	void takeTimeCurrent() override;
 
 	void addEnemy(EnemyType type);
+	void addEnemy(EnemyType type,Vector2f Position,Vector2f Velocity,Vector2f Acceleration,int timerEnd);
 	void removeEnemy(Entity& target); 
 	vector <Enemy*> enemy;
 
 	void addBulletPattern(BulletType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, bool Physics,
 		int total, float width, int widthCnt, int timerStart, int timerEnd,double thisScale);
 
-	void addBulletPattern(BulletPattern* bulletPattern,BulletType type);
+	void addBulletPattern(BulletPattern* bulletPattern);
 
 private:
 
@@ -41,6 +43,10 @@ private:
 	static vector <BulletPattern*> BulletPatternList;
 
 	vector <pair <BulletPattern*,int>> BulletPattern_Aim_For_Player; //
+
+	// the one that last update 
+	SubTitle* dummy=null;
+	
 
 	void fireBulletPattern();
 

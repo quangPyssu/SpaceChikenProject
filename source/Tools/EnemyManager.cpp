@@ -10,6 +10,8 @@ EnemyManager::EnemyManager(Player& player, BulletManager& PlayerBullets_Standard
 
 	this->EnimesBullets = new BulletManager(player);
 	this->EnimesBullets_Vulnerable = new BulletManager(player);
+	dummy = new SubTitle({ 0,0 }, Vector2f(-300, -300), trans, { 0.2,0.4 }, 0, trans, "", "neuro", -1);
+	PushToObject(dummy, this);
 
 	PushToObject(EnimesBullets, this);
 	PushToObject(EnimesBullets_Vulnerable, this);
@@ -21,13 +23,15 @@ EnemyManager::EnemyManager(Player& player, BulletManager& PlayerBullets_Standard
 	PlayerBullets_Detroyer.addTarget(*EnimesBullets);
 	PlayerBullets_Detroyer.addTarget(*EnimesBullets_Vulnerable);
 	PlayerBullets_Standard.addTarget(*EnimesBullets_Vulnerable);
+
+	
 }
 
 EnemyManager::~EnemyManager()
 {
 	for (int i = 0; i < enemy.size(); i++) if (enemy[i] != nullptr) 
 	{
-		detachChild(*enemy[i]);
+		dummy->detachChild(*enemy[i]);
 	}
 	enemy.clear();
 
@@ -52,7 +56,16 @@ void EnemyManager::addEnemy(EnemyType type)
 	PlayerBullets_Standard->addTarget(*enemy.back());
 	PlayerBullets_Detroyer->addTarget(*enemy.back());
 
-	PushToObject(enemy.back(), this);
+	PushToObject(enemy.back(), dummy);
+}
+
+void EnemyManager::addEnemy(EnemyType type, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,int timerEnd)
+{
+	addEnemy(type);
+	enemy.back()->setPosition(Position*SCALE);
+	enemy.back()->setVelocity(Velocity*SCALE);
+	enemy.back()->setAcceleration(Acceleration*SCALE);
+	enemy.back()->setTimer(0, timerEnd);
 }
 
 void EnemyManager::removeEnemy(Entity& target)
@@ -75,7 +88,7 @@ void EnemyManager::takeTimeCurrent()
 		if (enemy[i]->CurrentEnityState == EntityState::Dead)
 		{
 			// Detach the child
-			detachChild(*enemy[i]);
+			dummy->detachChild(*enemy[i]);
 
 			PlayerBullets_Standard->removeTarget(*enemy[i]);
 			PlayerBullets_Detroyer->removeTarget(*enemy[i]);
@@ -86,19 +99,32 @@ void EnemyManager::takeTimeCurrent()
 		}
 		else if (enemy[i]->CurrentEnityState == EntityState::Alive && enemy[i]->isFiring)// Enemy Fire
 		{
-			switch (enemy[i]->type)
+			while (!enemy[i]->Enemy_BulletPattern_queue.empty())
 			{
-				case EnemyType_Boss_Chicken_1:
-				{
-					while (!enemy[i]->Enemy_BulletPattern_queue.empty())
-					{
-						addBulletPattern(enemy[i]->Enemy_BulletPattern_queue.front().ff, BulletType::BulletType_Enemy_Egg);
+				addBulletPattern(enemy[i]->Enemy_BulletPattern_queue.front().ff);
 
-						if (enemy[i]->Enemy_BulletPattern_queue.front().ss) BulletPattern_Aim_For_Player.push_back(enemy[i]->Enemy_BulletPattern_queue.front());
-						
-						enemy[i]->Enemy_BulletPattern_queue.pop();
+				if (enemy[i]->Enemy_BulletPattern_queue.front().ss) BulletPattern_Aim_For_Player.push_back(enemy[i]->Enemy_BulletPattern_queue.front());
+
+				enemy[i]->Enemy_BulletPattern_queue.pop();
+			}
+
+			if (enemy[i]->spawnRequest) // Enemy Spawn event
+			{
+				addEnemy(enemy[i]->SpawnType, enemy[i]->getPosition()*(1/SCALE)+Vector2f(0,100),Vector2f(50,0),Vector2f(0,0), -1);
+				enemy.back()->setHitPoints(enemy.back()->getHitPoint() / 2 + 10);
+				enemy[i]->spawnRequest = false;
+			}
+
+			switch (enemy[i]->type)	// Enemy spawn with cooldown
+			{
+				case EnemyType_Henterprise:
+				{
+					for (int j = 0; j < 2; j++)
+					{
+						addEnemy(EnemyType_Chicken_1, Vector2f(200+j*100, 1), Vector2f(0, 40), Vector2f(-8, -1), 1000);
+						addEnemy(EnemyType_Chicken_1, Vector2f(600-j*100, 1), Vector2f(0, 40), Vector2f(8, -1), 1000);
 					}
-				}
+				} break;
 			}
 
 			enemy[i]->resetGun();
@@ -140,13 +166,12 @@ void EnemyManager::addBulletPattern(BulletType type, PatternType patternType, Ro
 	PushToObject(BulletPatternList.back(), this);
 }
 
-void EnemyManager::addBulletPattern(BulletPattern* bulletPattern, BulletType type)
+void EnemyManager::addBulletPattern(BulletPattern* bulletPattern)
 {
 	BulletPatternList.push_back(bulletPattern);
 
 	PushToObject(BulletPatternList.back(), this);
 }
-
 
 void EnemyManager::fireBulletPattern()
 {

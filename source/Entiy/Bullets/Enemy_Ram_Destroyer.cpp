@@ -7,7 +7,7 @@ Enemy_Ram_Destroyer::Enemy_Ram_Destroyer(Vector2f StartPosition) : Bullet(StartP
 	hitbox.setOutlineThickness(1);
 
 	sprites.push_back(new SpriteOnly("exhaust.png", Vector2f(0, 0)));
-	sprites.back()->setOrigin({ 0.5,1 });
+	sprites.back()->setOrigin({ 0.5,1.2 });
 	sprites.back()->setScale(0.5);
 	sprites.back()->PushToObject(sprites.back(), this);
 

@@ -2,7 +2,7 @@
 #include "Entity.h"
 #include "BulletPattern.h"
 
-enum EnemyType { EnemyType_Chicken_1, EnemyType_Boss_Chicken_1,EnemyType_UFO, EnemyType_SpaceShip};
+enum EnemyType { EnemyType_Chicken_1, EnemyType_Boss_Chicken_1,EnemyType_UFO, EnemyType_SpaceShip, EnemyType_Henterprise };
 
 class Enemy : public Entity
 {
@@ -14,6 +14,7 @@ class Enemy : public Entity
 	bool isFiring = false;
 	int attackType = 0;
 	int attackTypeMax = 0;
+	bool spawnRequest = false;
 
 	void setBulletManager(BulletManager*& EnimesBullets, BulletManager*& EnimesBullets_Vulnerable);
 	void setPlayer(Player*& player) { this->player = player; };
@@ -28,6 +29,7 @@ protected:
 	virtual void attack() {};
 
 	EnemyType type;
+	EnemyType SpawnType= EnemyType_Chicken_1;
 	friend class EnemyManager;
 	
 	BulletManager* EnimesBullets=NULL;
@@ -36,6 +38,7 @@ protected:
 	WarningZone* warningZone=NULL;
 
 	queue <pair <BulletPattern*, int>> Enemy_BulletPattern_queue; //
+
 };
 
 class EnemyFactory
@@ -105,6 +108,25 @@ class SpaceShip : public Enemy
 
 		int isRamming = 0;
 		int RammingSpeed = 300;
+};
+
+class Henterprise : public Enemy
+{
+public:
+	Henterprise(Vector2f StartPosition);
+	//void takeTimeCurrent() override;
+
+private:
+	void atThreeQuarterHealth() override;
+	void atHalfHealth() override;
+	void atQuarterHealth() override;
+	void addDeathAnimation() override;
+	void attack() override;
+
+	void addExplosion(int cnt);
+
+	void additionalBehavior() override;
+
 };
 
 

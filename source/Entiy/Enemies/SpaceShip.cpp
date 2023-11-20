@@ -19,6 +19,7 @@ SpaceShip::SpaceShip(Vector2f StartPosition) : Enemy(StartPosition)
 	animations.back()->PushToObject(animations.back(), this);	
 
 	HitPoints = HitPointsMax = 2200;
+	if (CurrentLevel == 4) HitPoints = 1300;
 
 	Velocity = { 50,20 };
 	Acceleration = { 0,0 };
@@ -144,6 +145,7 @@ void SpaceShip::additionalBehavior()
 
 void SpaceShip::ramming()
 {
+	setPosition(Vector2f(player->getPosition().x, getPosition().y));
 	gotoPosition(Vector2f(player->getPosition().x, WINDOW_SIZE.y + 150 * SCALE), RammingSpeed*SCALE);
 	EnimesBullets->addBullet(BulletType_Enemy_Ram_Destroyer, getPosition() + Vector2f(0, 0));
 	EnimesBullets->setBulletBackVelocity(Vector2f( 0, RammingSpeed*SCALE ));
@@ -153,7 +155,7 @@ void SpaceShip::ramming()
 void SpaceShip::addSpaceShipBullet(bool isRotated)
 {
 	EnimesBullets->addBullet(BulletType::BulletType_Player_Minigun, getPosition());
-	EnimesBullets->setBulletBackDamage(25);
+	EnimesBullets->setBulletBackDamage(30);
 	
 	if (isRotated) EnimesBullets->reverseBulletBackDirection();
 }

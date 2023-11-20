@@ -42,6 +42,9 @@ Bullet* BulletFactory::createBullet(BulletType type, Vector2f StartPosition)
 	case BulletType::BulletType_Enemy_Laser:
 		return new Enemy_Laser_Flash(StartPosition);
 		break;
+	case BulletType::BulletType_Enemy_Laser_Destroyer:
+		return new Enemy_Laser_Destroyer(StartPosition);
+		break;
 	case BulletType::BulletType_Enemy_Purple:
 		return new Enemy_Bullet_Purple(StartPosition);
 		break;

@@ -56,6 +56,9 @@ Enemy* EnemyFactory::createEnemy(EnemyType type, Vector2f StartPosition)
 	case EnemyType_SpaceShip:
 		return new SpaceShip(StartPosition);
 		break;
+	case EnemyType_Henterprise:
+		return new Henterprise(StartPosition);
+		break;
 
 	default:
 		break;

@@ -308,7 +308,7 @@ void Pattern::setTimer(int timerStart, int timerEnd)
 {
 	Entity::setTimer(timerStart, timerEnd);
 
-	for (int i = 0; i < entityList.size(); i++) entityList[i]->setTimer(timerStart+1, timerEnd);
+	for (int i = 0; i < entityList.size(); i++) entityList[i]->setTimer(timerStart+2, timerEnd);
 }
 
 void Pattern::setVelocity(Vector2f Velocity)

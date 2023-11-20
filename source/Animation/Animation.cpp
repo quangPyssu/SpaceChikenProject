@@ -25,7 +25,6 @@ Animation::Animation(unsigned short animationSpeed, unsigned short widthCnt, uns
 
 	isRootSet = true;
 }
-
 Animation::Animation(unsigned short animationSpeed, unsigned short widthCnt, unsigned short floorCnt, double Scale, Vector2f Position, Vector2f Origin, Vector2f divation, const std::string& i_texture_location)
 	: Animation(animationSpeed, widthCnt, floorCnt, Scale, Position, Origin, i_texture_location)
 {
@@ -40,6 +39,34 @@ Animation::Animation(unsigned short animationSpeed, unsigned short widthCnt, uns
 	hasLimitedTime = true;
 }
 
+Animation::Animation(unsigned short animationSpeed, float FrameWidth, double Scale, Vector2f Position, Vector2f Origin, const std::string& i_texture_location)
+{
+	texture = ResourceManager::getTexture(i_texture_location);
+
+	this->animationSpeed = animationSpeed;	
+
+	totalWidth = texture.getSize().x;
+	Width = totalWidth*FrameWidth;
+	Height = texture.getSize().y;
+
+	totalFrames = 0;
+	FramePerFloor = 0;
+
+	sprite.setTexture(texture);
+
+	setScale(Vector2f(Scale, Scale));
+
+	if (Position != Vector2f(0, 0)) setPosition(Position);
+	else setPosition(Vector2f(-300, -300));
+
+	sprite.setOrigin(Vector2f(Origin.x*Width, Origin.y*Height));
+
+	isRootSet = false;
+
+	this->floorCnt = 1;
+}
+
+
 void Animation::takeTimeCurrent() 
 {
 	if (hasLimitedTime)
@@ -50,24 +77,36 @@ void Animation::takeTimeCurrent()
 
 		animationFrameID++;
 
-		while (animationFrameID >= animationSpeed)
+	//if totalFrames==0 then move sprite instead of frame change
+
+		if (totalFrames)
 		{
-			animationFrameID -= animationSpeed;
-			currentFrame += pingPongDirection;
-
-			if (isPingPong)
+			while (animationFrameID >= animationSpeed)
 			{
-				if (currentFrame == totalFrames) currentFrame--, pingPongDirection = -1;
-				else if (currentFrame == 0) pingPongDirection = 1;
+				animationFrameID -= animationSpeed;
+				currentFrame += pingPongDirection;
+
+				if (isPingPong)
+				{
+					if (currentFrame == totalFrames) currentFrame--, pingPongDirection = -1;
+					else if (currentFrame == 0) pingPongDirection = 1;
+				}
+				else if (currentFrame == totalFrames) currentFrame = resetFrame;
 			}
-			else
-				if (currentFrame == totalFrames) currentFrame = resetFrame;
+
+
+			currentFloor = currentFrame / FramePerFloor;
+
+			sprite.setTextureRect(sf::IntRect(currentFrame % FramePerFloor * Width, Height * currentFloor, Width, Height));
 		}
-	
+		else
+		{
+			animationFrameID = 0;
+			totalWidth -= animationSpeed;
+			if (totalWidth <= Width ) totalWidth = texture.getSize().x;
 
-	currentFloor = currentFrame / FramePerFloor;
-
-	sprite.setTextureRect(sf::IntRect(currentFrame%FramePerFloor * Width, Height*currentFloor, Width, Height));
+			sprite.setTextureRect(sf::IntRect(texture.getSize().x - totalWidth, 0, Width, Height));
+		}
 
 	if (!isRootSet)	setPosition(this->Parent->getPosition() + divation);
 

@@ -87,12 +87,14 @@ LoadScreen::LoadScreen(State& parentState)
 		textureList_Enemy.push_back({ "ChickenBody.png","BossChickenBody.png","BossChickenBody2.png","BossChickenBody3.png","egg.png" });
 		textureList_Enemy.push_back({ "UFO.png","UFO_Bullet.png" });
 		textureList_Enemy.push_back({ "space_ship.png","exhaust.png","missle.png","microgun-bullet.png"});
+		textureList_Enemy.push_back({ "henterprise.png","laserCannon.png","electroBeam5.png","ChickenBody.png","ChickenFace.png","egg.png"
+			,"BossChickenBody.png","BossChickenBody2.png","BossChickenBody3.png","UFO.png","UFO_Bullet.png" });
 
 		soundList_Enemy.push_back({ "chicken1a(die).ogg","chicken2b(die).ogg","chicken3a(die).ogg" });
 		soundList_Enemy.push_back({ "(chickbossCry).ogg","(chickbossDie).ogg" });
 		soundList_Enemy.push_back({ "(buglezap).ogg","(ufoEngine).ogg","engineUfoDamaged.ogg"});
 		soundList_Enemy.push_back({ "(defaultweapon).ogg","(ufoEngine).ogg","engineUfoDamaged.ogg" });
-
+		soundList_Enemy.push_back({ "MasterSpark.ogg" ,"laserSmall.ogg","(buglezap).ogg","(chickbossCry).ogg","(chickbossDie).ogg" });
 
 		textureList_Bullet.push_back({ "egg.png" });
 		textureList_Bullet.push_back({ "Astroid.png" });

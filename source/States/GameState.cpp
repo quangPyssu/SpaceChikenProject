@@ -48,6 +48,8 @@ GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 GameState::~GameState()
 {
 	window->setMouseCursorVisible(true);
+	//set normal view
+	window->setView(originalView);
 }
 
 void GameState::addEnemyPattern(EnemyType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,
