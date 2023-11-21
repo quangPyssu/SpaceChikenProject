@@ -68,5 +68,6 @@ private:
     //data
     float scrollSpeed = 25.0f;
     float BGHeight = 0.0f;
+    bool isBGScrolling = true;
 };
 

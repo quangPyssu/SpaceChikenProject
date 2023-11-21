@@ -183,6 +183,18 @@
     <ClCompile Include="source\Entiy\Bullets\Enemy_Laser_Destroyer.cpp">
       <Filter>Entity\Bullets</Filter>
     </ClCompile>
+    <ClCompile Include="source\Entiy\Enemies\Black_Hole.cpp">
+      <Filter>Entity\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Enemies\Semi_Vortex.cpp">
+      <Filter>Entity\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Enemies\Boss_Chicken_2.cpp">
+      <Filter>Entity\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Entiy\Enemies\Spiral_Vortex.cpp">
+      <Filter>Entity\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SceneNode.h">

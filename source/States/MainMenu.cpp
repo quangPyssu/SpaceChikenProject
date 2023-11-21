@@ -6,10 +6,9 @@ MainMenu::MainMenu()
 	backgroundSprite.setTexture(textureBack);
 	backgroundSprite.setScale(getScale::getScaleMax(sf::Vector2f(backgroundSprite.getTextureRect().width, backgroundSprite.getTextureRect().height), Constants::WINDOW_SIZE));
 
-	Vector2f PlanetTopSize = Vector2f(ResourceManager::getTexture("TerraTop.png").getSize());
 
-	animePlanetTop = new Animation(15, 60, 1, 1, WINDOW_SIZE + sf::Vector2f(-WINDOW_SIZE.x-20*SCALE, -PlanetTopSize.y*SCALE),{0,0}, "TerraTop.png");
-	animePlanetTop->PushToObject(animePlanetTop, this);
+	/*animePlanetTop = new Animation(15, 60, 1, 1.2, WINDOW_SIZE * 0.5, { 0,0 }, "Black_Hole.png");
+	animePlanetTop->PushToObject(animePlanetTop, this);*/
 
 	Vector2f NeutronStarSize = Vector2f(ResourceManager::getTexture("NeutronStar.png").getSize());
 

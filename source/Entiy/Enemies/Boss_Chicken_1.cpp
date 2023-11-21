@@ -11,6 +11,7 @@ Boss_Chicken_1::Boss_Chicken_1(Vector2f StartPosition) : Enemy(StartPosition)
 	animations.back()->PushToObject(animations.back(), this);
 
 	sprites.push_back(new SpriteOnly("BossChickenBody.png", Vector2f(0, 0)));
+	sprites.back()->setScale(0.55);
 	sprites.back()->setOrigin({ 0.5,0.68 });
 	sprites.back()->PushToObject(sprites.back(), this);
 
@@ -19,7 +20,7 @@ Boss_Chicken_1::Boss_Chicken_1(Vector2f StartPosition) : Enemy(StartPosition)
 	HitPoints = HitPointsMax = 2500;
 
 	ApplyPhysics();
-	Velocity = { 50,20 };
+	Velocity = { 50,0 };
 	Acceleration = { 0,-1 };
 
 	reloadFrameID = 420;
@@ -63,7 +64,7 @@ void Boss_Chicken_1::attack()
 		for (int j = 0; j < 3; j++)
 		{
 			BulletPattern* tmp = new BulletPattern(BulletType::BulletType_Enemy_Egg, PatternType::Circle, RotationType::Spin, *EnimesBullets,
-				getPosition(), { 0,0 }, { 0,0 }, false, 10, 70, 0, *warningZone, j * 100, 2000, 1);
+				getPosition(), { 0,0 }, { 0,0 }, false, 10, 40, 0, *warningZone, j * 100, 2000, 1);
 
 			Enemy_BulletPattern_queue.push({ tmp,5 });
 		}
@@ -75,7 +76,7 @@ void Boss_Chicken_1::attack()
 		for (int j = 0; j < 4; j++)
 		{
 			BulletPattern* tmp = new BulletPattern(BulletType::BulletType_Enemy_Egg, PatternType::Circle, RotationType::Spin, *EnimesBullets,
-								getPosition(), AngleShift(velocityToB(150, player), 90 * j), { 0,0 }, true, 6, 80, 4, *warningZone, 0, 2000, 1);
+								getPosition(), AngleShift(velocityToB(100*SCALE, player), 90 * j), { 0,0 }, true, 6, 80, 4, *warningZone, 0, 2000, 1);
 
 			Enemy_BulletPattern_queue.push({ tmp,0 });
 		}
@@ -93,6 +94,7 @@ void Boss_Chicken_1::atHalfHealth()
 
 	sprites.push_back(new SpriteOnly("BossChickenBody2.png", Vector2f(0, 0)));
 	sprites.back()->setOrigin({ 0.5,0.68 });
+	sprites.back()->setScale(0.55);
 	sprites.back()->PushToObject(sprites.back(), this);
 
 	//explosions
@@ -122,6 +124,7 @@ void Boss_Chicken_1::atQuarterHealth()
 
 	sprites.push_back(new SpriteOnly("BossChickenBody3.png", Vector2f(0, 0)));
 	sprites.back()->setOrigin({ 0.5,0.68 });
+	sprites.back()->setScale(0.55);
 	sprites.back()->PushToObject(sprites.back(), this);
 
 	animations.push_back(new Animation(10, 8, 1, 1.5, WINDOW_SIZE, { 0.5,0.5 }, Vector2f(0, 0), "Explosion.png", 70));

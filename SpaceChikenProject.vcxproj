@@ -170,10 +170,14 @@
     <ClCompile Include="source\Entiy\Bullets\Player_Laser_Destroyer.cpp" />
     <ClCompile Include="source\Entiy\Bullets\Player_Laser_Normal.cpp" />
     <ClCompile Include="source\Entiy\Bullets\Player_Ram_Destroyer.cpp" />
+    <ClCompile Include="source\Entiy\Enemies\Black_Hole.cpp" />
     <ClCompile Include="source\Entiy\Enemies\Boss_Chicken_1.cpp" />
+    <ClCompile Include="source\Entiy\Enemies\Boss_Chicken_2.cpp" />
     <ClCompile Include="source\Entiy\Enemies\Enemy_Chicken_1.cpp" />
     <ClCompile Include="source\Entiy\Enemies\Henterprise.cpp" />
+    <ClCompile Include="source\Entiy\Enemies\Semi_Vortex.cpp" />
     <ClCompile Include="source\Entiy\Enemies\SpaceShip.cpp" />
+    <ClCompile Include="source\Entiy\Enemies\Spiral_Vortex.cpp" />
     <ClCompile Include="source\Entiy\Enemies\UFO.cpp" />
     <ClCompile Include="source\Entiy\Enemy.cpp" />
     <ClCompile Include="source\Entiy\EnemyPattern.cpp" />

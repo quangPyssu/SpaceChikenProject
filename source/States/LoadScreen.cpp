@@ -22,17 +22,17 @@ LoadScreen::LoadScreen(State& parentState)
 	PushToObject(progressBar, this);
 
 	{
-		btnWeapon = new Button(Vector2f(WINDOW_SIZE.x / 5, 100), Vector2f(100, 100), "W");
+		btnWeapon = new Button(Vector2f(WINDOW_SIZE.x / 6, 100*SCALE), Vector2f(100, 100)*SCALE, "W");
 		btnWeapon->PushToObject(btnWeapon, this);
 		btnWeapon->makeInvisible();
 
-		btnWeapon2 = new Button(Vector2f(WINDOW_SIZE.x / 5-120, 100), Vector2f(100, 100), "E");
+		btnWeapon2 = new Button(Vector2f(WINDOW_SIZE.x / 6-120*SCALE, 100*SCALE), Vector2f(100, 100)*SCALE, "E");
 		btnWeapon2->PushToObject(btnWeapon2, this);
 		btnWeapon2->makeInvisible();
 
 		for (int i = 0; i < weaponMax; i++)
 		{
-			btnWeaponList.push_back(new Button(Vector2f(WINDOW_SIZE.x / 5, 250 + 125 * i), Vector2f(100, 100), "A"));
+			btnWeaponList.push_back(new Button(Vector2f(WINDOW_SIZE.x / 6, SCALE*(250 + 125 * i)), Vector2f(100, 100)*SCALE, "A"));
 			btnWeaponList.back()->makeInvisible();
 			PushToObject(btnWeaponList.back(), this);
 
@@ -52,13 +52,13 @@ LoadScreen::LoadScreen(State& parentState)
 	}	
 
 	{
-		btnSpecial = new Button(Vector2f(WINDOW_SIZE.x / 5 + 150, 100), Vector2f(100, 100), "S");
+		btnSpecial = new Button(Vector2f(WINDOW_SIZE.x / 6 + 150*SCALE, 100*SCALE), Vector2f(100, 100)*SCALE, "S");
 		btnSpecial->PushToObject(btnSpecial, this);
 		btnSpecial->makeInvisible();
 
 		for (int i = 0; i < specialMax; i++)
 		{
-			btnSpecialList.push_back(new Button(Vector2f(WINDOW_SIZE.x / 5 + 150, 250 + 125 * i), Vector2f(100, 100), "A"));
+			btnSpecialList.push_back(new Button(Vector2f(WINDOW_SIZE.x / 6 + 150*SCALE, SCALE*(250 + 125 * i)), Vector2f(100, 100)*SCALE, "A"));
 			btnSpecialList.back()->makeInvisible();
 			PushToObject(btnSpecialList.back(), this);
 
@@ -86,15 +86,24 @@ LoadScreen::LoadScreen(State& parentState)
 		textureList_Enemy.push_back({ "ChickenBody.png","ChickenFace.png","egg.png" });
 		textureList_Enemy.push_back({ "ChickenBody.png","BossChickenBody.png","BossChickenBody2.png","BossChickenBody3.png","egg.png" });
 		textureList_Enemy.push_back({ "UFO.png","UFO_Bullet.png" });
-		textureList_Enemy.push_back({ "space_ship.png","exhaust.png","missle.png","microgun-bullet.png"});
+		textureList_Enemy.push_back({ "space_ship.png","exhaust.png","microgun-bullet.png"});
 		textureList_Enemy.push_back({ "henterprise.png","laserCannon.png","electroBeam5.png","ChickenBody.png","ChickenFace.png","egg.png"
 			,"BossChickenBody.png","BossChickenBody2.png","BossChickenBody3.png","UFO.png","UFO_Bullet.png" });
+		textureList_Enemy.push_back({ });//black hole
+		textureList_Enemy.push_back({ });//semi Vortex
+		textureList_Enemy.push_back({ });//spiral Vortex
+		textureList_Enemy.push_back({"Fire_Vortex.png","SuperHenBody2.png","Black_Hole.png","Blue_Vortex.png"});//chick boss 2 
 
 		soundList_Enemy.push_back({ "chicken1a(die).ogg","chicken2b(die).ogg","chicken3a(die).ogg" });
 		soundList_Enemy.push_back({ "(chickbossCry).ogg","(chickbossDie).ogg" });
 		soundList_Enemy.push_back({ "(buglezap).ogg","(ufoEngine).ogg","engineUfoDamaged.ogg"});
 		soundList_Enemy.push_back({ "(defaultweapon).ogg","(ufoEngine).ogg","engineUfoDamaged.ogg" });
 		soundList_Enemy.push_back({ "MasterSpark.ogg" ,"laserSmall.ogg","(buglezap).ogg","(chickbossCry).ogg","(chickbossDie).ogg" });
+		soundList_Enemy.push_back({ });
+		soundList_Enemy.push_back({ });
+		soundList_Enemy.push_back({ });
+		soundList_Enemy.push_back({ "(chickbossCry).ogg","(chickbossDie).ogg" });
+
 
 		textureList_Bullet.push_back({ "egg.png" });
 		textureList_Bullet.push_back({ "Astroid.png" });

@@ -76,6 +76,8 @@ namespace Constants
     extern int breakTimeMax;
 
     enum TextAlign {Left,Middle,Right};       
+
+    extern bool DisplayHitbox;
 };
 
 namespace Colors

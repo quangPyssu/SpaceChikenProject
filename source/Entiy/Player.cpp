@@ -28,6 +28,8 @@ Player::Player()
 		sprites.push_back(new SpriteOnly("Battlecruiser_Base.png",Vector2f(0,0)));
 		sprites.back()->PushToObject(sprites.back(), this);
 		sprites.back()->setOrigin({ 0.5, 0.5 });
+		sprites.back()->setScale(0.6);
+		setHitBox(sprites.back()->getSize() * Vector2f(0.35,0.5));
 	}
 
 	HitPoints = HitPointsMax = PlayerMaxHP;

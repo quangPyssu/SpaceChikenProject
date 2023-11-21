@@ -13,6 +13,7 @@ SpriteOnly::SpriteOnly(const std::string& i_texture_location, sf::Vector2f divat
 {
 	texture = ResourceManager::getTexture(i_texture_location);
 	sprite.setPosition({-300,-300});
+	setScale(1);
 	sprite.setTexture(texture);
 	isRootSet = false;
 }

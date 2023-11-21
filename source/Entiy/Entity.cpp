@@ -8,7 +8,7 @@ Entity::~Entity()
 void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	if (timerStart > 0) return;
-	target.draw(hitbox);
+	if (DisplayHitbox) target.draw(hitbox);
 }
 
 void Entity::takeTimeCurrent()

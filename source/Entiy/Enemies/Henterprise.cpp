@@ -14,6 +14,7 @@ Henterprise::Henterprise(Vector2f StartPosition) : Enemy(StartPosition)
 	hitbox.setSize(sprites.back()->getSize() * Vector2f(0.95,0.4));
 	hitbox.setOrigin(hitbox.getSize().x / 2, hitbox.getSize().y*1.7);
 	canFlicker = false;
+	spawnVelocity = { 50,0 };
 
 	HitPoints = HitPointsMax = 5000;
 	
@@ -88,14 +89,14 @@ void Henterprise::atQuarterHealth()
 
 void Henterprise::additionalBehavior()
 {
-	gotoPosition(Vector2f(400, 80) * SCALE,50);
+	if (!isGoingToPos) gotoPosition(Vector2f(400, 80) * SCALE,50);
 }
 
 void Henterprise::addExplosion(int cnt)
 {
 	for (int i = 0; i < cnt; i++)
 	{
-		int tolTimer = rand() % 150;
+		int tolTimer = rand() % 600;
 		Vector2f Pos = Vector2f(rand() % 300*(i&1 ? -1 : 1), rand() % 100);
 		animations.push_back(new Animation(randInt(12)+8, 8, 1, 2, WINDOW_SIZE, Vector2f(0.5, 0.5), Pos, "Explosion.png", tolTimer));
 		PushToObject(animations.back(), this);

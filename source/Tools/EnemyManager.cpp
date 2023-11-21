@@ -110,9 +110,16 @@ void EnemyManager::takeTimeCurrent()
 
 			if (enemy[i]->spawnRequest) // Enemy Spawn event
 			{
-				addEnemy(enemy[i]->SpawnType, enemy[i]->getPosition()*(1/SCALE)+Vector2f(0,100),Vector2f(50,0),Vector2f(0,0), -1);
+				addEnemy(enemy[i]->SpawnType, enemy[i]->getPosition()*(1/SCALE)+Vector2f(0,100),enemy[i]->spawnVelocity, Vector2f(0, 0), -1);
 				enemy.back()->setHitPoints(enemy.back()->getHitPoint() / 2 + 10);
 				enemy[i]->spawnRequest = false;
+
+				switch (enemy[i]->SpawnType)
+				{
+					case EnemyType_SemiVortex: { enemy.back()->gotoPosition(Vector2f(25, 560) * SCALE, 50); } break;
+					case EnemyType_SprialVortex: { enemy.back()->gotoPosition(Vector2f(775, 560) * SCALE, 50); } break;
+					case EnemyType_BlackHole: { enemy.back()->gotoPosition(Vector2f(400, 80) * SCALE, 50); } break;
+				}
 			}
 
 			switch (enemy[i]->type)	// Enemy spawn with cooldown
@@ -182,7 +189,7 @@ void EnemyManager::fireBulletPattern()
 			BulletPattern*& tmp=BulletPattern_Aim_For_Player[i].ff;
 			int diva = BulletPattern_Aim_For_Player[i].ss;
 
-			tmp->setVelocity(tmp->velocityToB(150, player)+Vector2f(diva-randInt(diva*2),diva - randInt(diva * 2)));
+			tmp->setVelocity(tmp->velocityToB(100*SCALE, player)+Vector2f(diva-randInt(diva*2),diva - randInt(diva * 2)));
 
 			BulletPattern_Aim_For_Player.erase(BulletPattern_Aim_For_Player.begin() + i);
 			i--;

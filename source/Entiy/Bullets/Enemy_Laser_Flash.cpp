@@ -3,8 +3,8 @@
 Enemy_Laser_Flash::Enemy_Laser_Flash(Vector2f StartPosition) : Bullet(StartPosition)
 {
 	hitbox.setFillColor(Colors::trans);
-	/*hitbox.setOutlineColor(red);
-	hitbox.setOutlineThickness(1);*/
+	hitbox.setOutlineColor(red);
+	hitbox.setOutlineThickness(1);
 
 	animations.push_back(new Animation(7, 4, 1, 1, { 0,0 }, { 0,0.5 }, Vector2f(0, 0), "QuicklyBeam.png"));
 	animations.back()->setScale({ 5.5,0.75 });

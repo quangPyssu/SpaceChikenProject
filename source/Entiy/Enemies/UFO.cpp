@@ -15,7 +15,7 @@ UFO::UFO(Vector2f StartPosition) : Enemy(StartPosition)
 	HitPoints = HitPointsMax = 2500;
 
 	ApplyPhysics();
-	Velocity = { 50,20 };
+	Velocity = { 50,0 };
 	Acceleration = { 0,0 };
 
 	reloadFrameID = 125;

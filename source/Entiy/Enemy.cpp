@@ -59,7 +59,18 @@ Enemy* EnemyFactory::createEnemy(EnemyType type, Vector2f StartPosition)
 	case EnemyType_Henterprise:
 		return new Henterprise(StartPosition);
 		break;
-
+	case EnemyType_BlackHole:
+		return new Black_Hole(StartPosition);
+		break;
+	case EnemyType_SemiVortex:
+		return new Semi_Vortex(StartPosition);
+		break;
+	case EnemyType_SprialVortex:
+		return new Spiral_Vortex(StartPosition);
+		break;
+	case EnemyType_Boss_Chicken_2:
+		return new Boss_Chicken_2(StartPosition);
+		break;
 	default:
 		break;
 	}

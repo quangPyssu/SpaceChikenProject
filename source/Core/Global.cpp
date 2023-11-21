@@ -21,6 +21,7 @@ namespace Constants {
 
     int EquipedWeapon[2] = { 0,0 };
 
+    short VortexId = 0;
 
     int breakTime = 300;
     int breakTimeMax = 300;
@@ -68,7 +69,9 @@ namespace Constants {
     const sf::Vector2f ButtonTypeTail[3] = { sf::Vector2f(95,95), sf::Vector2f(263,190), sf::Vector2f(287,298) };
 
     sf::Vector2f lastMousePos = sf::Vector2f(0, 0);
-    sf::Vector2f dtMousePos = sf::Vector2f(0, 0);   
+    sf::Vector2f dtMousePos = sf::Vector2f(0, 0);  
+
+    bool DisplayHitbox = true;
 };
 
 namespace utility

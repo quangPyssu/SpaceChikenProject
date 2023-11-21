@@ -107,7 +107,11 @@ void GameState::takeTimeCurrent()
 			levelReader.gotoNextWave();
 			breakTime = breakTimeMax;
 
-			if (levelReader.isFinalWave()) playMusic(Constants::GameMusicTrack[CurrentLevel][1], Constants::GameMusicOffset[CurrentLevel][1]);
+			if (levelReader.isFinalWave())
+			{
+				playMusic(Constants::GameMusicTrack[CurrentLevel][1], Constants::GameMusicOffset[CurrentLevel][1]);
+				isBGScrolling = false;
+			}
 		}		
 	}
 
@@ -198,6 +202,8 @@ void GameState::readAttackQueue()
 			PlayerBullets_Detroyer->addBullet(BulletType_Player_Ram_Destroyer, player->getPosition() + Vector2f(0, 0));
 			player->resetSpecial();
 			player->makeSuperFlicker(700);
+			//heal 50
+			player->HitPoints = min(player->HitPointsMax, player->HitPoints + 50);
 		}
 		break;
 		}
@@ -276,6 +282,7 @@ bool GameState::isWaveEmpty()
 
 void GameState::BGLoop()
 {
+	if (!isBGScrolling) return;
 	backgroundSprite.move(0.0f, scrollSpeed * TIME_PER_FRAME.asSeconds());
 	if (backgroundSprite.getPosition().y >= 0) backgroundSprite.setPosition(SCALE * (-10) , WINDOW_SIZE.y - BGHeight * SCALE);
 }
