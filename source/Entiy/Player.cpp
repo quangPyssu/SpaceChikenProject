@@ -42,7 +42,6 @@ Player::Player()
 void Player::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	Entity::drawCurrent(target, states);
-	target.draw(hitbox);
 }
 
 void Player::updateCurrent(Event& event, Vector2f& MousePos)

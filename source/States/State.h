@@ -18,7 +18,8 @@ namespace States {
 		Pause,
 		GameOver,
 		Difficulty,
-		KillMe
+		KillMe,
+		Credit
     };
 };
 

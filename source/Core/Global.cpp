@@ -71,7 +71,7 @@ namespace Constants {
     sf::Vector2f lastMousePos = sf::Vector2f(0, 0);
     sf::Vector2f dtMousePos = sf::Vector2f(0, 0);  
 
-    bool DisplayHitbox = true;
+    bool DisplayHitbox = false;
 };
 
 namespace utility
@@ -195,7 +195,6 @@ namespace ResourceManager
         {
             std::shared_ptr<sf::Texture> texture = std::make_shared<sf::Texture>();
             if (texture->loadFromFile("Assets/Textures/" + ID)) {
-                std::cout << " Loading texture: " << ID << std::endl;
                 loadedTextures.push_back(ID);
                 textures.emplace(ID, texture);
                 return *(texture);

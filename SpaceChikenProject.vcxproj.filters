@@ -195,6 +195,9 @@
     <ClCompile Include="source\Entiy\Enemies\Spiral_Vortex.cpp">
       <Filter>Entity\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="source\States\Credit.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SceneNode.h">
@@ -285,6 +288,9 @@
       <Filter>States</Filter>
     </ClInclude>
     <ClInclude Include="source\States\PostGameMenu.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="source\States\Credit.h">
       <Filter>States</Filter>
     </ClInclude>
   </ItemGroup>

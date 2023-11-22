@@ -10,6 +10,7 @@ class Enemy : public Entity
 {
 	public:
 	Enemy(Vector2f StartPosition);
+	~Enemy();
 
 	void takeTimeCurrent() override;
 	virtual void additionalBehavior() {};

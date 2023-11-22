@@ -37,6 +37,22 @@ GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 		SubTitle* LevelName = new SubTitle({ 0,WINDOW_SIZE.y / 3 }, Vector2f(WINDOW_SIZE.x, 200), tran_Grey, { 0.2,0.4 }, 20, white, levelReader.levelName, "neuro", 600);
 		SubTitleList.push_back(LevelName);
 		PushToObject(SubTitleList.back(), this);
+
+		if (CurrentLevel == 0)
+		{
+			LevelName = new SubTitle({ 0,WINDOW_SIZE.y / 10 }, Vector2f(WINDOW_SIZE.x/8, WINDOW_SIZE.y / 8), trans, { 0.2,0.4 }, 13, yellow
+				, "Use MOUSE to move, LEFT CLICK to shoot", "neuro", 400);
+			SubTitleList.push_back(LevelName);
+			PushToObject(SubTitleList.back(), this);
+		}
+
+		if (CurrentLevel == 1)
+		{
+			LevelName = new SubTitle({ 0,WINDOW_SIZE.y / 10 }, Vector2f(WINDOW_SIZE.x / 8, WINDOW_SIZE.y / 8), trans, { 0.2,0.4 }, 13, yellow
+				, "RIGHT CLICK to use ultimate", "neuro", 400);
+			SubTitleList.push_back(LevelName);
+			PushToObject(SubTitleList.back(), this);
+		}
 	}
 
 	window.setMouseCursorVisible(false);
@@ -86,6 +102,7 @@ void GameState::takeTimeCurrent()
 	if (levelReader.isLevelFinished()) // Level Complete
 	{
 		CurrentState = States::LevelComplete;
+		if (CurrentLevel == 4) CurrentState = States::Credit;
 		window->setMouseCursorVisible(true);
 		return;
 	}
@@ -111,6 +128,10 @@ void GameState::takeTimeCurrent()
 			{
 				playMusic(Constants::GameMusicTrack[CurrentLevel][1], Constants::GameMusicOffset[CurrentLevel][1]);
 				isBGScrolling = false;
+					
+				SubTitle* FinalWave = new SubTitle({ 0,WINDOW_SIZE.y / 3 + 200 }, Vector2f(WINDOW_SIZE.x, 200), tran_Grey, { 0.2,0.4 }, 20, white, "Final Wave", "neuro", 600);
+				SubTitleList.push_back(FinalWave);
+				PushToObject(SubTitleList.back(), this);				
 			}
 		}		
 	}

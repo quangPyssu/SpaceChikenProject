@@ -6,7 +6,6 @@ App::App()
 	settings.antialiasingLevel = 5.0;
 	srand(time(NULL));
 
-	cout << SCALE_X << " " << SCALE_Y << endl;
 	window = new sf::RenderWindow(sf::VideoMode(800 * Constants::SCALE, 600 * Constants::SCALE), "Chieken", sf::Style::Fullscreen,settings);
 
 	window->setVerticalSyncEnabled(true);

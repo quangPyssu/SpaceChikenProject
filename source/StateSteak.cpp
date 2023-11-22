@@ -35,6 +35,9 @@ void StateSteak::CreateState(States::ID &stateID)
 	}
 	break;
 
+	case States::Credit:
+	{		Stack.push_back(Dummy.makeUnique(new Credit(*Stack.back())));	}	break;
+
 	case States::Pause:
 	{		Stack.push_back(Dummy.makeUnique(new PauseMenu(*Stack.back())));	}	break;
 

@@ -91,6 +91,8 @@ void CurrentData::getData()
 
 	WeaponUnlocked[0].first = true;
 
+	fin >> Constants::masterVolume >> Constants::musicVolume >> Constants::soundVolume;
+
 	fin.close();
 
 	//delete later	
@@ -99,6 +101,7 @@ void CurrentData::getData()
 //
 //	1 0  < -- bool for Weapon Unlocked  // basic is alway on so no reading
 // 	1 0 0  < -- bool for Special Unlocked
+//  80 50 70 < --- Master, Music, Sound Volume
 }
 
 void CurrentData::writeData()
@@ -109,6 +112,8 @@ void CurrentData::writeData()
 
 	for (int i = 0; i < Constants::weaponMax; i++) fout << Constants::WeaponUnlocked[i].first << " ";	fout << endl;
 	for (int i = 0; i < Constants::specialMax; i++) fout << Constants::SpecialUnlocked[i].first << " ";	fout << endl;
+
+	fout << Constants::masterVolume << " " << Constants::musicVolume << " " << Constants::soundVolume << endl;
 
 	fout.close();
 }

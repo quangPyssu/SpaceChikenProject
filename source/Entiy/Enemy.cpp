@@ -7,6 +7,15 @@ Enemy::Enemy(Vector2f StartPosition)
 	type = EnemyType_Chicken_1;
 }
 
+Enemy::~Enemy()
+{
+	while (!Enemy_BulletPattern_queue.empty())
+	{
+		delete Enemy_BulletPattern_queue.front().ff;
+		Enemy_BulletPattern_queue.pop();
+	}
+}
+
 void Enemy::takeTimeCurrent()
 {
 	Entity::takeTimeCurrent();

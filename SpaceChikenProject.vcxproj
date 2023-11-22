@@ -136,7 +136,8 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\External\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
@@ -185,6 +186,7 @@
     <ClCompile Include="source\Entiy\Player.cpp" />
     <ClCompile Include="source\SceneNode.cpp" />
     <ClCompile Include="source\StateSteak.cpp" />
+    <ClCompile Include="source\States\Credit.cpp" />
     <ClCompile Include="source\States\GameOverScreen.cpp" />
     <ClCompile Include="source\States\GameState.cpp" />
     <ClCompile Include="source\States\LoadScreen.cpp" />
@@ -217,6 +219,7 @@
     <ClInclude Include="source\Entiy\Player.h" />
     <ClInclude Include="source\SceneNode.h" />
     <ClInclude Include="source\StateSteak.h" />
+    <ClInclude Include="source\States\Credit.h" />
     <ClInclude Include="source\States\GameOverScreen.h" />
     <ClInclude Include="source\States\GameState.h" />
     <ClInclude Include="source\States\LoadScreen.h" />

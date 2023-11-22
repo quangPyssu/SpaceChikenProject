@@ -4,8 +4,6 @@ void LevelReader::ReadLevel(int id)
 {
 	std::string path = "Data/Level/Level_" + std::to_string(id) + ".inp";
 
-	std::cout << path << std::endl;
-
 	std::ifstream fin(path);
 
 	if (!fin.is_open())

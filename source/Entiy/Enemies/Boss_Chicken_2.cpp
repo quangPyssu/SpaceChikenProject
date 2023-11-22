@@ -110,8 +110,15 @@ void Boss_Chicken_2::FireworkAttack()
 {
 	for (int j = 0; j < 3; j++)
 	{
+		int cnt = 0;
+		switch (j)
+		{
+			case 0: cnt = 10; break;
+				case 1: cnt = 12; break;
+					case 2: cnt = 14; break;
+		 }
 		BulletPattern* tmp = new BulletPattern(BulletType::BulletType_Enemy_Egg, PatternType::Firework, RotationType::defaultRotation, *EnimesBullets,
-			getPosition(), Vector2f(60,60)*SCALE, { 0,0 }, false, 10, 100 * SCALE, 5, *warningZone, j * 100, 2000, 1);
+			getPosition(), Vector2f(60,60)*SCALE, { 0,0 }, false, cnt, 100 * SCALE, cnt/2, *warningZone, j * 100, 2000, 1);
 
 		Enemy_BulletPattern_queue.push({ tmp,0 });
 	}
