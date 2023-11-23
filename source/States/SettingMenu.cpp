@@ -11,13 +11,13 @@ SettingMenu::SettingMenu(State& parentState)
 	background.setTexture(ResourceManager::getTexture("Blue_Background.png"));
 	background.setScale(getScale::getScaleMax((Vector2f) background.getTexture()->getSize(), WINDOW_SIZE));
 
-	sliderMaster = new Slider(sf::Vector2f(WINDOW_SIZE.x / 5 , 100 * SCALE), sf::Vector2f(100, 30) * SCALE, Color::Green, grey, "Master Volume:", Constants::masterVolume, 100);
+	sliderMaster = new Slider(sf::Vector2f(WINDOW_SIZE.x / 5 , WINDOW_SIZE.y / 5), sf::Vector2f(100, 30) * SCALE, Color::Green, grey, "Master Volume:", Constants::masterVolume, 100);
 	sliderMaster->PushToObject(sliderMaster, this);
 
-	sliderMusic = new Slider(sf::Vector2f(WINDOW_SIZE.x / 5 , 140 * SCALE), sf::Vector2f(100, 30) * SCALE, Color::Green, grey, "Music Volume:", Constants::musicVolume, 100);
+	sliderMusic = new Slider(sf::Vector2f(WINDOW_SIZE.x / 5 , WINDOW_SIZE.y / 5+40 * SCALE), sf::Vector2f(100, 30) * SCALE, Color::Green, grey, "Music Volume:", Constants::musicVolume, 100);
 	sliderMusic->PushToObject(sliderMusic, this);
 
-	sliderSound = new Slider(sf::Vector2f(WINDOW_SIZE.x / 5 , 180 * SCALE), sf::Vector2f(100, 30) * SCALE, Color::Green, grey, "Sfx Volume:", Constants::soundVolume, 100);
+	sliderSound = new Slider(sf::Vector2f(WINDOW_SIZE.x / 5 , WINDOW_SIZE.y / 5+80 * SCALE), sf::Vector2f(100, 30) * SCALE, Color::Green, grey, "Sfx Volume:", Constants::soundVolume, 100);
 	sliderSound->PushToObject(sliderSound, this);
 
 	CurrentState = States::None;

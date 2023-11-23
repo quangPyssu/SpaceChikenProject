@@ -21,6 +21,16 @@ LoadScreen::LoadScreen(State& parentState)
 	progressBar = new ProgressBar(Vector2f( 10,WINDOW_SIZE.y - 20 ), Vector2f(WINDOW_SIZE.x - 20, 20), Colors::green, Colors::grey, "Load Progress", loadProgress,loadProgressMax);
 	PushToObject(progressBar, this);
 
+	SubTitle* Instruction = new SubTitle({ 10,10 }, Vector2f(WINDOW_SIZE.x, 200), trans, { 0.05,0.3 }, 13, yellow,
+		"Left click on available Weapon and Speacial to equip it", "neuro", -1);
+	SubTitleList.push_back(Instruction);
+	PushToObject(SubTitleList.back(), this);
+
+	SubTitle* SideArm = new SubTitle({ 10,50 }, Vector2f(WINDOW_SIZE.x, 200), trans, { 0.05,0.3 }, 13, yellow,
+		"Right click on available Weapon to equip side Weapon", "neuro", -1);
+	SubTitleList.push_back(SideArm);
+	PushToObject(SubTitleList.back(), this);
+
 	{
 		btnWeapon = new Button(Vector2f(WINDOW_SIZE.x / 6, 100*SCALE), Vector2f(100, 100)*SCALE, "W");
 		btnWeapon->PushToObject(btnWeapon, this);
