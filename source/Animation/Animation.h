@@ -26,7 +26,7 @@ private:
 
 	sf::Texture texture;
 
-	sf::Vector2f divation;
+	sf::Vector2f divation = { 0,0 };
 	float rotationDivation = 0;
 
 	bool isRootSet = true;

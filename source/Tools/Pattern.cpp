@@ -2,6 +2,13 @@
 
 Pattern::~Pattern()
 {
+	for (int i = 0; i < entityList.size(); i++) if (entityList[i]->CurrentEnityState!=Dead) 
+	{
+		entityList[i]->setTimer(0,0);
+	}
+
+	entityList.clear();
+
 }
 
 void Pattern::setUpPattern(PatternType type)
@@ -180,7 +187,7 @@ void Pattern::takeTimeCurrent()
 		Entity::killEntity();
 		return;
 	}
-
+	
 	for (int i = 0; i < entityList.size(); i++)
 		if (entityList[i]->CurrentEnityState == EntityState::Dead)
 		{

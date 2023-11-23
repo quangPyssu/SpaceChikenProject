@@ -139,6 +139,10 @@ LoadScreen::~LoadScreen()
 {
 	for (int i = 0; i < spriteWeaponList.size(); i++)
 		delete spriteWeaponList[i];
+
+	for (int i = 0; i < spriteSpecialList.size(); i++)
+		delete spriteSpecialList[i];
+	
 }
 
 void LoadScreen::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const

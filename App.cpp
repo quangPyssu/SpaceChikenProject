@@ -27,6 +27,7 @@ App::App()
 	OutScopeY = { -300 * SCALE,WINDOW_SIZE.y * SCALE };
 
 	state_stk = new StateSteak(*window);	
+	event = sf::Event();
 }
 
 App::~App()
@@ -38,7 +39,6 @@ App::~App()
 void App::Run()
 {
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
-	std::thread logicThread(&App::GameLogicThread, this);
 
 	while (window->isOpen()) {
 		ProcessInput(); 
@@ -55,25 +55,6 @@ void App::Run()
 
 		render();
 	}
-
-	logicThread.join();
-}
-
-void App::GameLogicThread() {
-	/*sf::Time timeSinceLastUpdate = sf::Time::Zero;
-
-	while (window->isOpen()) 
-	{
-		sf::Time elapsedTime = clock.restart();
-		timeSinceLastUpdate += elapsedTime;
-
-		while (timeSinceLastUpdate > TIME_PER_FRAME)
-		{
-			timeSinceLastUpdate -= TIME_PER_FRAME;
-			TakeTime(TIME_PER_FRAME);
-		}
-		TakeTime(TIME_PER_FRAME);
-	}*/
 }
 
 void App::ProcessInput()
@@ -87,7 +68,8 @@ void App::ProcessInput()
 		else if (event.type == sf::Event::LostFocus)
 			IsPaused = true;
 
-		if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Delete) || isDead) window->close();
+		if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Delete) || isDead)	window->close();
+	
 
 		update(event,MousePos);		
 		//std::cout << MousePos.x << " " << MousePos.y << std::endl;

@@ -81,6 +81,7 @@ Enemy* EnemyFactory::createEnemy(EnemyType type, Vector2f StartPosition)
 		return new Boss_Chicken_2(StartPosition);
 		break;
 	default:
+		return new Enemy_Chicken_1(StartPosition);
 		break;
 	}
 }

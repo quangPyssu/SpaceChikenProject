@@ -55,6 +55,7 @@ Bullet* BulletFactory::createBullet(BulletType type, Vector2f StartPosition)
 		return new Astroid(StartPosition);
 		break;
 	default:
+		return new Player_Bullet_Normal(StartPosition);
 		break;
 	}
 }

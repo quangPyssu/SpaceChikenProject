@@ -1,12 +1,12 @@
-#include  "SFML/Graphics.hpp" 
-#include "SFML/Audio.hpp"
 #include "App.h"
 
-int main()
+int WinMain()
 {
    	App* app=new App;
 
     app->Run();
+
+    delete app;
 
     return 0;
 }

@@ -22,23 +22,12 @@ EnemyManager::EnemyManager(Player& player, BulletManager& PlayerBullets_Standard
 
 	PlayerBullets_Detroyer.addTarget(*EnimesBullets);
 	PlayerBullets_Detroyer.addTarget(*EnimesBullets_Vulnerable);
-	PlayerBullets_Standard.addTarget(*EnimesBullets_Vulnerable);
-
-	
+	PlayerBullets_Standard.addTarget(*EnimesBullets_Vulnerable);	
 }
 
 EnemyManager::~EnemyManager()
 {
-	for (int i = 0; i < enemy.size(); i++) if (enemy[i] != nullptr) 
-	{
-		dummy->detachChild(*enemy[i]);
-	}
 	enemy.clear();
-
-	for (int i = 0; i < BulletPatternList.size(); i++) if (BulletPatternList[i] != nullptr)
-	{
-		detachChild(*BulletPatternList[i]);
-	}
 
 	BulletPatternList.clear();
 	BulletPattern_Aim_For_Player.clear();

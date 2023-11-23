@@ -64,7 +64,6 @@ GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 GameState::~GameState()
 {
 	window->setMouseCursorVisible(true);
-	//set normal view
 	window->setView(originalView);
 }
 

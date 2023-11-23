@@ -33,7 +33,7 @@ Enemy_Chicken_1::Enemy_Chicken_1(Vector2f StartPosition) : Enemy(StartPosition)
 
 void Enemy_Chicken_1::addDeathAnimation()
 {
-	Entity::addDeathAnimation();
+	Entity::addDeathAnimation();	
 
 	animations.push_back(new Animation(10, 8, 1, 1.2, WINDOW_SIZE, { 0.5,0.5 }, Vector2f(0, 0), "Explosion.png", 70));
 	PushToObject(animations.back(), this);

@@ -32,7 +32,7 @@ private:
 	bool isDead = false;
 	Clock clock;
 
-	StateSteak* state_stk;
+	StateSteak* state_stk=null;
 
 
 	// subject for delete later	

@@ -145,7 +145,6 @@ void SpaceShip::additionalBehavior()
 
 void SpaceShip::ramming()
 {
-	setPosition(Vector2f(player->getPosition().x, getPosition().y));
 	gotoPosition(Vector2f(player->getPosition().x, WINDOW_SIZE.y + 150 * SCALE), RammingSpeed*SCALE);
 	EnimesBullets->addBullet(BulletType_Enemy_Ram_Destroyer, getPosition() + Vector2f(0, 0));
 	EnimesBullets->setBulletBackVelocity(Vector2f( 0, RammingSpeed*SCALE ));

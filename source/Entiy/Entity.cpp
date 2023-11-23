@@ -194,9 +194,9 @@ void Entity::outScope()
 
 void Entity::killEntity()
 {
-	if (Destructible)
+	if (Destructible && CurrentEnityState == EntityState::Alive)
 	{
-		CurrentEnityState = EntityState::Dying;
+		CurrentEnityState = EntityState::Dying;		
 		addDeathAnimation();
 	}
 }
@@ -208,6 +208,7 @@ void Entity::addDeathAnimation()
 
 	animations.clear();
 	sprites.clear();
+	
 }
 
 void Entity::playSound(string soundName)

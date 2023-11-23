@@ -31,6 +31,7 @@ void StateSteak::CreateState(States::ID &stateID)
 		}
 
 		if (!Stack.empty()) CreateState(Stack.back()->CurrentState);
+		
 		break;
 	}
 	break;
@@ -62,7 +63,6 @@ void StateSteak::CreateState(States::ID &stateID)
 	
 	if (!Stack.empty()) Stack.back()->CurrentState = States::None;
 }
-
 
 void StateSteak::pushState(States::ID stateID)
 {
