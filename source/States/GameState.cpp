@@ -28,7 +28,6 @@ GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 		PBplayerHealth = new ProgressBar({ 10,WINDOW_SIZE.y - 20 }, Vector2f(WINDOW_SIZE.x - 20, 20), Colors::green, Colors::grey, "HP", player->HitPoints, player->HitPointsMax);
 		PushToObject(PBplayerHealth, this);
 
-		//PBplayerSpecial = new ProgressBar({ 10,WINDOW_SIZE.y - 50 }, Vector2f(WINDOW_SIZE.x/3, 10), Colors::yellow, Colors::grey, "SP", player->specialFrameID, player->specialFrameIDMax);
 		PBplayerSpecial = new ProgressBar({ 10,WINDOW_SIZE.y - 35 }, Vector2f(WINDOW_SIZE.x / 3, 15), Colors::yellow, Colors::grey, "SP", player->specialFrameID, player->specialFrameIDMax);
 		PushToObject(PBplayerSpecial, this);
 
@@ -65,6 +64,8 @@ GameState::~GameState()
 {
 	window->setMouseCursorVisible(true);
 	window->setView(originalView);
+
+	for (int i = 0; i < EnemyPatternList.size(); i++) detachChild(*EnemyPatternList[i]);
 }
 
 void GameState::addEnemyPattern(EnemyType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration,

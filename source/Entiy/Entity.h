@@ -10,6 +10,9 @@ class Entity : public SceneNode, protected Flicker
 {
 
 public:
+    //static int EntityCount;
+
+   // Entity();
     ~Entity();
 
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;

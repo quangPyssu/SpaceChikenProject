@@ -39,6 +39,10 @@ Player::Player()
 	hitbox.setPosition(getPosition());
 }
 
+Player::~Player()
+{
+}
+
 void Player::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	Entity::drawCurrent(target, states);

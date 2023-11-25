@@ -10,6 +10,7 @@ class Player : public Entity
 {
 	public:
 	Player();
+	~Player();
 
 	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void updateCurrent(Event& event, Vector2f& MousePos) override;

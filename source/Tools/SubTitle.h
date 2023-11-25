@@ -7,6 +7,7 @@ class SubTitle : public SceneNode
 public:
     SubTitle(sf::Vector2f position, sf::Vector2f size, sf::Color bgColor,
         sf::Vector2f labelPos,int labelSize, sf::Color labelColor, std::string label,std::string font,int timerEnd);
+~SubTitle();
 
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
     void takeTimeCurrent() override;

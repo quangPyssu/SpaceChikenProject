@@ -137,7 +137,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\External\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
@@ -208,6 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="source\Animation\Animation.h" />
     <ClInclude Include="source\Animation\Flicker.h" />
     <ClInclude Include="source\Animation\SpriteOnly.h" />
@@ -240,7 +241,10 @@
     <ClInclude Include="source\Tools\SubTitle.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\condauvoi.ico" />
+    <Image Include="condauvoi.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SpaceChikenProject.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

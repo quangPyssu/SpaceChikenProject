@@ -52,7 +52,7 @@ void Slider::updateCurrent(Event& event, Vector2f& MousePos)
 	{
 		if (event.mouseButton.button == Mouse::Left)
 		{
-			if (bar.getGlobalBounds().contains(MousePos))
+			if (background.getGlobalBounds().contains(MousePos))
 			{
 				isPressed = true;
 			}

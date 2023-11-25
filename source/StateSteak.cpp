@@ -12,7 +12,7 @@ void StateSteak::CreateState(States::ID &stateID)
 {
 	switch (stateID)
 	{
-	case States::None:	{		return;	}	break;
+	case States::None:	{	return;	}	break;
 
 	case States::Main:
 	{		Stack.push_back(Dummy.makeUnique(new MainMenu()));	}	break;
@@ -28,7 +28,9 @@ void StateSteak::CreateState(States::ID &stateID)
 		while (Stack.size() > 0 && Stack.back()->CurrentState == States::KillMe)
 		{
 			Stack.pop_back();
+			//cout << "Stack pop : " << Stack.size() << endl;
 		}
+		//cout << "Stack size: " << Stack.size() << endl << endl;
 
 		if (!Stack.empty()) CreateState(Stack.back()->CurrentState);
 		

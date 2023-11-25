@@ -38,7 +38,7 @@ void BulletManager::addBullet(BulletType type,sf::Vector2f position)
 	}
 
 	BulletList.push_back(tmp);
-	BulletList.back()->PushToObject(BulletList.back(), this);
+	PushToObject(BulletList.back(), this);
 }
 
 void BulletManager::addTarget(Entity& target)

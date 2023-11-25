@@ -1,8 +1,17 @@
 #include "Entity.h"
 
+//int Entity::EntityCount = 0;
+//
+//Entity::Entity()
+//{
+//	EntityCount++;
+//}
+
 Entity::~Entity()
 {
 	for (int i = 0; i < sounds.size(); i++) delete sounds[i];
+	//cout << "Entity deleted " << EntityCount << endl;
+	//EntityCount--;
 }
 
 void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const

@@ -50,3 +50,7 @@ void SubTitle::setTranparency(float alpha)
 		, alpha*baseLabelAlpha));
 }
 
+SubTitle::~SubTitle()
+{
+}
+

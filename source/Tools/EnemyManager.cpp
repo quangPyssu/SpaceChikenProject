@@ -1,7 +1,5 @@
 #include "EnemyManager.h"
 
-std::vector<BulletPattern*> EnemyManager::BulletPatternList;
-
 EnemyManager::EnemyManager(Player& player, BulletManager& PlayerBullets_Standard, BulletManager& PlayerBullets_Detroyer)
 	: player(&player), PlayerBullets_Standard(&PlayerBullets_Standard), PlayerBullets_Detroyer(&PlayerBullets_Detroyer)
 {
@@ -27,12 +25,14 @@ EnemyManager::EnemyManager(Player& player, BulletManager& PlayerBullets_Standard
 
 EnemyManager::~EnemyManager()
 {
-	enemy.clear();
+	detachChild(*dummy);
+	dummy = nullptr;
+	for (int i = 0; i < BulletPatternList.size(); i++) detachChild(*BulletPatternList[i]);
 
+	
+	enemy.clear();
 	BulletPatternList.clear();
 	BulletPattern_Aim_For_Player.clear();
-
-	//_CrtDumpMemoryLeaks();
 }
 
 void EnemyManager::addEnemy(EnemyType type)
@@ -55,19 +55,6 @@ void EnemyManager::addEnemy(EnemyType type, Vector2f Position, Vector2f Velocity
 	enemy.back()->setVelocity(Velocity*SCALE);
 	enemy.back()->setAcceleration(Acceleration*SCALE);
 	enemy.back()->setTimer(0, timerEnd);
-}
-
-void EnemyManager::removeEnemy(Entity& target)
-{
-	for (unsigned int i = 0; i < enemy.size(); i++)
-	{
-		if (enemy[i] == &target)
-		{
-			detachChild(*enemy[i]);
-			enemy.erase(enemy.begin() + i);
-			return;
-		}
-	}
 }
 
 void EnemyManager::takeTimeCurrent()

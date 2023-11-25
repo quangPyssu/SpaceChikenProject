@@ -20,7 +20,6 @@ public:
 
 	void addEnemy(EnemyType type);
 	void addEnemy(EnemyType type,Vector2f Position,Vector2f Velocity,Vector2f Acceleration,int timerEnd);
-	void removeEnemy(Entity& target); 
 	vector <Enemy*> enemy;
 
 	void addBulletPattern(BulletType type, PatternType patternType, RotationType rotationType, Vector2f Position, Vector2f Velocity, Vector2f Acceleration, bool Physics,
@@ -40,7 +39,7 @@ private:
 	BulletManager* EnimesBullets;
 	BulletManager* EnimesBullets_Vulnerable;
 
-	static vector <BulletPattern*> BulletPatternList;
+	vector <BulletPattern*> BulletPatternList;
 
 	vector <pair <BulletPattern*,int>> BulletPattern_Aim_For_Player; //
 
