@@ -3,6 +3,7 @@
 #include "../SceneNode.h"
 #include "../Button.h"
 #include "../Animation/Animation.h"
+#include "../Animation/SpriteOnly.h"
 #include "../Tools/SubTitle.h"
 #include <fstream>
 

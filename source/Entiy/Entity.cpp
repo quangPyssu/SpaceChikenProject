@@ -131,45 +131,29 @@ void Entity::gotoPosition(sf::Vector2f Position, float speed)
 	CurrentDestination = Position;
 }
 
-Entity::damageEvent Entity::takeDamage(int damage)
+void Entity::takeDamage(int damage)
 {
 	if (CurrentEnityState == EntityState::Alive && !timerStart)
 	{
-		if (isFlickering && isInvincibleWhenFlicker) return damageEvent::NoDamage;
-
-		damageEvent tmp = Entity::damageEvent::TakeDamage;
+		if (isFlickering && isInvincibleWhenFlicker) return;
 
 		//at three quarter health
-		if (HitPoints > HitPointsMax * 3 / 4 && HitPoints - damage <= HitPointsMax * 3 / 4)
-		{
-			tmp = damageEvent::ThreeQuarterHealth;
-			atThreeQuarterHealth();
-		}
+		if (HitPoints > HitPointsMax * 3 / 4 && HitPoints - damage <= HitPointsMax * 3 / 4)	atThreeQuarterHealth();
 		else
-		if (HitPoints > HitPointsMax / 2 && HitPoints - damage <= HitPointsMax / 2)
-		{
-			tmp = damageEvent::HalfHealth;
-			atHalfHealth();
-		}
-		else if (HitPoints > HitPointsMax / 4 && HitPoints - damage <= HitPointsMax / 4)
-		{
-			tmp = damageEvent::QuarterHealth;
-			atQuarterHealth();
-		}
+		if (HitPoints > HitPointsMax / 2 && HitPoints - damage <= HitPointsMax / 2)	atHalfHealth();
+		else 
+		if (HitPoints > HitPointsMax / 4 && HitPoints - damage <= HitPointsMax / 4)	atQuarterHealth();
 
 		HitPoints -= damage;
 
 		if (!isFlickering) makeFlicker();
 
-		if (HitPoints <= 0)
-		{
-			killEntity();
-		}
+		if (HitPoints <= 0)	killEntity();
 
-		return tmp;
+		return;
 	}
 
-	return damageEvent::NoDamage;
+	return;
 }
 
 void Entity::setAcceleration(sf::Vector2f acceleration)

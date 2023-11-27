@@ -73,44 +73,52 @@ void EnemyManager::takeTimeCurrent()
 			enemy.erase(enemy.begin() + i);
 			i--;
 		}
-		else if (enemy[i]->CurrentEnityState == EntityState::Alive && enemy[i]->isFiring)// Enemy Fire
+		else if (enemy[i]->CurrentEnityState == EntityState::Alive)
 		{
-			while (!enemy[i]->Enemy_BulletPattern_queue.empty())
+			if (player->CurrentEnityState == Alive && enemy[i]->CollitionDetection(*player))
 			{
-				addBulletPattern(enemy[i]->Enemy_BulletPattern_queue.front().ff);
-
-				if (enemy[i]->Enemy_BulletPattern_queue.front().ss) BulletPattern_Aim_For_Player.push_back(enemy[i]->Enemy_BulletPattern_queue.front());
-
-				enemy[i]->Enemy_BulletPattern_queue.pop();
+				player->takeDamage(enemy[i]->Damage);
 			}
 
-			if (enemy[i]->spawnRequest) // Enemy Spawn event
+			if (enemy[i]->isFiring)// Enemy Fire
 			{
-				addEnemy(enemy[i]->SpawnType, enemy[i]->getPosition()*(1/SCALE)+Vector2f(0,100),enemy[i]->spawnVelocity, Vector2f(0, 0), -1);
-				enemy.back()->setHitPoints(enemy.back()->getHitPoint() / 2 + 10);
-				enemy[i]->spawnRequest = false;
-
-				switch (enemy[i]->SpawnType)
+				while (!enemy[i]->Enemy_BulletPattern_queue.empty())
 				{
+					addBulletPattern(enemy[i]->Enemy_BulletPattern_queue.front().ff);
+
+					if (enemy[i]->Enemy_BulletPattern_queue.front().ss) BulletPattern_Aim_For_Player.push_back(enemy[i]->Enemy_BulletPattern_queue.front());
+
+					enemy[i]->Enemy_BulletPattern_queue.pop();
+				}
+
+				if (enemy[i]->spawnRequest) // Enemy Spawn event
+				{
+					addEnemy(enemy[i]->SpawnType, enemy[i]->getPosition() * (1 / SCALE) + Vector2f(0, 100), enemy[i]->spawnVelocity, Vector2f(0, 0), -1);
+					enemy.back()->setHitPoints(enemy.back()->getHitPoint() / 2 + 10);
+					enemy[i]->spawnRequest = false;
+
+					switch (enemy[i]->SpawnType)
+					{
 					case EnemyType_SemiVortex: { enemy.back()->gotoPosition(Vector2f(25, 560) * SCALE, 50); } break;
 					case EnemyType_SprialVortex: { enemy.back()->gotoPosition(Vector2f(775, 560) * SCALE, 50); } break;
 					case EnemyType_BlackHole: { enemy.back()->gotoPosition(Vector2f(400, 80) * SCALE, 50); } break;
+					}
 				}
-			}
 
-			switch (enemy[i]->type)	// Enemy spawn with cooldown
-			{
+				switch (enemy[i]->type)	// Enemy spawn with cooldown
+				{
 				case EnemyType_Henterprise:
 				{
 					for (int j = 0; j < 2; j++)
 					{
-						addEnemy(EnemyType_Chicken_1, Vector2f(200+j*100, 1), Vector2f(0, 40), Vector2f(-8, -1), 1000);
-						addEnemy(EnemyType_Chicken_1, Vector2f(600-j*100, 1), Vector2f(0, 40), Vector2f(8, -1), 1000);
+						addEnemy(EnemyType_Chicken_1, Vector2f(200 + j * 100, 1), Vector2f(0, 40), Vector2f(-8, -1), 1000);
+						addEnemy(EnemyType_Chicken_1, Vector2f(600 - j * 100, 1), Vector2f(0, 40), Vector2f(8, -1), 1000);
 					}
 				} break;
-			}
+				}
 
-			enemy[i]->resetGun();
+				enemy[i]->resetGun();
+			}
 		}
 	}	
 

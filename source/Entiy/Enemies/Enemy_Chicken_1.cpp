@@ -7,6 +7,7 @@ Enemy_Chicken_1::Enemy_Chicken_1(Vector2f StartPosition) : Enemy(StartPosition)
 	hitbox.setOutlineThickness(1);	
 
 	animations.push_back(new Animation(2, 50, 1, 0.35, { 0,0 }, { 0.5,0.5 }, Vector2f(0, 0), "ChickenBody.png"));
+	animations.back()->setCurrentFrame(rand() % 50);
 	animations.back()->makePingPong();
 	animations.back()->PushToObject(animations.back(), this);
 

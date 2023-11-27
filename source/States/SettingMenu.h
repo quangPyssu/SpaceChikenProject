@@ -1,7 +1,6 @@
 #pragma once
 
 #include "State.h"
-#include "../Button.h"
 #include "../Tools/Slider.h"
 
 class SettingMenu : public State

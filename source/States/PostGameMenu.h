@@ -1,8 +1,6 @@
 #pragma once
 
 #include "State.h"
-#include "../Button.h"
-#include "../Animation/SpriteOnly.h"
 
 class PostGameMenu: public State
 {

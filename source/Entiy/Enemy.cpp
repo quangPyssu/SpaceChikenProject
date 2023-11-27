@@ -5,6 +5,7 @@ Enemy::Enemy(Vector2f StartPosition)
 	setPosition(StartPosition);
 	hitbox.setPosition(StartPosition);
 	type = EnemyType_Chicken_1;
+	Damage = 50;
 }
 
 Enemy::~Enemy()

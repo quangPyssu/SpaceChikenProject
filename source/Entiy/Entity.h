@@ -40,6 +40,8 @@ public:
 
     EntityState CurrentEnityState = EntityState::Alive;
 
+    void takeDamage(int damage);
+
     void killEntity();
 
     void setDivation(Vector2f divation);
@@ -85,7 +87,7 @@ protected:
 
 protected:
 
-    enum damageEvent { NoDamage = 0, TakeDamage = 1, HalfHealth = 2, QuarterHealth = 3,ThreeQuarterHealth=4 };
+    
 
     int HitPoints = 1;
     int HitPointsMax = 1;
@@ -96,7 +98,6 @@ protected:
     bool hasPhysics = false;
     bool isInvincibleWhenFlicker = false;
 
-    damageEvent takeDamage(int damage);
     virtual void atThreeQuarterHealth() {};
     virtual void atHalfHealth() {};
     virtual void atQuarterHealth() {};
