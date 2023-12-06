@@ -47,9 +47,6 @@ public:
 protected:
 	RenderWindow* window=nullptr;
 
-	vector <string> usedTextures;
-	vector <string> usedSounds;
-
 	int textureStackID;
 	int soundStackID;
 	

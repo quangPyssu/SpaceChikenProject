@@ -20,9 +20,9 @@ namespace Constants
     extern const int T;
 
     extern const double pi;
-    extern const double SCALE_X;
-    extern const double SCALE_Y;
-    extern const double SCALE;
+    extern double SCALE_X;
+    extern double SCALE_Y;
+    extern double SCALE;
     extern const sf::Time TIME_PER_FRAME;
     extern sf::Vector2f WINDOW_SIZE;
 

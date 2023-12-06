@@ -21,8 +21,6 @@ private:
 	void TakeTime(sf::Time dt);
 	void updateMousePos();
 
-	void GameLogicThread();
-
 	sf::Event event;
 	sf::View view;
 
@@ -33,7 +31,6 @@ private:
 	Clock clock;
 
 	StateSteak* state_stk=null;
-
 
 	// subject for delete later	
 };

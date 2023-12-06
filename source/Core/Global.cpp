@@ -27,13 +27,13 @@ namespace Constants {
     int breakTimeMax = 300;
 
     const double pi = 3.14159265;
-    const double SCALE_X = (double)(sf::VideoMode::getDesktopMode().width) / (800);
-    const double SCALE_Y = (double)(sf::VideoMode::getDesktopMode().height) / (600);
-    const double SCALE = std::min(SCALE_X, SCALE_Y);
+    double SCALE_X = (double)(sf::VideoMode::getDesktopMode().width) / (800);
+    double SCALE_Y = (double)(sf::VideoMode::getDesktopMode().height) / (600);
+    double SCALE = std::min(SCALE_X, SCALE_Y);
     const sf::Time TIME_PER_FRAME = sf::seconds(1.f / 60.f);
 
-    std::pair <double, double> OutScopeX = {-300*SCALE,WINDOW_SIZE.x*SCALE};
-    std::pair <double, double> OutScopeY = { -300 * SCALE,WINDOW_SIZE.y * SCALE };
+    std::pair <double, double> OutScopeX = {-300*SCALE,1100 * SCALE };
+    std::pair <double, double> OutScopeY = { -300 * SCALE,900 * SCALE };
 
     const float targetAspectRatio = 1920.0f / 1080.0f;
 

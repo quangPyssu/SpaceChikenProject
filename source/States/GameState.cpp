@@ -48,16 +48,26 @@ GameState::GameState(State& parentState, RenderWindow& window) : State(window)
 		if (CurrentLevel == 1)
 		{
 			LevelName = new SubTitle({ 0,WINDOW_SIZE.y / 10 }, Vector2f(WINDOW_SIZE.x / 8, WINDOW_SIZE.y / 8), trans, { 0.2,0.4 }, 13, yellow
-				, "RIGHT CLICK to use ultimate", "neuro", 400);
+				, "RIGHT CLICK to use ultimate", "neuro", 500);
 			SubTitleList.push_back(LevelName);
 			PushToObject(SubTitleList.back(), this);
 		}
+
+		if (CurrentLevel == 2)
+		{
+			LevelName = new SubTitle({ 0,WINDOW_SIZE.y / 10 }, Vector2f(WINDOW_SIZE.x / 8, WINDOW_SIZE.y / 8), trans, { 0.2,0.4 }, 13, yellow
+				, "MIDDLE SCROLL to change weapon ", "neuro", 500);
+			SubTitleList.push_back(LevelName);
+			PushToObject(SubTitleList.back(), this);
+		}		
 	}
 
 	window.setMouseCursorVisible(false);
 	originalView = window.getView();
 
 	playMusic(Constants::GameMusicTrack[CurrentLevel][0], Constants::GameMusicOffset[CurrentLevel][0]);
+
+
 }
 
 GameState::~GameState()
